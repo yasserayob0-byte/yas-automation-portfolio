@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { createPortal } from 'react-dom';
+import { useModalFocus } from './useModalFocus';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Sparkles,
@@ -22,43 +24,46 @@ import {
   Activity
 } from 'lucide-react';
 import type { CaseStudyData } from '../types';
-import { FB_MESSENGER_CASE_STUDY } from '../data/caseStudiesData';
 
 interface CaseStudyTemplateProps {
-  data?: Partial<CaseStudyData>;
+  data: CaseStudyData;
   onBack?: () => void;
   onNavigateProject?: (projectId: string) => void;
   onContactClick?: (subjectTopic?: string) => void;
 }
 
-// Default template data populated with AI-Powered Facebook Messenger Support Agent
-const DEFAULT_TEMPLATE_DATA: CaseStudyData = FB_MESSENGER_CASE_STUDY;
 
 export default function CaseStudyTemplate({
-  data = {},
+  data,
   onBack,
   onNavigateProject,
   onContactClick
 }: CaseStudyTemplateProps) {
-  // Merge prop data with default template placeholders
-  const study: CaseStudyData = {
-    ...DEFAULT_TEMPLATE_DATA,
-    ...data,
-    overview: { ...DEFAULT_TEMPLATE_DATA.overview, ...data.overview },
-    challenge: { ...DEFAULT_TEMPLATE_DATA.challenge, ...data.challenge },
-    solution: { ...DEFAULT_TEMPLATE_DATA.solution, ...data.solution },
-    architecture: { ...DEFAULT_TEMPLATE_DATA.architecture, ...data.architecture },
-    businessValue: { ...DEFAULT_TEMPLATE_DATA.businessValue, ...data.businessValue },
-    heroScreenshot: { ...DEFAULT_TEMPLATE_DATA.heroScreenshot, ...data.heroScreenshot }
-  };
+  const study = data;
 
   const [activeGalleryModal, setActiveGalleryModal] = useState<string | null>(null);
   const [isHeroScreenshotZoomed, setIsHeroScreenshotZoomed] = useState(false);
   const [activeGallerySlideIndex, setActiveGallerySlideIndex] = useState(0);
   const [lightboxZoomLevel, setLightboxZoomLevel] = useState<number>(1);
 
+  const heroModalRef = useModalFocus(isHeroScreenshotZoomed, () => setIsHeroScreenshotZoomed(false));
+  const galleryModalRef = useModalFocus(!!activeGalleryModal, () => { setActiveGalleryModal(null); setLightboxZoomLevel(1); });
+  useEffect(() => {
+    if (!activeGalleryModal) return;
+    const keydown = (event: KeyboardEvent) => {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      event.preventDefault();
+      const next = (activeGallerySlideIndex + (event.key === 'ArrowRight' ? 1 : -1) + study.gallery.length) % study.gallery.length;
+      setActiveGallerySlideIndex(next);
+      setActiveGalleryModal(study.gallery[next].id);
+      setLightboxZoomLevel(1);
+    };
+    window.addEventListener('keydown', keydown);
+    return () => window.removeEventListener('keydown', keydown);
+  }, [activeGalleryModal, activeGallerySlideIndex, study.gallery]);
+
   return (
-    <article className="min-h-screen bg-slate-950 text-slate-100 selection:bg-cyan-500 selection:text-slate-950 font-sans pb-24 relative overflow-hidden">
+    <article className="min-h-screen bg-slate-950 text-slate-100 selection:bg-cyan-500 selection:text-slate-950 font-sans pb-24 relative overflow-x-clip">
       {/* Ambient Lighting Orbs */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-cyan-500/10 rounded-full blur-[160px] pointer-events-none -z-10" />
       <div className="absolute top-[40%] right-[-100px] w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[160px] pointer-events-none -z-10" />
@@ -128,17 +133,17 @@ export default function CaseStudyTemplate({
             </div>
             <div>
               <div className="text-[10px] font-mono uppercase text-slate-400 tracking-wider">Role</div>
-              <div className="text-sm font-semibold text-cyan-300 mt-1">{study.role || 'Automation Architect'}</div>
+              <div className="text-sm font-semibold text-cyan-300 mt-1">{study.role || 'AI Automation Specialist'}</div>
             </div>
             <div>
               <div className="text-[10px] font-mono uppercase text-slate-400 tracking-wider">Delivery Timeline</div>
-              <div className="text-sm font-semibold text-white mt-1">{study.timeline || '2 Weeks'}</div>
+              <div className="text-sm font-semibold text-white mt-1">{study.timeline || 'Confirm during scoping'}</div>
             </div>
             <div>
-              <div className="text-[10px] font-mono uppercase text-slate-400 tracking-wider">Status</div>
+              <div className="text-[10px] font-mono uppercase text-slate-400 tracking-wider">Format</div>
               <div className="text-sm font-semibold text-emerald-400 flex items-center gap-1.5 mt-1">
                 <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                <span>Live in Production</span>
+                <span>Workflow Case Study</span>
               </div>
             </div>
           </div>
@@ -173,7 +178,7 @@ export default function CaseStudyTemplate({
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
                 </div>
                 <span className="text-[11px] font-mono text-slate-400 ml-2 hidden sm:inline truncate">
-                  {study.heroScreenshot?.browserUrl || 'https://orchestrator.domain.com/workflow'}
+                  {study.heroScreenshot?.browserUrl || study.title}
                 </span>
               </div>
 
@@ -184,6 +189,7 @@ export default function CaseStudyTemplate({
                 <button
                   onClick={() => setIsHeroScreenshotZoomed(true)}
                   className="p-1.5 rounded-lg bg-slate-900 hover:bg-cyan-500 hover:text-slate-950 text-slate-400 transition-colors cursor-pointer"
+                  aria-label="Enlarge workflow screenshot"
                   title="Enlarge Canvas"
                 >
                   <Maximize2 className="w-3.5 h-3.5" />
@@ -206,15 +212,15 @@ export default function CaseStudyTemplate({
                   </div>
                   <div className="space-y-1.5">
                     <h3 className="text-lg font-bold text-white font-heading">
-                      {study.heroScreenshot?.title || '[Large Workflow Screenshot Placeholder]'}
+                      {study.heroScreenshot?.title || study.title}
                     </h3>
                     <p className="text-xs text-slate-400 leading-relaxed">
-                      {study.heroScreenshot?.caption || '[Attach high-resolution n8n canvas screenshot or GoHighLevel automation pipeline flow]'}
+                      {study.heroScreenshot?.caption || study.tagline}
                     </p>
                   </div>
                   <div className="pt-2 flex items-center justify-center gap-2 text-[11px] font-mono text-cyan-400">
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    <span>Live Interactive Execution Visual Container</span>
+                    <span>Workflow architecture</span>
                   </div>
                 </div>
               )}
@@ -222,9 +228,9 @@ export default function CaseStudyTemplate({
 
             {/* Bottom Caption Footer */}
             {study.heroScreenshot?.caption && (
-              <div className="px-4 py-2.5 bg-[#060911] border-t border-slate-800 text-xs font-mono text-slate-400 flex items-center justify-between">
+              <div className="px-4 py-2.5 bg-[#060911] border-t border-slate-800 text-xs font-mono text-slate-400 flex flex-wrap gap-3 items-center justify-between">
                 <span>{study.heroScreenshot.caption}</span>
-                <span className="text-cyan-400 shrink-0">100% Automated</span>
+                <span className="text-cyan-400 shrink-0">Workflow Screenshot</span>
               </div>
             )}
           </div>
@@ -394,7 +400,7 @@ export default function CaseStudyTemplate({
                 {/* Bottom Node Indicator */}
                 <div className="pt-3 border-t border-slate-900 flex items-center gap-1.5 text-[10px] font-mono text-slate-400">
                   <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-                  <span>Pipeline Node Verified</span>
+                  <span>Workflow step</span>
                 </div>
               </div>
             ))}
@@ -727,7 +733,7 @@ export default function CaseStudyTemplate({
                       className="px-3 py-1.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 text-xs font-mono flex items-center gap-1.5 cursor-pointer transition-all hover:scale-[1.02]"
                     >
                       <Maximize2 className="w-3.5 h-3.5" />
-                      <span className="hidden sm:inline">Fullscreen</span>
+                      <span>Fullscreen</span>
                     </button>
                   </div>
                 </div>
@@ -735,6 +741,8 @@ export default function CaseStudyTemplate({
                 {/* Workflow Canvas Viewport with Hover Zoom & Fade Animation */}
                 <div 
                   className="relative bg-[#06080e] p-4 sm:p-8 flex items-center justify-center min-h-[380px] sm:min-h-[480px] lg:min-h-[520px] overflow-hidden cursor-zoom-in group"
+                  role="button" tabIndex={0} aria-label="Enlarge current workflow"
+                  onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); event.currentTarget.click(); } }}
                   onClick={() => {
                     setLightboxZoomLevel(1);
                     setActiveGalleryModal(study.gallery[activeGallerySlideIndex].id);
@@ -750,7 +758,7 @@ export default function CaseStudyTemplate({
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.98 }}
                       transition={{ duration: 0.25, ease: 'easeOut' }}
-                      className="w-full flex items-center justify-center"
+                      className="w-full shrink-0"
                     >
                       {study.gallery[activeGallerySlideIndex]?.imageUrl ? (
                         <img
@@ -793,7 +801,7 @@ export default function CaseStudyTemplate({
                   <div className="flex items-center gap-3 shrink-0 self-start md:self-center">
                     <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono">
                       <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                      <span className="font-semibold">🟢 Successfully Executed</span>
+                      <span className="font-semibold">Workflow Screenshot</span>
                     </div>
                   </div>
                 </div>
@@ -807,11 +815,12 @@ export default function CaseStudyTemplate({
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 sm:gap-4">
-                  {study.gallery.slice(0, 4).map((item, idx) => {
+                  {study.gallery.map((item, idx) => {
                     const isSelected = activeGallerySlideIndex === idx;
                     return (
                       <button
                         key={item.id}
+                        aria-pressed={isSelected}
                         onClick={() => setActiveGallerySlideIndex(idx)}
                         className={`group relative rounded-2xl bg-slate-950/90 border text-left overflow-hidden transition-all duration-200 cursor-pointer flex flex-col justify-between ${
                           isSelected
@@ -886,17 +895,17 @@ export default function CaseStudyTemplate({
 
                   <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-1">
                     <span className="text-[10px] font-mono text-slate-400 uppercase">Execution Platform</span>
-                    <div className="text-sm font-bold text-white">n8n Cloud</div>
-                    <p className="text-[11px] text-slate-400">Serverless enterprise runtime</p>
+                    <div className="text-sm font-bold text-white">{study.techStack.find(tech => /n8n|gohighlevel/i.test(tech.name))?.name || study.category}</div>
+                    <p className="text-[11px] text-slate-400">Workflow platform</p>
                   </div>
 
                   <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-1">
-                    <span className="text-[10px] font-mono text-slate-400 uppercase">Live Pipeline Status</span>
+                    <span className="text-[10px] font-mono text-slate-400 uppercase">Recorded Workflow Status</span>
                     <div className="text-sm font-bold text-emerald-400 flex items-center gap-1.5">
                       <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                      <span>🟢 Successfully Executed</span>
+                      <span>Workflow Screenshot</span>
                     </div>
-                    <p className="text-[11px] text-slate-400">Verified zero failure rate</p>
+                    <p className="text-[11px] text-slate-400">Captured execution; not a live uptime monitor</p>
                   </div>
                 </div>
               </div>
@@ -953,16 +962,17 @@ export default function CaseStudyTemplate({
       </div>
 
       {/* Lightbox Modal for Hero Zoom */}
-      {isHeroScreenshotZoomed && (
-        <div
-          className="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-xl flex flex-col p-4 sm:p-8 animate-in fade-in duration-200"
-          onClick={() => setIsHeroScreenshotZoomed(false)}
+      {isHeroScreenshotZoomed && createPortal(
+        <div ref={heroModalRef} role="dialog" aria-modal="true" aria-label={`${study.title} screenshot`} tabIndex={-1}
+          className="fixed inset-0 z-[120] bg-slate-950/90 backdrop-blur-xl flex flex-col p-4 sm:p-8 animate-in fade-in duration-200"
+          onClick={(event) => { if (event.target === event.currentTarget) setIsHeroScreenshotZoomed(false); }}
         >
-          <div className="flex items-center justify-between pb-4 max-w-7xl w-full mx-auto">
+          <div className="flex gap-3 items-center justify-between pb-4 max-w-7xl w-full mx-auto">
             <h3 className="text-base font-bold text-white">
               {study.heroScreenshot?.title || 'Workflow Architecture Preview'}
             </h3>
             <button
+              aria-label="Close screenshot"
               onClick={() => setIsHeroScreenshotZoomed(false)}
               className="p-2 rounded-xl bg-slate-900 text-slate-300 hover:text-white border border-slate-700 cursor-pointer"
             >
@@ -978,17 +988,17 @@ export default function CaseStudyTemplate({
               />
             ) : (
               <div className="text-center text-slate-400 font-mono text-sm">
-                [High-Resolution Workflow Canvas View Modal]
+                No screenshot is available for this workflow.
               </div>
             )}
           </div>
-        </div>
+        </div>, document.body
       )}
 
       {/* Lightbox Modal for Gallery Thumbnail Zoom & Fullscreen Inspection */}
-      {activeGalleryModal && (
-        <div
-          className="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-2xl flex flex-col p-3 sm:p-6 animate-in fade-in duration-200"
+      {activeGalleryModal && createPortal(
+        <div ref={galleryModalRef} role="dialog" aria-modal="true" aria-label="Workflow gallery" tabIndex={-1}
+          className="fixed inset-0 z-[120] bg-slate-950/95 backdrop-blur-2xl flex flex-col p-3 sm:p-6 animate-in fade-in duration-200"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setActiveGalleryModal(null);
@@ -997,7 +1007,7 @@ export default function CaseStudyTemplate({
           }}
         >
           {/* Lightbox Top Header */}
-          <div className="flex items-center justify-between pb-3 max-w-7xl w-full mx-auto border-b border-slate-800/80">
+          <div className="flex flex-wrap gap-3 items-center justify-between pb-3 max-w-7xl w-full mx-auto border-b border-slate-800/80">
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
                 <span className="w-3 h-3 rounded-full bg-rose-500/90" />
@@ -1024,7 +1034,7 @@ export default function CaseStudyTemplate({
                     setLightboxZoomLevel((prev) => Math.max(0.75, prev - 0.25));
                   }}
                   className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition-colors cursor-pointer"
-                  title="Zoom Out"
+                  aria-label="Zoom out" title="Zoom Out"
                 >
                   <ZoomOut className="w-4 h-4" />
                 </button>
@@ -1037,7 +1047,7 @@ export default function CaseStudyTemplate({
                     setLightboxZoomLevel((prev) => Math.min(2.5, prev + 0.25));
                   }}
                   className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition-colors cursor-pointer"
-                  title="Zoom In"
+                  aria-label="Zoom in" title="Zoom In"
                 >
                   <ZoomIn className="w-4 h-4" />
                 </button>
@@ -1067,7 +1077,7 @@ export default function CaseStudyTemplate({
                     setLightboxZoomLevel(1);
                   }}
                   className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition-colors cursor-pointer"
-                  title="Previous Image"
+                  aria-label="Previous screenshot" title="Previous Image"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
@@ -1082,7 +1092,7 @@ export default function CaseStudyTemplate({
                     setLightboxZoomLevel(1);
                   }}
                   className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition-colors cursor-pointer"
-                  title="Next Image"
+                  aria-label="Next screenshot" title="Next Image"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
@@ -1095,7 +1105,7 @@ export default function CaseStudyTemplate({
                   setLightboxZoomLevel(1);
                 }}
                 className="p-2 rounded-xl bg-slate-900 text-slate-300 hover:text-white hover:bg-rose-500/20 border border-slate-700 cursor-pointer transition-colors"
-                title="Close Fullscreen"
+                aria-label="Close gallery" title="Close Fullscreen"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1104,7 +1114,7 @@ export default function CaseStudyTemplate({
 
           {/* Lightbox Image Canvas Viewport */}
           <div 
-            className="flex-1 flex flex-col items-center justify-center max-w-7xl w-full mx-auto overflow-auto rounded-2xl border border-slate-800 bg-[#06080e] p-4 my-3 relative"
+            className="flex-1 min-h-0 flex flex-col items-start justify-start max-w-7xl w-full mx-auto overflow-auto rounded-2xl border border-slate-800 bg-[#06080e] p-4 my-3 relative"
             onClick={(e) => {
               if (e.target === e.currentTarget) {
                 setActiveGalleryModal(null);
@@ -1117,8 +1127,8 @@ export default function CaseStudyTemplate({
                 <img
                   src={study.gallery[activeGallerySlideIndex].imageUrl}
                   alt={study.gallery[activeGallerySlideIndex].title}
-                  style={{ transform: `scale(${lightboxZoomLevel})`, transformOrigin: 'center center' }}
-                  className="max-w-full max-h-[72vh] object-contain rounded-xl shadow-2xl transition-transform duration-200"
+                  style={{ width: `${lightboxZoomLevel * 100}%`, maxWidth: 'none' }}
+                  className="h-auto object-contain rounded-xl shadow-2xl"
                 />
               </div>
             ) : null}
@@ -1135,10 +1145,10 @@ export default function CaseStudyTemplate({
               </p>
             </div>
             <div className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded border border-emerald-500/20 shrink-0 self-start sm:self-auto">
-              🟢 Successfully Executed
+              Workflow Screenshot
             </div>
           </div>
-        </div>
+        </div>, document.body
       )}
     </article>
   );

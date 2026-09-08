@@ -1,3 +1,5 @@
+import { createPortal } from 'react-dom';
+import { useModalFocus } from './useModalFocus';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
@@ -5,8 +7,7 @@ import {
   Layers,
   CheckCircle2,
   X,
-  ShieldCheck,
-  Maximize2
+  ShieldCheck
 } from 'lucide-react';
 import { PROJECTS_DATA } from '../data/portfolioData';
 import type { ProjectItem } from '../types';
@@ -21,6 +22,8 @@ interface ProjectsSectionProps {
 export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStudy }: ProjectsSectionProps) {
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
+
+  const modalRef = useModalFocus(!!selectedProject, () => setSelectedProject(null));
 
   const categories = ['All', 'n8n', 'AI Agents', 'GoHighLevel', 'Custom APIs'];
 
@@ -42,11 +45,11 @@ export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStu
             <Layers className="w-3.5 h-3.5" />
             <span>FEATURED AUTOMATION SOLUTIONS</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
+          <motion.h2 initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px -40px 0px" }} transition={{ duration: 0.65 }} className="text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
             Featured Automation Solutions.
-          </h2>
+          </motion.h2>
           <p className="text-base sm:text-lg text-slate-400">
-            Production-grade autonomous AI workflows, knowledge-grounded support agents, and resilient data pipelines built for enterprise operations.
+            Explore real workflow screenshots, the problems each system solves, and how the integrations work. Project metrics are reported outcomes, not guarantees for a new deployment.
           </p>
 
           {/* Category Filter Tabs */}
@@ -54,6 +57,7 @@ export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStu
             {categories.map((cat) => (
               <button
                 key={cat}
+                aria-pressed={activeCategory === cat}
                 onClick={() => setActiveCategory(cat)}
                 className={`px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer ${
                   activeCategory === cat
@@ -72,11 +76,13 @@ export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStu
           {filteredProjects.map((project, idx) => (
             <motion.div
               key={project.id}
+              layout="position"
+              whileHover={{ y: -5 }}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="group relative rounded-3xl bg-slate-950/80 border border-slate-800/90 hover:border-cyan-500/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_25px_60px_-15px_rgba(6,182,212,0.18)] flex flex-col overflow-hidden backdrop-blur-xl"
+              transition={{ duration: 0.5, delay: (idx % 2) * 0.08 }}
+              className="group relative rounded-3xl bg-slate-950/80 border border-slate-800/90 hover:border-cyan-500/50 transition-[border-color,box-shadow] duration-300 hover:shadow-[0_25px_60px_-15px_rgba(6,182,212,0.18)] flex flex-col overflow-hidden backdrop-blur-xl"
             >
               {/* Top Large Project Screenshot */}
               <div className="p-4 sm:p-6 pb-0">
@@ -85,17 +91,9 @@ export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStu
                   title={project.browserTitle}
                   className="group-hover:border-cyan-500/40 transition-colors"
                 >
-                  <div className="relative h-48 sm:h-56 w-full bg-[#0a0d14] overflow-hidden group/screen cursor-pointer" onClick={() => setSelectedProject(project)}>
+                  <div className="relative h-48 sm:h-56 w-full bg-[#0a0d14] overflow-hidden group/screen">
                     {/* Rendered Visual Screenshot Canvas matching real n8n interface */}
-                    <ProjectVisualScreenshot projectId={project.id} className="h-full" />
-
-                    {/* Screenshot Hover Overlay with View Case Study hint */}
-                    <div className="absolute inset-0 bg-slate-950/50 opacity-0 group-hover/screen:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
-                      <div className="px-4 py-2 rounded-xl bg-cyan-500/90 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg">
-                        <Maximize2 className="w-3.5 h-3.5" />
-                        <span>Inspect Full Screenshot & Blueprint</span>
-                      </div>
-                    </div>
+                    <ProjectVisualScreenshot projectId={project.id} showFrame={false} className="h-full" />
                   </div>
                 </BrowserMockup>
               </div>
@@ -130,10 +128,10 @@ export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStu
                         key={mIdx}
                         className="p-2.5 rounded-xl bg-slate-900/60 border border-slate-800 text-center"
                       >
-                        <div className="text-sm sm:text-base font-bold text-white font-heading">
+                        <div className="text-sm sm:text-base font-bold text-white font-heading break-words">
                           {metric.value}
                         </div>
-                        <div className="text-[10px] text-slate-400 font-medium truncate mt-0.5">
+                        <div className="text-xs text-slate-400 font-medium break-words mt-0.5">
                           {metric.label}
                         </div>
                       </div>
@@ -155,9 +153,11 @@ export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStu
                     ))}
                   </div>
 
+                  <button onClick={() => setSelectedProject(project)} className="text-xs text-slate-400 hover:text-cyan-300 text-left">Inspect Full Screenshot &amp; Blueprint</button>
                   {/* Card Action Links */}
                   <div className="flex items-center justify-between pt-2">
-                    <button
+                    <button id={`case-link-${project.id}`}
+                      aria-label={`View case study: ${project.title}`}
                       onClick={() => {
                         if (onOpenCaseStudy) {
                           onOpenCaseStudy(project.id);
@@ -175,7 +175,7 @@ export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStu
                       onClick={() => onSelectProjectForAudit(project.title)}
                       className="text-xs font-mono text-slate-400 hover:text-white px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 transition-colors cursor-pointer"
                     >
-                      Deploy System
+                      Discuss Similar Build
                     </button>
                   </div>
                 </div>
@@ -187,9 +187,9 @@ export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStu
       </div>
 
       {/* Interactive Project Architecture Blueprint & Full Screenshot Modal */}
-      <AnimatePresence>
+      {createPortal(<AnimatePresence>
         {selectedProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
             {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
@@ -200,7 +200,7 @@ export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStu
             />
 
             {/* Modal Box */}
-            <motion.div
+            <motion.div ref={modalRef} tabIndex={-1} role="dialog" aria-modal="true" aria-label={selectedProject.title}
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -209,6 +209,7 @@ export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStu
             >
               {/* Close Button */}
               <button
+                aria-label="Close project blueprint"
                 onClick={() => setSelectedProject(null)}
                 className="absolute top-6 right-6 p-2 rounded-xl bg-slate-800/80 text-slate-400 hover:text-white transition-colors cursor-pointer"
               >
@@ -317,7 +318,7 @@ export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStu
                 <div className="pt-4 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
                   <div className="flex items-center gap-2 text-xs text-slate-400 font-mono">
                     <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                    <span>Includes 30-Day SLA & Monitoring</span>
+                    <span>Discuss monitoring and support scope</span>
                   </div>
 
                   <button
@@ -337,7 +338,7 @@ export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStu
             </motion.div>
           </div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>, document.body)}
     </section>
   );
 }

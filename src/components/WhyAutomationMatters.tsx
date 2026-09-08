@@ -22,58 +22,60 @@ export default function WhyAutomationMatters() {
   const [manualHoursPerWeek, setManualHoursPerWeek] = useState<number>(12);
   const [hourlyWage, setHourlyWage] = useState<number>(45);
 
+  const [automationShare, setAutomationShare] = useState(85);
+
   // Calculations
   const totalWeeklyHoursWasted = teamSize * manualHoursPerWeek;
-  const annualHoursSaved = Math.round(totalWeeklyHoursWasted * 50 * 0.85); // 85% automated
+  const annualHoursSaved = Math.round(totalWeeklyHoursWasted * 50 * automationShare / 100); // 50 working weeks; adjustable automation assumption
   const annualDollarSaved = Math.round(annualHoursSaved * hourlyWage);
-  const leadSpeedMultiplier = '12x Faster';
+
 
   const impactCards = [
     {
       icon: Clock,
-      title: 'Save 25+ Hours Every Week',
+      title: 'Reduce repetitive admin',
       description: 'Eliminate tedious manual copy-pasting across CRMs, email inboxes, and spreadsheets so your team focuses on high-ticket revenue tasks.',
-      metric: '85% Time Reclaimed',
+      metric: 'Time reclaimed',
       color: 'text-cyan-400',
       border: 'hover:border-cyan-500/50'
     },
     {
       icon: Zap,
-      title: 'Sub-Minute Lead Response Time',
-      description: 'Convert leads while their buying temperature is high. Auto-qualify and dispatch personalized calendar invites in under 45 seconds.',
-      metric: '< 45s SLA',
+      title: 'Respond to leads sooner',
+      description: 'Route new inquiries, qualify leads, and send booking options without waiting for manual inbox checks.',
+      metric: 'Faster routing',
       color: 'text-amber-400',
       border: 'hover:border-amber-500/50'
     },
     {
       icon: TrendingUp,
-      title: '3.4x Higher Lead Conversion',
-      description: 'Multi-touch empathy sequences ensure no lead ever falls through the cracks, reviving 38%+ of cold drop-offs and no-shows.',
-      metric: '+38% Revival',
+      title: 'Follow up consistently',
+      description: 'Use scheduled follow-ups and recovery workflows to give missed appointments and unresponsive leads another path to booking.',
+      metric: 'Recovery workflows',
       color: 'text-emerald-400',
       border: 'hover:border-emerald-500/50'
     },
     {
       icon: ShieldCheck,
-      title: 'Zero Data Entry Mistakes',
-      description: 'Deterministic API logic and AI verification eliminate human typo errors in invoices, addresses, and customer CRM records.',
-      metric: '99.9% Accuracy',
+      title: 'Reduce data entry errors',
+      description: 'Validate required fields, deduplicate records, and route exceptions for review before updating connected systems.',
+      metric: 'Validation checks',
       color: 'text-indigo-400',
       border: 'hover:border-indigo-500/50'
     },
     {
       icon: Users,
-      title: 'World-Class Client Experience',
-      description: 'Instant onboarding packets, automated calendar locks, and dynamic review engines create an unforgettable 5-star brand impression.',
-      metric: '4.9 ⭐ CSAT',
+      title: 'Keep customers informed',
+      description: 'Send confirmations, reminders, and follow-up messages so customers know what happens next.',
+      metric: 'Consistent updates',
       color: 'text-purple-400',
       border: 'hover:border-purple-500/50'
     },
     {
       icon: Flame,
-      title: 'Infinite Operational Scaling',
-      description: 'Handle 100 or 10,000 inquiries per day without hiring a bloated operational support team or paying unnecessary overhead.',
-      metric: '10x Capacity',
+      title: 'Support growing volumes',
+      description: 'Connect your tools and automate repeatable steps, with capacity shaped by API limits, hosting, monitoring, and team oversight.',
+      metric: 'Connected operations',
       color: 'text-rose-400',
       border: 'hover:border-rose-500/50'
     }
@@ -82,28 +84,28 @@ export default function WhyAutomationMatters() {
   const comparisonData = [
     {
       area: 'Lead Response Time',
-      manual: '4 to 8 hours (Leads cool down and book competitors)',
-      automated: 'Under 45 seconds with dynamic calendar booking'
+      manual: 'Inquiries wait for a team member to review them',
+      automated: 'Event-triggered qualification and booking options'
     },
     {
       area: 'Appointment Show-Up Rate',
-      manual: '58% - 65% with high no-show abandonment',
-      automated: '92%+ with 2-way SMS confirmation & self-reschedule'
+      manual: 'Reminders and rescheduling handled manually',
+      automated: 'Scheduled confirmations and rescheduling workflows'
     },
     {
       area: 'Invoice & Billing Processing',
-      manual: '2–4 days of typing, PDF squinting, and reconciliation',
-      automated: 'Instant vision parsing & QuickBooks sync in 2 minutes'
+      manual: 'Manual extraction and reconciliation',
+      automated: 'Document parsing and accounting sync, with exception review'
     },
     {
       area: 'Weekend & After-Hours Inquiries',
-      manual: 'Ignored until Monday morning; deals lost',
-      automated: '24/7 autonomous qualification and appointment lock'
+      manual: 'Responses depend on staff availability',
+      automated: 'Automated intake outside staffed hours'
     },
     {
       area: 'Human Administrative Cost',
-      manual: 'High payroll overhead, burnout, and frequent turnover',
-      automated: 'Predictable zero-payroll system running 24/7/365'
+      manual: 'Staff time spent on repetitive administrative work',
+      automated: 'Software, hosting, and maintenance costs plus human oversight'
     }
   ];
 
@@ -120,16 +122,17 @@ export default function WhyAutomationMatters() {
             <Sparkles className="w-3.5 h-3.5" />
             <span>BUSINESS IMPACT & ROI MATRIX</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
+          <motion.h2 initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px -40px 0px" }} transition={{ duration: 0.65 }} className="text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
             Why Automation Matters.
-          </h2>
+          </motion.h2>
           <p className="text-base sm:text-lg text-slate-400">
-            In modern business, speed and consistency are the ultimate competitive moat. Companies with autonomous systems out-convert and out-scale manual teams every time.
+            In modern business, speed and consistency are the ultimate competitive moat. Well-scoped automation can reduce repetitive work and make customer follow-up more consistent.
           </p>
 
           {/* Toggle between Impact View and Live ROI Calculator */}
           <div className="flex items-center justify-center gap-3 pt-4">
             <button
+              aria-pressed={activeTab === 'comparison'}
               onClick={() => setActiveTab('comparison')}
               className={`px-5 py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
                 activeTab === 'comparison'
@@ -137,9 +140,10 @@ export default function WhyAutomationMatters() {
                   : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
               }`}
             >
-              Enterprise Impact Pillars
+              Workflow Benefits
             </button>
             <button
+              aria-pressed={activeTab === 'calculator'}
               onClick={() => setActiveTab('calculator')}
               className={`px-5 py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
                 activeTab === 'calculator'
@@ -148,7 +152,7 @@ export default function WhyAutomationMatters() {
               }`}
             >
               <Calculator className="w-3.5 h-3.5" />
-              <span>Interactive ROI Calculator</span>
+              <span>Savings Estimator</span>
             </button>
           </div>
         </div>
@@ -219,7 +223,7 @@ export default function WhyAutomationMatters() {
                     {/* Manual Way */}
                     <div className="md:col-span-4 flex items-start gap-2 text-xs text-rose-300/80 bg-rose-950/20 p-3 rounded-xl border border-rose-900/30">
                       <XCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
-                      <span>{row.manual}</span>
+                      <span><strong className="block mb-1">Manual workflow</strong>{row.manual}</span>
                     </div>
 
                     {/* Arrow on desktop */}
@@ -230,7 +234,7 @@ export default function WhyAutomationMatters() {
                     {/* YAS Automation Way */}
                     <div className="md:col-span-4 flex items-start gap-2 text-xs text-emerald-300 bg-emerald-950/20 p-3 rounded-xl border border-emerald-900/30">
                       <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                      <span className="font-medium">{row.automated}</span>
+                      <span className="font-medium"><strong className="block mb-1">With automation</strong>{row.automated}</span>
                     </div>
                   </div>
                 ))}
@@ -253,10 +257,10 @@ export default function WhyAutomationMatters() {
               <div className="md:col-span-7 space-y-6">
                 <div>
                   <h3 className="text-xl font-bold text-white font-heading">
-                    Estimate Your Agency's ROI
+                    Estimate Potential Time Savings
                   </h3>
                   <p className="text-xs text-slate-400 mt-1">
-                    Adjust the sliders below to calculate projected time and capital reclaimed.
+                    Adjust your assumptions to estimate reusable team capacity. This estimates time value, not net ROI or guaranteed cash savings.
                   </p>
                 </div>
 
@@ -270,6 +274,7 @@ export default function WhyAutomationMatters() {
                     type="range"
                     min="1"
                     max="50"
+                    aria-label="Team size in people"
                     value={teamSize}
                     onChange={(e) => setTeamSize(Number(e.target.value))}
                     className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400"
@@ -286,6 +291,7 @@ export default function WhyAutomationMatters() {
                     type="range"
                     min="2"
                     max="30"
+                    aria-label="Manual hours per person per week"
                     value={manualHoursPerWeek}
                     onChange={(e) => setManualHoursPerWeek(Number(e.target.value))}
                     className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400"
@@ -303,31 +309,36 @@ export default function WhyAutomationMatters() {
                     min="20"
                     max="150"
                     step="5"
+                    aria-label="Hourly staff cost in US dollars"
                     value={hourlyWage}
                     onChange={(e) => setHourlyWage(Number(e.target.value))}
                     className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400"
                   />
                 </div>
 
+                <div className="space-y-2">
+                  <label htmlFor="automation-share" className="flex justify-between text-sm text-slate-300">Share of manual work automated <span className="text-cyan-300">{automationShare}%</span></label>
+                  <input id="automation-share" type="range" min="0" max="100" step="5" value={automationShare} onChange={event => setAutomationShare(Number(event.target.value))} className="w-full accent-cyan-400" />
+                </div>
                 <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 text-[11px] text-slate-400 flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-cyan-400 shrink-0" />
-                  <span>Assumes an 85% reduction in repetitive manual workflows using GoHighLevel & n8n architecture.</span>
+                  <span>Assumes 50 working weeks per year. USD values exclude implementation, software, hosting, and ongoing support costs. Saved time is reusable capacity, not necessarily a reduction in payroll.</span>
                 </div>
               </div>
 
               {/* Output Result Box (5 Cols) */}
-              <div className="md:col-span-5 p-6 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-900 to-cyan-950/40 border border-cyan-500/30 text-center space-y-5 shadow-inner">
+              <div className="md:col-span-5 p-5 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-900 to-cyan-950/40 border border-cyan-500/30 text-center space-y-5 shadow-inner">
                 <div className="text-xs font-mono text-cyan-400 uppercase tracking-wider">
-                  Projected Annual Value
+                  Estimated Annual Capacity Value (USD)
                 </div>
 
                 {/* Dollar Savings */}
                 <div>
-                  <div className="text-3xl sm:text-4xl font-extrabold text-white font-heading bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
+                  <div className="text-3xl sm:text-4xl break-words font-extrabold text-white font-heading bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
                     ${annualDollarSaved.toLocaleString()}
                   </div>
                   <div className="text-xs text-slate-400 font-medium mt-1">
-                    Annual Payroll & Overhead Reclaimed
+                    Equivalent value of staff time
                   </div>
                 </div>
 
@@ -341,9 +352,9 @@ export default function WhyAutomationMatters() {
                   </div>
                   <div className="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800">
                     <div className="text-lg font-bold text-emerald-400 font-heading">
-                      {leadSpeedMultiplier}
+                      {automationShare}%
                     </div>
-                    <div className="text-[10px] text-slate-400">Response Speed</div>
+                    <div className="text-[10px] text-slate-400">Automation Assumption</div>
                   </div>
                 </div>
 
@@ -351,7 +362,7 @@ export default function WhyAutomationMatters() {
                   href="#contact"
                   className="w-full py-3 px-4 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs uppercase tracking-wider hover:bg-cyan-400 transition-colors flex items-center justify-center gap-1.5 cursor-pointer block"
                 >
-                  <span>Reclaim This Value Today</span>
+                  <span>Discuss These Assumptions</span>
                   <ArrowRight className="w-3.5 h-3.5 inline" />
                 </a>
               </div>

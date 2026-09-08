@@ -1,100 +1,33 @@
-import { useEffect, useState } from 'react';
-import { motion } from 'motion/react';
+﻿import { useMotionPreference } from './MotionPreferences';
+import { useEffect } from 'react';
+import { motion, useMotionValue, useSpring } from 'motion/react';
 
+/** Ambient pointer light without React renders on pointer movement. */
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: -100, y: -100 });
-  const [isHovered, setIsHovered] = useState(false);
-  const [isClicking, setIsClicking] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-
+  const { enabled: motionEnabled } = useMotionPreference();
+  const reduceMotion = !motionEnabled;
+  const pointerX = useMotionValue(-800);
+  const pointerY = useMotionValue(-800);
+  const opacity = useMotionValue(0);
+  const x = useSpring(pointerX, { stiffness: 80, damping: 24 });
+  const y = useSpring(pointerY, { stiffness: 80, damping: 24 });
   useEffect(() => {
-    // Only enable on non-touch devices
-    if (window.matchMedia('(pointer: coarse)').matches) {
-      return;
-    }
-
-    const onMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-      setIsVisible(true);
+    if (reduceMotion || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    const move = (event: PointerEvent) => {
+      pointerX.set(event.clientX - 280);
+      pointerY.set(event.clientY - 280);
+      opacity.set(1);
     };
-
-    const onMouseDown = () => setIsClicking(true);
-    const onMouseUp = () => setIsClicking(false);
-
-    const onMouseEnterInteractive = () => setIsHovered(true);
-    const onMouseLeaveInteractive = () => setIsHovered(false);
-
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mousedown', onMouseDown);
-    window.addEventListener('mouseup', onMouseUp);
-
-    const updateInteractiveListeners = () => {
-      const interactiveElements = document.querySelectorAll(
-        'button, a, input, textarea, select, [role="button"], .interactive-hover'
-      );
-      interactiveElements.forEach((el) => {
-        el.addEventListener('mouseenter', onMouseEnterInteractive);
-        el.addEventListener('mouseleave', onMouseLeaveInteractive);
-      });
-    };
-
-    updateInteractiveListeners();
-    const observer = new MutationObserver(updateInteractiveListeners);
-    observer.observe(document.body, { childList: true, subtree: true });
-
+    const hide = () => opacity.set(0);
+    window.addEventListener('pointermove', move, { passive: true });
+    document.documentElement.addEventListener('pointerleave', hide);
+    window.addEventListener('blur', hide);
     return () => {
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mousedown', onMouseDown);
-      window.removeEventListener('mouseup', onMouseUp);
-      observer.disconnect();
-      document.querySelectorAll(
-        'button, a, input, textarea, select, [role="button"], .interactive-hover'
-      ).forEach((el) => {
-        el.removeEventListener('mouseenter', onMouseEnterInteractive);
-        el.removeEventListener('mouseleave', onMouseLeaveInteractive);
-      });
+      window.removeEventListener('pointermove', move);
+      document.documentElement.removeEventListener('pointerleave', hide);
+      window.removeEventListener('blur', hide);
     };
-  }, []);
-
-  if (!isVisible) return null;
-
-  return (
-    <div className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden hidden md:block">
-      {/* Outer trailing aura */}
-      <motion.div
-        className="fixed top-0 left-0 rounded-full pointer-events-none border border-cyan-400/40 bg-cyan-500/10 backdrop-blur-[1px]"
-        animate={{
-          x: mousePosition.x - (isHovered ? 24 : 16),
-          y: mousePosition.y - (isHovered ? 24 : 16),
-          width: isHovered ? 48 : 32,
-          height: isHovered ? 48 : 32,
-          scale: isClicking ? 0.8 : 1,
-          borderColor: isHovered ? 'rgba(56, 189, 248, 0.8)' : 'rgba(56, 189, 248, 0.4)',
-          backgroundColor: isHovered ? 'rgba(6, 182, 212, 0.15)' : 'rgba(6, 182, 212, 0.05)',
-        }}
-        transition={{
-          type: 'spring',
-          stiffness: 450,
-          damping: 28,
-          mass: 0.5,
-        }}
-      />
-
-      {/* Central precise dot */}
-      <motion.div
-        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-cyan-400 pointer-events-none shadow-[0_0_12px_rgba(56,189,248,0.9)]"
-        animate={{
-          x: mousePosition.x - 4,
-          y: mousePosition.y - 4,
-          scale: isClicking ? 1.5 : isHovered ? 0.5 : 1,
-        }}
-        transition={{
-          type: 'spring',
-          stiffness: 1200,
-          damping: 35,
-          mass: 0.1,
-        }}
-      />
-    </div>
-  );
+  }, [reduceMotion, pointerX, pointerY, opacity]);
+  if (reduceMotion) return null;
+  return <motion.div aria-hidden="true" className="pointer-glow" style={{ x, y, opacity }} />;
 }

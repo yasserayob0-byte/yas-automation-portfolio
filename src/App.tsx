@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import Preloader from './components/Preloader';
+﻿import { useEffect, useMemo, useRef, useState } from 'react';
 import CustomCursor from './components/CustomCursor';
 import BackgroundEffects from './components/BackgroundEffects';
 import Navbar from './components/Navbar';
@@ -15,118 +14,80 @@ import FaqSection from './components/FaqSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import CaseStudyTemplate from './components/CaseStudyTemplate';
-import { FB_MESSENGER_CASE_STUDY, CASE_STUDIES_MAP } from './data/caseStudiesData';
+import { resolveCaseStudy } from './data/resolveCaseStudy';
+import { focusSection } from './components/navigation';
 
 export default function App() {
-  const [loading, setLoading] = useState(true);
-  const [contactTopic, setContactTopic] = useState<string>('');
-  const [activeCaseStudyId, setActiveCaseStudyId] = useState<string | null>(null);
+  const [hash, setHash] = useState(window.location.hash);
+  const [contactTopic, setContactTopic] = useState('');
+  const returnPoint = useRef<{ top: number; projectId: string; hash: string } | null>(null);
+  const previousCase = useRef(false);
+  const originalTitle = useRef(document.title);
+  const originalDescription = useRef(document.querySelector('meta[name="description"]')?.getAttribute('content') || '');
+  const caseId = hash.startsWith('#case-study/') ? hash.slice('#case-study/'.length) : '';
+  const study = useMemo(() => caseId ? resolveCaseStudy(caseId) : null, [caseId]);
 
-  const handleOpenContact = (topic?: string) => {
-    if (activeCaseStudyId) {
-      setActiveCaseStudyId(null);
-      setTimeout(() => {
-        if (topic) setContactTopic(topic);
-        const el = document.getElementById('contact');
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-      return;
-    }
-    if (topic) setContactTopic(topic);
-    const el = document.getElementById('contact');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
+  useEffect(() => {
+    const change = () => setHash(window.location.hash);
+    window.addEventListener('hashchange', change);
+    return () => window.removeEventListener('hashchange', change);
+  }, []);
+
+  useEffect(() => {
+    document.title = study ? `${study.title} | YAS Automation` : originalTitle.current;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', study?.tagline || originalDescription.current);
+    const wasCase = previousCase.current;
+    previousCase.current = !!study;
+    const frame = requestAnimationFrame(() => {
+      if (study) {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        document.getElementById('case-study-content')?.focus({ preventScroll: true });
+      } else if (wasCase && returnPoint.current && (hash === '#projects' || hash === returnPoint.current.hash)) {
+        window.scrollTo({ top: returnPoint.current.top, behavior: 'instant' });
+        document.getElementById(`case-link-${returnPoint.current.projectId}`)?.focus({ preventScroll: true });
+      } else if (hash && !caseId) {
+        focusSection(hash.slice(1));
+      }
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [hash, caseId, study?.id]);
+
+  const navigateSection = (id: string) => {
+    if (window.location.hash === `#${id}`) focusSection(id);
+    else window.location.hash = id;
   };
-
-  const handleExploreWorkflows = () => {
-    const el = document.getElementById('ghl-showcase');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
+  const handleOpenContact = (topic = '') => {
+    setContactTopic(topic);
+    navigateSection('contact');
   };
-
-  if (activeCaseStudyId) {
-    const currentCaseStudy = CASE_STUDIES_MAP[activeCaseStudyId] || FB_MESSENGER_CASE_STUDY;
-
-    return (
-      <div className="min-h-screen bg-[#07090e] text-slate-100 selection:bg-cyan-500/30 selection:text-cyan-200 relative overflow-x-hidden">
-        <CustomCursor />
-        <CaseStudyTemplate
-          data={currentCaseStudy}
-          onBack={() => {
-            setActiveCaseStudyId(null);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-          onNavigateProject={(projId) => {
-            setActiveCaseStudyId(projId);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-          onContactClick={(topic) => handleOpenContact(topic)}
-        />
-        <Footer />
-      </div>
-    );
-  }
+  const openCase = (id: string) => {
+    if (!resolveCaseStudy(id)) return;
+    if (!study) returnPoint.current = { top: window.scrollY, projectId: id, hash: window.location.hash };
+    window.location.hash = `case-study/${id}`;
+  };
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-slate-100 selection:bg-cyan-500/30 selection:text-cyan-200 relative overflow-x-hidden">
-      {/* Modern Preloader */}
-      {loading && <Preloader onComplete={() => setLoading(false)} />}
-
-      {/* Desktop Custom Glowing Cursor */}
+    <div className="min-h-screen bg-[#07090e] text-slate-100 selection:bg-cyan-500/30 selection:text-cyan-200 relative overflow-x-clip">
       <CustomCursor />
-
-      {/* Subtle Animated Backgrounds & Node Canvas */}
       <BackgroundEffects />
-
-      {/* Sticky Navigation Bar */}
-      <Navbar onOpenContact={handleOpenContact} />
-
-      <main className="relative z-10">
-        {/* Hero Section with Live Pipeline Visualizer */}
-        <HeroSection
-          onExploreWorkflows={handleExploreWorkflows}
-          onBookAudit={() => handleOpenContact('Enterprise Systems Audit')}
-        />
-
-        {/* About Agency & Architect Section */}
-        <AboutSection onTalkWithYasser={() => handleOpenContact('Consultation with Yasser Usman')} />
-
-        {/* Services & Capabilities */}
-        <ServicesSection onSelectService={(srv) => handleOpenContact(`Service: ${srv}`)} />
-
-        {/* GoHighLevel Apple-Style Horizontal Showcase */}
-        <GoHighLevelShowcase onConsultWorkflow={(wf) => handleOpenContact(`GoHighLevel Workflow: ${wf}`)} />
-
-        {/* Projects / Solutions Repository */}
-        <ProjectsSection
-          onSelectProjectForAudit={(proj) => handleOpenContact(`Project Deployment: ${proj}`)}
-          onOpenCaseStudy={(projId) => {
-            setActiveCaseStudyId(projId);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-        />
-
-        {/* Floating Tech Stack with 3D Tilt & Glow */}
-        <TechStackSection />
-
-        {/* Why Automation Matters & ROI Calculator */}
-        <WhyAutomationMatters />
-
-        {/* Enterprise Testimonials & Case Studies */}
-        <TestimonialsSection />
-
-        {/* Frequently Asked Questions */}
-        <FaqSection />
-
-        {/* Contact & Systems Audit Discovery */}
-        <ContactSection initialTopic={contactTopic} />
-      </main>
-
-      {/* Professional Footer */}
+      <a onClick={(event) => { event.preventDefault(); focusSection(study ? 'case-study-content' : 'main-content'); }} href={study ? '#case-study-content' : '#main-content'} className="skip-link">Skip to content</a>
+      <div hidden={!!study}>
+        <Navbar onOpenContact={handleOpenContact} />
+        <main id="main-content" tabIndex={-1} className="relative z-10">
+          {caseId && !study && <div role="status" className="pt-28 px-6 text-center text-slate-300">That case study is unavailable. <a href="#projects" className="text-cyan-300 underline">Browse all projects</a>.</div>}
+          <HeroSection onExploreWorkflows={() => navigateSection('ghl-showcase')} onBookAudit={() => handleOpenContact('Automation Project Consultation')} />
+          <ProjectsSection onSelectProjectForAudit={(project) => handleOpenContact(`Project: ${project}`)} onOpenCaseStudy={openCase} />
+          <ServicesSection onSelectService={(service) => handleOpenContact(`Service: ${service}`)} />
+          <GoHighLevelShowcase onConsultWorkflow={(workflow) => handleOpenContact(`GoHighLevel Workflow: ${workflow}`)} />
+          <AboutSection onTalkWithYasser={() => handleOpenContact('Consultation with Yasser Usman')} />
+          <TechStackSection />
+          <WhyAutomationMatters />
+          <TestimonialsSection />
+          <FaqSection />
+          <ContactSection initialTopic={contactTopic} />
+        </main>
+      </div>
+      {study && <main id="case-study-content" tabIndex={-1} className="relative z-10"><CaseStudyTemplate key={study.id} data={study} onBack={() => navigateSection('projects')} onNavigateProject={openCase} onContactClick={handleOpenContact} /></main>}
       <Footer />
     </div>
   );

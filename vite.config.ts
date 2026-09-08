@@ -6,6 +6,7 @@ import {defineConfig} from 'vite';
 export default defineConfig(() => {
   return {
     plugins: [react(), tailwindcss()],
+    build: { rollupOptions: { output: { manualChunks: { motion: ['motion/react'], react: ['react', 'react-dom', 'react-dom/client'] } } } },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),

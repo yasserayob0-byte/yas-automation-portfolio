@@ -4,6 +4,11 @@ import { ChevronDown, HelpCircle } from 'lucide-react';
 import { FAQS } from '../data/portfolioData';
 
 export default function FaqSection() {
+  const questions = [...FAQS,
+    { question: 'What should I include in my first message?', answer: 'Describe one repetitive workflow, your current tools, the volume of work, and the result you want. Include a timeline and budget range if known. Avoid sending credentials or customer records in the initial email.' },
+    { question: 'How are project costs and ongoing support scoped?', answer: 'Build cost depends on integrations, workflow complexity, data quality, and testing needs. Discuss software subscriptions, hosting, maintenance, and support separately so the total cost is clear before committing.' },
+    { question: 'What should we agree on before rollout?', answer: 'Confirm access and ownership of accounts, data handling, test cases, human review and fallback steps, documentation, and who responds to failures. Use a measurable baseline to evaluate the result.' }
+  ];
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
@@ -16,14 +21,14 @@ export default function FaqSection() {
             <HelpCircle className="w-3.5 h-3.5" />
             <span>COMMONLY ASKED QUESTIONS</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold font-heading text-white tracking-tight">
+          <motion.h2 initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px -40px 0px" }} transition={{ duration: 0.65 }} className="text-2xl sm:text-4xl font-extrabold font-heading text-white tracking-tight">
             Frequently Asked Questions.
-          </h2>
+          </motion.h2>
         </div>
 
         {/* FAQs Accordion */}
         <div className="space-y-3">
-          {FAQS.map((faq, idx) => {
+          {questions.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
               <div
@@ -31,6 +36,9 @@ export default function FaqSection() {
                 className="rounded-2xl bg-slate-950/70 border border-slate-800/80 overflow-hidden transition-colors"
               >
                 <button
+                  id={`faq-question-${idx}`}
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-answer-${idx}`}
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
                   className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-900/40 transition-colors"
                 >
@@ -46,7 +54,7 @@ export default function FaqSection() {
 
                 <AnimatePresence>
                   {isOpen && (
-                    <motion.div
+                    <motion.div id={`faq-answer-${idx}`} role="region" aria-labelledby={`faq-question-${idx}`}
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}

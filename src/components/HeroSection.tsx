@@ -1,4 +1,7 @@
-import { motion } from 'motion/react';
+import { useMotionPreference } from './MotionPreferences';
+import { preferredScrollBehavior } from './navigation';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import {
   ArrowRight,
   ChevronDown,
@@ -17,6 +20,7 @@ import {
   SlackLogo,
   AirtableLogo
 } from './BrandLogos';
+import { PROJECTS_DATA } from '../data/portfolioData';
 import portraitImg from '../assets/images/yasser_portrait_1787548927135.png';
 
 interface HeroSectionProps {
@@ -25,10 +29,15 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSectionProps) {
+  const heroRef = useRef<HTMLElement>(null);
+  const { enabled: motionEnabled } = useMotionPreference();
+  const reduceMotion = !motionEnabled;
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
+  const portraitY = useTransform(scrollYProgress, [0, 1], [0, 48]);
   const handleScrollToProjects = () => {
     const el = document.getElementById('projects');
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+      el.scrollIntoView({ behavior: preferredScrollBehavior() });
     } else {
       onExploreWorkflows();
     }
@@ -37,16 +46,16 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
   const handleScrollToExplore = () => {
     const el = document.getElementById('projects') || document.getElementById('about');
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+      el.scrollIntoView({ behavior: preferredScrollBehavior() });
     }
   };
 
   return (
-    <section id="home" className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden">
+    <section ref={heroRef} id="home" className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Main 2-Column Hero Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-center">
           
           {/* Left Column: Headline, Subheadline, CTAs & Trusted Tech Logos (7 Cols) */}
           <div className="lg:col-span-7 space-y-8 text-left">
@@ -58,7 +67,7 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
               transition={{ duration: 0.5 }}
               className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-cyan-500/30 shadow-[0_0_20px_rgba(6,182,212,0.15)] text-xs font-semibold text-cyan-300 backdrop-blur-md"
             >
-              <span>🚀</span>
+              <Sparkles aria-hidden="true" className="w-3.5 h-3.5" />
               <span className="tracking-wide">AI Automation Specialist</span>
             </motion.div>
 
@@ -67,11 +76,11 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight font-heading leading-[1.15] text-white"
+              className="text-4xl sm:text-5xl lg:text-[3.4rem] font-bold tracking-tight font-heading leading-[1.08] text-balance text-white"
             >
-              Building Intelligent Automation That Helps{' '}
+              AI Automation That Helps Your{' '}
               <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">
-                Businesses Scale
+                Business Scale
               </span>
             </motion.h1>
 
@@ -80,7 +89,7 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
-              className="text-base sm:text-lg text-slate-300 font-normal leading-relaxed max-w-2xl"
+              className="text-base sm:text-lg text-slate-300 font-normal leading-relaxed max-w-xl"
             >
               I design and build AI-powered automation systems that eliminate repetitive tasks, streamline business operations, and improve customer experiences using n8n, GoHighLevel, and modern AI technologies.
             </motion.p>
@@ -97,7 +106,7 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
                 onClick={handleScrollToProjects}
                 className="px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 via-sky-400 to-indigo-600 text-slate-950 font-bold text-sm hover:shadow-[0_0_35px_rgba(6,182,212,0.45)] hover:scale-[1.02] transition-all flex items-center justify-center gap-2 group cursor-pointer shadow-lg"
               >
-                <span>View My Projects</span>
+                <span>Explore Automation Projects</span>
                 <ArrowRight className="w-4 h-4 text-slate-950 group-hover:translate-x-1 transition-transform" />
               </button>
 
@@ -106,11 +115,11 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
                 onClick={onBookAudit}
                 className="px-7 py-4 rounded-full bg-slate-900/80 hover:bg-slate-800/90 border border-slate-700/80 hover:border-cyan-500/40 text-slate-200 text-sm font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer backdrop-blur-md"
               >
-                <span>Let's Connect</span>
+                <span>Discuss Your Project</span>
               </button>
             </motion.div>
 
-            {/* Trusted Technologies Row (Logos Only) */}
+            {/* Tools I Work With Row (Logos Only) */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -163,7 +172,7 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
           </div>
 
           {/* Right Column: Professional Portrait with Animated Workflow Lines & Floating Tech Cards (5 Cols) */}
-          <div className="lg:col-span-5 flex items-center justify-center relative">
+          <motion.div style={{ y: reduceMotion ? 0 : portraitY }} initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.9, delay: 0.2 }} className="hero-portrait lg:col-span-5 flex items-center justify-center relative">
             <div className="relative w-full max-w-sm sm:max-w-md aspect-square flex items-center justify-center">
               
               {/* Soft Ambient Glow Halo */}
@@ -177,10 +186,6 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
                     <stop offset="50%" stopColor="#6366f1" stopOpacity="0.5" />
                     <stop offset="100%" stopColor="#a855f7" stopOpacity="0.2" />
                   </linearGradient>
-                  <filter id="glow-filter" x="-20%" y="-20%" width="140%" height="140%">
-                    <feGaussianBlur stdDeviation="3" result="blur" />
-                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                  </filter>
                 </defs>
 
                 {/* Workflow line connecting left-top to center */}
@@ -190,7 +195,7 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
                   strokeWidth="1.5"
                   strokeDasharray="4 4"
                   fill="none"
-                  animate={{ strokeDashoffset: [0, -40] }}
+                  animate={{ strokeDashoffset: reduceMotion ? 0 : [0, -40] }}
                   transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
                 />
 
@@ -201,7 +206,7 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
                   strokeWidth="1.5"
                   strokeDasharray="5 5"
                   fill="none"
-                  animate={{ strokeDashoffset: [0, -50] }}
+                  animate={{ strokeDashoffset: reduceMotion ? 0 : [0, -50] }}
                   transition={{ duration: 7, repeat: Infinity, ease: 'linear' }}
                 />
 
@@ -212,7 +217,7 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
                   strokeWidth="1.5"
                   strokeDasharray="6 6"
                   fill="none"
-                  animate={{ strokeDashoffset: [0, 60] }}
+                  animate={{ strokeDashoffset: reduceMotion ? 0 : [0, 60] }}
                   transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
                 />
 
@@ -221,34 +226,13 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
                 <circle cx="50%" cy="50%" r="38%" stroke="#818cf8" strokeWidth="1" strokeOpacity="0.18" fill="none" />
               </svg>
 
-              {/* Floating Soft Ambient Particles */}
-              <motion.div
-                animate={{ y: [0, -12, 0], opacity: [0.3, 0.8, 0.3] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute top-8 left-12 w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_10px_#06b6d4]"
-              />
-              <motion.div
-                animate={{ y: [0, 14, 0], opacity: [0.2, 0.7, 0.2] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-                className="absolute bottom-12 right-14 w-2.5 h-2.5 rounded-full bg-indigo-400 shadow-[0_0_12px_#6366f1]"
-              />
-              <motion.div
-                animate={{ y: [0, -10, 0], opacity: [0.4, 0.9, 0.4] }}
-                transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-                className="absolute top-1/3 right-4 w-1.5 h-1.5 rounded-full bg-sky-300 shadow-[0_0_8px_#38bdf8]"
-              />
-              <motion.div
-                animate={{ y: [0, 10, 0], opacity: [0.2, 0.6, 0.2] }}
-                transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-                className="absolute bottom-1/4 left-6 w-2 h-2 rounded-full bg-rose-400 shadow-[0_0_10px_#f43f5e]"
-              />
-
               {/* Central Professional Portrait Container */}
-              <div className="relative w-72 h-80 sm:w-80 sm:h-96 lg:w-[420px] lg:h-[500px] rounded-3xl p-1 bg-gradient-to-b from-cyan-500/40 via-indigo-500/30 to-slate-800/80 shadow-[0_0_50px_rgba(6,182,212,0.25)] group">
+              <div className="relative w-72 h-80 sm:w-80 sm:h-96 lg:w-full lg:h-[480px] rounded-3xl p-1 bg-gradient-to-b from-cyan-500/40 via-indigo-500/30 to-slate-800/80 shadow-[0_30px_80px_-25px_rgba(0,0,0,0.8)] group">
                 <div className="w-full h-full rounded-[22px] overflow-hidden bg-slate-950 relative flex flex-col justify-end">
                   
                   {/* Business Portrait Image */}
                   <img
+                    fetchPriority="high"
                     src={portraitImg}
                     alt="Yasser Usman - AI Automation Specialist"
                   className="absolute inset-0 w-full h-full object-cover object-[center_20%] scale-[1.15] transition-transform duration-700 group-hover:scale-[1.2]"
@@ -269,7 +253,7 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
                       </div>
                     </div>
                     <span className="px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 text-[10px] font-mono border border-cyan-500/30">
-                      Verified
+                      n8n + GHL
                     </span>
                   </div>
                 </div>
@@ -363,7 +347,7 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
               </motion.div>
 
             </div>
-          </div>
+          </motion.div>
 
         </div>
 
@@ -387,7 +371,7 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
             </div>
             <div>
               <div className="text-2xl sm:text-3xl font-extrabold font-heading text-white tracking-tight">
-                4
+                {PROJECTS_DATA.filter(project => project.techStack.includes('n8n')).length}
               </div>
               <div className="text-sm font-semibold text-slate-200 mt-1">
                 n8n Automation Projects

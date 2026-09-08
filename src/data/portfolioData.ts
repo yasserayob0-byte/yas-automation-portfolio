@@ -909,18 +909,18 @@ export const TESTIMONIALS: TestimonialItem[] = [
 export const FAQS = [
   {
     question: 'How is YAS Automation different from hiring a standard freelancer?',
-    answer: 'We do not build fragile, one-off Zapier hacks. We architect resilient, production-grade business systems using enterprise tools like GoHighLevel, n8n, and custom AI agent graphs. Every system includes automated error handling, queue management, data validation, and complete documentation.'
+    answer: 'I focus on business workflows using GoHighLevel, n8n, and AI integrations. We identify the operational problem, map the integrations, and agree on error handling, validation, queueing, and documentation appropriate to the project.'
   },
   {
     question: 'How long does a typical automation project take to build and deploy?',
-    answer: 'Standard GoHighLevel appointment frameworks or focused n8n workflows typically launch within 7–14 days. Comprehensive multi-agent AI systems and custom enterprise API integrations typically take 2–4 weeks including thorough staging tests.'
+    answer: 'Indicative timelines are 7–14 days for focused GoHighLevel or n8n workflows and 2–4 weeks for more complex AI and API integrations. Scope, access to your tools, testing, and feedback determine the actual schedule; confirm it before work starts.'
   },
   {
     question: 'What happens if a third-party API changes or experiences downtime?',
-    answer: 'All YAS Automation systems are built with fail-safe error queues and automated retry loops. If an external API is momentarily unreachable, the event payload is queued securely in Redis/database and reprocessed as soon as service restores, with instant alerts sent to your team Slack.'
+    answer: 'We plan how the workflow should handle outages: retries, queued events, validation, and alerts to the right person. The approach depends on the connected tools and data. Agree on monitoring, support, and exception handling as part of the scope.'
   },
   {
     question: 'Can you integrate with our existing proprietary or legacy software?',
-    answer: 'Yes. Through custom REST API webhooks, Python microservices, and database connectors, we bridge virtually any software with an accessible API or webhook endpoint to modern AI engines.'
+    answer: 'I assess the APIs, webhooks, database access, and permission requirements of your existing tools before recommending an integration. Some legacy systems have limits; we clarify those during scoping.'
   }
 ];

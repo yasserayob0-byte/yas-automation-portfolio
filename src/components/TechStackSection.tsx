@@ -1,7 +1,10 @@
+import { createPortal } from 'react-dom';
+import { useModalFocus } from './useModalFocus';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Cpu,
+  X,
   Sparkles,
   ArrowUpRight,
   Share2,
@@ -36,7 +39,8 @@ interface TechStackSectionProps {
 
 export default function TechStackSection({ onExploreApiBridge }: TechStackSectionProps) {
   const [selectedTech, setSelectedTech] = useState<TechItem | null>(null);
-  const [viewMode, setViewMode] = useState<'marquee' | 'grid'>('marquee');
+  const modalRef = useModalFocus(!!selectedTech, () => setSelectedTech(null));
+  const [viewMode, setViewMode] = useState<'marquee' | 'grid'>('grid');
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
@@ -107,9 +111,9 @@ export default function TechStackSection({ onExploreApiBridge }: TechStackSectio
             <Cpu className="w-3.5 h-3.5" />
             <span>CORE TECHNOLOGIES & PLATFORMS</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
+          <motion.h2 initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px -40px 0px" }} transition={{ duration: 0.65 }} className="text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
             Core Technologies I Use.
-          </h2>
+          </motion.h2>
           <p className="text-base sm:text-lg text-slate-400">
             Enterprise-grade workflow orchestration, frontier generative AI models, cloud databases, and low-latency API protocols powering autonomous business systems.
           </p>
@@ -118,6 +122,7 @@ export default function TechStackSection({ onExploreApiBridge }: TechStackSectio
           <div className="pt-2 flex items-center justify-center">
             <div className="p-1 bg-slate-900/90 border border-slate-800 rounded-full inline-flex items-center gap-1 shadow-inner">
               <button
+                aria-pressed={viewMode === 'marquee'}
                 onClick={() => setViewMode('marquee')}
                 className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
                   viewMode === 'marquee'
@@ -129,6 +134,7 @@ export default function TechStackSection({ onExploreApiBridge }: TechStackSectio
                 <span>Live Infinite Flow</span>
               </button>
               <button
+                aria-pressed={viewMode === 'grid'}
                 onClick={() => setViewMode('grid')}
                 className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
                   viewMode === 'grid'
@@ -156,9 +162,14 @@ export default function TechStackSection({ onExploreApiBridge }: TechStackSectio
           {/* Marquee Row 1: Leftward Scrolling */}
           <div className="flex overflow-hidden">
             <div className="animate-marquee-left flex gap-5 items-stretch">
-              {[...rowOneItems, ...rowOneItems, ...rowOneItems].map((item, idx) => (
+              {[...rowOneItems, ...rowOneItems].map((item, idx) => (
                 <div
                   key={`r1-${item.id}-${idx}`}
+                  role="button"
+                  aria-hidden={idx >= rowOneItems.length}
+                  tabIndex={idx < rowOneItems.length ? 0 : -1}
+                  aria-label={`Explore ${item.name}`}
+                  onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); setSelectedTech(item); } }}
                   onClick={() => setSelectedTech(item)}
                   className="group relative w-[310px] sm:w-[350px] shrink-0 rounded-2xl bg-slate-900/70 hover:bg-slate-900/95 border border-slate-800/90 hover:border-cyan-500/60 p-5 sm:p-6 backdrop-blur-xl transition-all duration-300 hover:scale-[1.03] hover:-translate-y-1.5 hover:shadow-[0_20px_45px_-12px_rgba(6,182,212,0.35)] cursor-pointer flex flex-col justify-between"
                 >
@@ -172,7 +183,7 @@ export default function TechStackSection({ onExploreApiBridge }: TechStackSectio
 
                   <div className="relative z-10 space-y-4">
                     {/* Top Row: Official Brand Logo + Category Tag */}
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-wrap gap-3 items-center justify-between">
                       <div className="w-14 h-14 rounded-2xl bg-slate-950/95 border border-slate-800 group-hover:border-cyan-500/50 p-2.5 flex items-center justify-center transition-all duration-300 shadow-inner group-hover:scale-110 group-hover:shadow-[0_0_22px_rgba(6,182,212,0.3)]">
                         {renderBrandLogo(item.logoKey, "w-8 h-8 group-hover:scale-105 transition-transform")}
                       </div>
@@ -226,9 +237,14 @@ export default function TechStackSection({ onExploreApiBridge }: TechStackSectio
           {/* Marquee Row 2: Rightward Scrolling */}
           <div className="flex overflow-hidden">
             <div className="animate-marquee-right flex gap-5 items-stretch">
-              {[...rowTwoItems, ...rowTwoItems, ...rowTwoItems].map((item, idx) => (
+              {[...rowTwoItems, ...rowTwoItems].map((item, idx) => (
                 <div
                   key={`r2-${item.id}-${idx}`}
+                  role="button"
+                  aria-hidden={idx >= rowTwoItems.length}
+                  tabIndex={idx < rowTwoItems.length ? 0 : -1}
+                  aria-label={`Explore ${item.name}`}
+                  onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); setSelectedTech(item); } }}
                   onClick={() => setSelectedTech(item)}
                   className="group relative w-[310px] sm:w-[350px] shrink-0 rounded-2xl bg-slate-900/70 hover:bg-slate-900/95 border border-slate-800/90 hover:border-cyan-500/60 p-5 sm:p-6 backdrop-blur-xl transition-all duration-300 hover:scale-[1.03] hover:-translate-y-1.5 hover:shadow-[0_20px_45px_-12px_rgba(6,182,212,0.35)] cursor-pointer flex flex-col justify-between"
                 >
@@ -312,6 +328,7 @@ export default function TechStackSection({ onExploreApiBridge }: TechStackSectio
               {categories.map((cat) => (
                 <button
                   key={cat}
+                  aria-pressed={activeCategory === cat}
                   onClick={() => setActiveCategory(cat)}
                   className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200 cursor-pointer ${
                     activeCategory === cat
@@ -328,7 +345,8 @@ export default function TechStackSection({ onExploreApiBridge }: TechStackSectio
             <div className="relative w-full md:w-64">
               <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
-                type="text"
+                type="search"
+                aria-label="Search technologies and integrations"
                 placeholder="Search stack or API..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -345,7 +363,11 @@ export default function TechStackSection({ onExploreApiBridge }: TechStackSectio
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: idx * 0.04 }}
-                onClick={() => setSelectedTech(item)}
+                role="button"
+                  tabIndex={0}
+                  aria-label={`Explore ${item.name}`}
+                  onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); setSelectedTech(item); } }}
+                  onClick={() => setSelectedTech(item)}
                 className="group relative rounded-2xl bg-slate-900/60 hover:bg-slate-900/90 border border-slate-800/90 hover:border-cyan-500/50 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_45px_-12px_rgba(6,182,212,0.25)] cursor-pointer flex flex-col justify-between"
               >
                 <div className="space-y-4">
@@ -431,14 +453,14 @@ export default function TechStackSection({ onExploreApiBridge }: TechStackSectio
       </div>
 
       {/* Tech Item Details Modal */}
-      <AnimatePresence>
+      {createPortal(<AnimatePresence>
         {selectedTech && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-            <motion.div
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+            <motion.div ref={modalRef} tabIndex={-1} role="dialog" aria-modal="true" aria-label={selectedTech.name}
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-2xl rounded-3xl bg-slate-900 border border-slate-800 p-7 sm:p-8 shadow-2xl space-y-6 overflow-hidden"
+              className="relative w-full max-w-2xl rounded-3xl bg-slate-900 border border-slate-800 p-7 sm:p-8 shadow-2xl space-y-6 max-h-[90dvh] overflow-y-auto"
             >
               {/* Background gradient banner */}
               <div
@@ -468,10 +490,11 @@ export default function TechStackSection({ onExploreApiBridge }: TechStackSectio
                 </div>
 
                 <button
+                  aria-label="Close technology details"
                   onClick={() => setSelectedTech(null)}
                   className="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-colors cursor-pointer text-sm font-bold"
                 >
-                  ✕
+                  <X className="w-4 h-4" />
                 </button>
               </div>
 
@@ -531,7 +554,7 @@ export default function TechStackSection({ onExploreApiBridge }: TechStackSectio
             </motion.div>
           </div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>, document.body)}
 
     </section>
   );

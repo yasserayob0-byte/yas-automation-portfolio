@@ -36,7 +36,7 @@ export default function BrowserMockup({
         </div>
 
         {/* Tab & URL Address Bar */}
-        <div className="flex-1 max-w-xl mx-auto flex items-center gap-2 bg-slate-950/80 px-3.5 py-1.5 rounded-lg border border-slate-800 text-xs text-slate-400 font-mono">
+        <div className="flex-1 min-w-0 max-w-xl mx-auto flex items-center gap-2 bg-slate-950/80 px-3.5 py-1.5 rounded-lg border border-slate-800 text-xs text-slate-400 font-mono">
           <Lock className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
           <span className="truncate text-slate-300 font-normal">{url}</span>
           <div className="ml-auto flex items-center gap-1 text-slate-500">
@@ -46,6 +46,7 @@ export default function BrowserMockup({
                   e.stopPropagation();
                   onRefresh();
                 }}
+                aria-label="Re-run simulation"
                 title="Re-run Simulation"
                 className="hover:text-cyan-400 transition-colors p-0.5"
               >
@@ -65,7 +66,7 @@ export default function BrowserMockup({
           ) : (
             <div className="flex items-center gap-1.5 text-xs text-slate-400 font-medium hidden sm:flex">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Live Engine</span>
+              <span>Workflow Screenshot</span>
             </div>
           )}
         </div>
@@ -75,10 +76,10 @@ export default function BrowserMockup({
       <div className="bg-slate-900/40 px-4 py-2 border-b border-slate-800/40 flex items-center justify-between text-xs text-slate-400">
         <div className="flex items-center gap-2 font-medium">
           <Layers className="w-3.5 h-3.5 text-cyan-400" />
-          <span className="text-slate-200">{title}</span>
+          <span className="text-slate-200 break-words">{title}</span>
         </div>
         <div className="text-[11px] font-mono text-slate-500 hidden md:block">
-          STATUS: 200 OK • 0ms QUEUE
+          CAPTURED WORKFLOW
         </div>
       </div>
 

@@ -96,9 +96,9 @@ export default function ServicesSection({ onSelectService }: ServicesSectionProp
             <Sparkles className="w-3.5 h-3.5" />
             <span>SERVICES & EXPERTISE</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
+          <motion.h2 initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px -40px 0px" }} transition={{ duration: 0.65 }} className="text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
             Tailored Automation Services.
-          </h2>
+          </motion.h2>
           <p className="text-base sm:text-lg text-slate-400">
             Production-grade systems designed to remove operational bottlenecks, connect platforms seamlessly, and accelerate business growth.
           </p>
@@ -115,8 +115,8 @@ export default function ServicesSection({ onSelectService }: ServicesSectionProp
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.08 }}
-                onClick={() => onSelectService(service.title)}
-                className={`group relative rounded-3xl bg-slate-950/80 border border-slate-800/90 p-7 backdrop-blur-xl ${service.borderColor} ${service.glowColor} transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between cursor-pointer overflow-hidden`}
+
+                className={`group relative rounded-3xl bg-slate-950/80 border border-slate-800/90 p-7 backdrop-blur-xl ${service.borderColor} ${service.glowColor} transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between overflow-hidden`}
               >
                 {/* Subtle Gradient Backlight on Hover */}
                 <div className={`absolute -top-24 -right-24 w-48 h-48 bg-gradient-to-br ${service.gradient} rounded-full blur-2xl opacity-40 group-hover:opacity-100 transition-opacity pointer-events-none`} />
@@ -146,10 +146,8 @@ export default function ServicesSection({ onSelectService }: ServicesSectionProp
                 </div>
 
                 {/* Card Footer: Interactive CTA Link with Animated Arrow */}
-                <div className="pt-6 mt-6 border-t border-slate-900/80 flex items-center justify-between relative z-10">
-                  <span className="text-xs font-mono text-slate-500 group-hover:text-cyan-400 transition-colors font-medium">
-                    Discuss Architecture
-                  </span>
+                <div className="pt-6 mt-6 border-t border-slate-900/80 flex items-center justify-between">
+                  <button onClick={() => onSelectService(service.title)} aria-label={`Discuss ${service.title}`} className="text-sm font-semibold text-cyan-300 after:absolute after:inset-0">Discuss this service</button>
 
                   <div className="w-8 h-8 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-center text-slate-400 group-hover:bg-cyan-500 group-hover:text-slate-950 group-hover:border-cyan-400 transition-all duration-300">
                     <ArrowRight className="w-4 h-4 transform group-hover:translate-x-0.5 transition-transform" />

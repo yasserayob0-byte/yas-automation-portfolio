@@ -1,3 +1,5 @@
+import { createPortal } from 'react-dom';
+import { useModalFocus } from './useModalFocus';
 import { useState, useEffect, useCallback } from 'react';
 import {
   Maximize2,
@@ -18,6 +20,7 @@ import aiReceptionistImg from '../assets/images/ai_receptionist.jpg';
 interface ScreenshotProps {
   projectId: string;
   className?: string;
+  showFrame?: boolean;
 }
 
 interface ProjectVisualItem {
@@ -88,7 +91,7 @@ const PROJECT_IMAGE_MAP: Record<string, ProjectVisualItem> = {
 'ai-receptionist': PROJECT_ITEMS[5],
 };
 
-export default function ProjectVisualScreenshot({ projectId, className = '' }: ScreenshotProps) {
+export default function ProjectVisualScreenshot({ projectId, className = '', showFrame = true }: ScreenshotProps) {
   const initialData = PROJECT_IMAGE_MAP[projectId] || PROJECT_ITEMS[0];
   
   const initialIndex = PROJECT_ITEMS.findIndex(
@@ -108,6 +111,8 @@ export default function ProjectVisualScreenshot({ projectId, className = '' }: S
     }
   }, [projectId]);
 
+  const modalRef = useModalFocus(isZoomed, () => { setIsZoomed(false); setLightboxZoom(1); });
+
   const activeItem = PROJECT_ITEMS[currentIndex] || initialData;
 
   const handlePrev = useCallback(() => {
@@ -125,10 +130,7 @@ export default function ProjectVisualScreenshot({ projectId, className = '' }: S
     if (!isZoomed) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setIsZoomed(false);
-        setLightboxZoom(1);
-      } else if (e.key === 'ArrowLeft') {
+      if (e.key === 'ArrowLeft') {
         handlePrev();
       } else if (e.key === 'ArrowRight') {
         handleNext();
@@ -150,7 +152,7 @@ export default function ProjectVisualScreenshot({ projectId, className = '' }: S
         className={`w-full h-full rounded-2xl border border-slate-800/90 bg-[#0b0f19] shadow-lg shadow-black/40 overflow-hidden flex flex-col justify-between transition-all duration-300 ease-out hover:scale-[1.02] hover:border-cyan-500/40 hover:shadow-[0_0_25px_rgba(6,182,212,0.18)] group/screenshot select-none ${className}`}
       >
         {/* Realistic Dark Browser Top Bar with macOS Traffic Lights */}
-        <div className="px-3.5 py-2.5 bg-slate-900/90 border-b border-slate-800/80 flex items-center justify-between gap-2 shrink-0 backdrop-blur-md">
+        {showFrame && <div className="px-3.5 py-2.5 bg-slate-900/90 border-b border-slate-800/80 flex items-center justify-between gap-2 shrink-0 backdrop-blur-md">
           {/* Traffic Lights */}
           <div className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f56] shadow-sm shadow-rose-500/40" />
@@ -182,12 +184,17 @@ export default function ProjectVisualScreenshot({ projectId, className = '' }: S
           >
             <Maximize2 className="w-3 h-3" />
           </button>
-        </div>
+        </div>}
 
         {/* Screenshot Viewport Container with 32px Padding and Dark Canvas */}
         <div
-          className="relative flex-1 w-full h-full min-h-[140px] bg-[#0b0f19] p-8 flex items-center justify-center overflow-hidden cursor-pointer"
-          onClick={() => {
+          className="relative flex-1 w-full h-full min-h-[140px] bg-[#0b0f19] p-3 sm:p-4 flex items-center justify-center overflow-hidden cursor-pointer"
+          role="button"
+          tabIndex={0}
+          aria-label={`Enlarge ${initialData.title}`}
+          onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); event.currentTarget.click(); } }}
+          onClick={(event) => {
+            event.stopPropagation();
             const matched = PROJECT_IMAGE_MAP[projectId] || PROJECT_ITEMS[0];
             const idx = PROJECT_ITEMS.findIndex((item) => item.id === matched.id);
             if (idx >= 0) setCurrentIndex(idx);
@@ -200,9 +207,10 @@ export default function ProjectVisualScreenshot({ projectId, className = '' }: S
 
           {/* Screenshot Image with object-contain centered to never crop nodes */}
           <img
+            loading="lazy" decoding="async"
             src={initialData.img}
             alt={initialData.title}
-            className="max-w-full max-h-full object-contain object-center rounded-lg shadow-xl transition-transform duration-300 group-hover/screenshot:scale-[1.01]"
+            className="w-full h-full min-h-0 object-contain object-center rounded-lg shadow-xl transition-transform duration-300 group-hover/screenshot:scale-[1.01]"
           />
 
           {/* Subtle Hover Inspection Badge */}
@@ -214,9 +222,9 @@ export default function ProjectVisualScreenshot({ projectId, className = '' }: S
       </div>
 
       {/* Fullscreen High-Resolution Lightbox Modal with Zoom & Navigation */}
-      {isZoomed && (
-        <div
-          className="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-2xl flex flex-col p-3 sm:p-6 animate-in fade-in duration-200"
+      {isZoomed && createPortal(
+        <div ref={modalRef} tabIndex={-1} role="dialog" aria-modal="true" aria-label="Workflow screenshot viewer"
+          className="fixed inset-0 z-[120] bg-slate-950/95 backdrop-blur-2xl flex flex-col p-3 sm:p-6 animate-in fade-in duration-200"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setIsZoomed(false);
@@ -225,7 +233,7 @@ export default function ProjectVisualScreenshot({ projectId, className = '' }: S
           }}
         >
           {/* Lightbox Header Bar */}
-          <div className="flex items-center justify-between pb-3 max-w-7xl w-full mx-auto border-b border-slate-800/80">
+          <div className="flex flex-wrap gap-3 items-center justify-between pb-3 max-w-7xl w-full mx-auto border-b border-slate-800/80">
             {/* Left Controls / Title */}
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-1.5">
@@ -234,7 +242,7 @@ export default function ProjectVisualScreenshot({ projectId, className = '' }: S
                 <span className="w-3 h-3 rounded-full bg-[#27c93f]" />
               </div>
               <div>
-                <h3 className="text-sm sm:text-base font-bold text-white font-heading truncate max-w-[280px] sm:max-w-xl">
+                <h3 className="text-sm sm:text-base font-bold text-white font-heading truncate max-w-[min(72vw,280px)] sm:max-w-xl">
                   {activeItem.title}
                 </h3>
                 <span className="text-[11px] font-mono text-cyan-400">
@@ -330,7 +338,7 @@ export default function ProjectVisualScreenshot({ projectId, className = '' }: S
 
           {/* Lightbox Content Container */}
           <div
-            className="flex-1 flex items-center justify-center max-w-7xl w-full mx-auto overflow-auto rounded-2xl border border-slate-800/90 bg-[#06080e] p-4 sm:p-6 my-3 relative shadow-2xl"
+            className="flex-1 min-h-0 flex items-start justify-start max-w-7xl w-full mx-auto overflow-auto rounded-2xl border border-slate-800/90 bg-[#06080e] p-4 sm:p-6 my-3 relative shadow-2xl"
             onClick={(e) => {
               if (e.target === e.currentTarget) {
                 setIsZoomed(false);
@@ -338,15 +346,15 @@ export default function ProjectVisualScreenshot({ projectId, className = '' }: S
               }
             }}
           >
-            <div className="overflow-auto max-w-full max-h-full flex items-center justify-center">
+            <div className="w-full shrink-0">
               <img
                 src={activeItem.img}
                 alt={activeItem.title}
                 style={{
-                  transform: `scale(${lightboxZoom})`,
-                  transformOrigin: 'center center'
+                  width: `${lightboxZoom * 100}%`,
+                  maxWidth: 'none'
                 }}
-                className="max-w-full max-h-[72vh] object-contain rounded-xl shadow-2xl transition-transform duration-200"
+                className="h-auto object-contain rounded-xl shadow-2xl"
                 onClick={(e) => e.stopPropagation()}
               />
             </div>
@@ -364,7 +372,7 @@ export default function ProjectVisualScreenshot({ projectId, className = '' }: S
               Press <kbd className="px-1.5 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700 text-[10px]">ESC</kbd> to exit • Use <kbd className="px-1.5 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700 text-[10px]">←</kbd> <kbd className="px-1.5 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700 text-[10px]">→</kbd> to navigate
             </div>
           </div>
-        </div>
+        </div>, document.body
       )}
     </>
   );

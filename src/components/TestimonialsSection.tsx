@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { Star, ShieldCheck } from 'lucide-react';
+import { MessageSquareQuote } from 'lucide-react';
 import { TESTIMONIALS } from '../data/portfolioData';
 
 export default function TestimonialsSection() {
@@ -10,19 +10,19 @@ export default function TestimonialsSection() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-xs font-mono text-cyan-400">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>CLIENT VERIFICATIONS & CASE STUDIES</span>
+            <MessageSquareQuote className="w-3.5 h-3.5" />
+            <span>CLIENT FEEDBACK</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
-            Trusted by Modern Founders & Operators.
-          </h2>
+          <motion.h2 initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px -40px 0px" }} transition={{ duration: 0.65 }} className="text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
+            Feedback from Founders & Operators.
+          </motion.h2>
           <p className="text-base sm:text-lg text-slate-400">
-            Real quantifiable outcomes delivered through robust AI systems and GoHighLevel infrastructure.
+            Project feedback and reported outcomes. Results depend on the workflow, implementation, and business context.
           </p>
         </div>
 
         {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {TESTIMONIALS.map((item, idx) => (
             <motion.div
               key={item.id}
@@ -35,11 +35,6 @@ export default function TestimonialsSection() {
               <div className="space-y-4">
                 {/* 5-Star Rating & Result Badge */}
                 <div className="flex items-center justify-between">
-                  <div className="flex text-amber-400 gap-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-amber-400" />
-                    ))}
-                  </div>
                   <span className="text-xs font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-md border border-emerald-500/20">
                     {item.metricsResult}
                   </span>
@@ -51,18 +46,14 @@ export default function TestimonialsSection() {
                 </p>
 
                 {/* Main Content */}
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed italic">
+                <blockquote className="text-xs sm:text-sm text-slate-300 leading-relaxed italic">
                   "{item.content}"
-                </p>
+                </blockquote>
               </div>
 
               {/* Author Info */}
               <div className="pt-6 mt-6 border-t border-slate-800/80 flex items-center gap-3.5">
-                <img
-                  src={item.avatar}
-                  alt={item.name}
-                  className="w-11 h-11 rounded-full object-cover border border-cyan-500/40"
-                />
+                <div aria-hidden="true" className="w-11 h-11 shrink-0 rounded-full bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-sm text-cyan-300">{item.name.split(' ').map(part => part[0]).join('')}</div>
                 <div>
                   <h4 className="text-sm font-bold text-white font-heading">
                     {item.name}

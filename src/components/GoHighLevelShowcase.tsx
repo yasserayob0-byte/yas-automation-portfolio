@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useMotionPreference } from './MotionPreferences';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import type { LucideIcon } from 'lucide-react';
 import {
@@ -364,8 +365,16 @@ const WORKFLOW_SLIDES: WorkflowSlide[] = [
 const TECH_BADGES = ['GoHighLevel', 'CRM', 'Workflow Automation', 'Email', 'SMS'];
 
 export default function GoHighLevelShowcase({ onConsultWorkflow }: GoHighLevelShowcaseProps) {
+  const { enabled: motionEnabled } = useMotionPreference();
+  const reduceMotion = !motionEnabled;
+  const slideNavRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(1);
+
+  useEffect(() => {
+    const selected = slideNavRef.current?.querySelector<HTMLElement>('[aria-pressed="true"]');
+    if (selected && slideNavRef.current) slideNavRef.current.scrollTo({ left: selected.offsetLeft - slideNavRef.current.offsetLeft - 12, behavior: reduceMotion ? 'auto' : 'smooth' });
+  }, [currentIndex, reduceMotion]);
 
   const activeSlide = WORKFLOW_SLIDES[currentIndex];
 
@@ -400,12 +409,12 @@ export default function GoHighLevelShowcase({ onConsultWorkflow }: GoHighLevelSh
               <span>GOHIGHLEVEL SHOWCASE</span>
             </div>
             
-            <h2 className="text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
+            <motion.h2 initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px -40px 0px" }} transition={{ duration: 0.65 }} className="text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
               Dental Clinic Patient Journey Automation
-            </h2>
+            </motion.h2>
             
             <p className="text-base sm:text-lg text-cyan-300 font-medium mt-2 max-w-2xl">
-              Complete Patient Lifecycle Automation built with GoHighLevel
+              Follow six connected workflows from a patient inquiry through post-appointment follow-up.
             </p>
           </div>
 
@@ -434,17 +443,18 @@ export default function GoHighLevelShowcase({ onConsultWorkflow }: GoHighLevelSh
         </div>
 
         {/* Horizontal Navigation Pills with Category Indicators */}
-        <div className="flex items-center gap-2.5 overflow-x-auto pb-4 mb-8 scrollbar-none">
+        <div ref={slideNavRef} aria-label="Choose patient journey workflow" className="relative flex items-center gap-2.5 overflow-x-auto pb-4 mb-8 scrollbar-none">
           {WORKFLOW_SLIDES.map((slide, idx) => {
             const isSelected = currentIndex === idx;
             return (
               <button
                 key={slide.id}
+                aria-pressed={isSelected}
                 onClick={() => handleSelectSlide(idx)}
                 className={`px-4 py-2.5 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all duration-300 cursor-pointer flex items-center gap-2 border ${
                   isSelected
                     ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-bold border-cyan-400 shadow-[0_0_25px_rgba(6,182,212,0.35)] scale-[1.02]'
-                    : 'bg-slate-900/80 text-slate-400 hover:text-slate-200 border-slate-800/80 hover:bg-slate-850'
+                    : 'bg-slate-900/80 text-slate-400 hover:text-slate-200 border-slate-800/80 hover:bg-slate-800'
                 }`}
               >
                 <span className="font-mono text-[10px] opacity-75">{slide.stepNum}.</span>
@@ -454,16 +464,19 @@ export default function GoHighLevelShowcase({ onConsultWorkflow }: GoHighLevelSh
           })}
         </div>
 
+        <p className="text-sm text-slate-400 mb-4">Workflow metrics are project-specific. Discuss the measurement period and baseline before using them to forecast results.</p>
         {/* Main Interactive Slide Stage (Glassmorphism + Apple Card) */}
-        <div className="relative">
+        <div className="relative" role="region" aria-label="Patient journey workflows" aria-roledescription="carousel">
+          <p className="sr-only" aria-live="polite">Workflow {currentIndex + 1} of {WORKFLOW_SLIDES.length}: {activeSlide.title}</p>
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={activeSlide.id}
               custom={direction}
-              initial={{ opacity: 0, x: direction > 0 ? 30 : -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: direction > 0 ? -30 : 30 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              variants={{ enter: (dir: number) => ({ opacity: 0, x: reduceMotion ? 0 : dir * 24 }), visible: { opacity: 1, x: 0 }, leave: (dir: number) => ({ opacity: 0, x: reduceMotion ? 0 : dir * -16 }) }}
+              initial="enter"
+              animate="visible"
+              exit="leave"
+              transition={{ duration: reduceMotion ? 0 : 0.28, ease: [0.16, 1, 0.3, 1] }}
               className="rounded-3xl bg-slate-950/85 border border-slate-800/90 backdrop-blur-2xl p-6 sm:p-9 shadow-2xl overflow-hidden relative"
             >
               {/* Background ambient lighting accent */}
@@ -477,7 +490,7 @@ export default function GoHighLevelShowcase({ onConsultWorkflow }: GoHighLevelSh
                   {/* Step tag & Category */}
                   <div className="flex items-center gap-2.5">
                     <span className="px-3 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-xs font-mono font-semibold text-cyan-300">
-                      Slide {activeSlide.stepNum} of 05
+                      Slide {activeSlide.stepNum} of {String(WORKFLOW_SLIDES.length).padStart(2, '0')}
                     </span>
                     <span className="text-xs font-medium text-slate-400">
                       {activeSlide.category}
@@ -497,7 +510,7 @@ export default function GoHighLevelShowcase({ onConsultWorkflow }: GoHighLevelSh
                   {/* Technology Badges Matrix */}
                   <div className="space-y-2 pt-1">
                     <div className="text-[11px] font-mono text-slate-400 uppercase tracking-wider">
-                      Technology Badges:
+                      Built with:
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {TECH_BADGES.map((badge, idx) => (
@@ -543,7 +556,7 @@ export default function GoHighLevelShowcase({ onConsultWorkflow }: GoHighLevelSh
 <div className="lg:col-span-7">
   <div className="rounded-3xl overflow-hidden border border-slate-700 bg-slate-950 shadow-2xl">
 
-    <div className="flex items-center justify-between px-5 py-3 bg-slate-900 border-b border-slate-700">
+    <div className="flex items-center justify-between px-4 py-3 gap-3 flex-wrap bg-slate-900 border-b border-slate-700">
       <div className="flex items-center gap-2">
         <span className="w-3 h-3 rounded-full bg-red-500"></span>
         <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
@@ -555,14 +568,15 @@ export default function GoHighLevelShowcase({ onConsultWorkflow }: GoHighLevelSh
       </span>
 
       <span className="text-xs px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-        Live Workflow
+        Workflow Screenshot
       </span>
     </div>
 
     <img
+      decoding="async"
       src={activeSlide.image}
       alt={activeSlide.title}
-      className="w-full object-cover transition-all duration-500"
+      className="w-full object-contain"
     />
 
   </div>
@@ -571,23 +585,6 @@ export default function GoHighLevelShowcase({ onConsultWorkflow }: GoHighLevelSh
               </div>
             </motion.div>
           </AnimatePresence>
-
-          {/* Pagination Navigation Dots */}
-          <div className="flex items-center justify-center gap-2.5 mt-8">
-            {WORKFLOW_SLIDES.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => handleSelectSlide(idx)}
-                aria-label={`Go to slide ${idx + 1}`}
-                className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                  currentIndex === idx
-                    ? 'w-9 bg-cyan-400 shadow-[0_0_12px_rgba(6,182,212,0.8)]'
-                    : 'w-2.5 bg-slate-800 hover:bg-slate-700'
-                }`}
-              />
-            ))}
-          </div>
-
         </div>
 
       </div>

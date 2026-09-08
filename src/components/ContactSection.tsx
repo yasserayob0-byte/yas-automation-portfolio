@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { motion } from 'motion/react';
 import {
   Sparkles,
@@ -5,7 +6,9 @@ import {
   Code2,
   MessageSquare,
   ArrowRight,
-  Send
+  Send,
+  Copy,
+  Check
 } from 'lucide-react';
 
 interface ContactSectionProps {
@@ -13,8 +16,7 @@ interface ContactSectionProps {
 }
 
 export default function ContactSection({ initialTopic = '' }: ContactSectionProps) {
-  // Reserved for prefilling a future contact form; retained for caller compatibility.
-  void initialTopic;
+  const [copyStatus, setCopyStatus] = useState('');
   const contactCards = [
     {
       id: 'contact-ai-workflow',
@@ -62,10 +64,15 @@ export default function ContactSection({ initialTopic = '' }: ContactSectionProp
     }
   ];
 
-  const handleConnectClick = () => {
-    const subject = encodeURIComponent("Let's Build Something Great Together — Automation Consultation");
+  const emailHref = (topic = initialTopic) => {
+    const subject = encodeURIComponent(topic || "Let's Build Something Great Together — Automation Consultation");
     const body = encodeURIComponent("Hi Yasser,\n\nI came across your portfolio and would like to discuss an automation project for our business.\n\nProject Scope:\n- Timeline:\n- Budget:");
-    window.location.href = `mailto:yasserayob0@gmail.com?subject=${subject}&body=${body}`;
+    return `mailto:yasserayob0@gmail.com?subject=${subject}&body=${body}`;
+  };
+
+  const copyEmail = async () => {
+    try { await navigator.clipboard.writeText('yasserayob0@gmail.com'); setCopyStatus('Email address copied.'); }
+    catch { setCopyStatus('Copy is unavailable. Select the email address below to copy it.'); }
   };
 
   return (
@@ -76,23 +83,30 @@ export default function ContactSection({ initialTopic = '' }: ContactSectionProp
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <div className="text-center max-w-3xl mx-auto mb-10 space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-xs font-mono text-cyan-400">
             <Sparkles className="w-3.5 h-3.5" />
             <span>START A PROJECT</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
-            Let's Build Something Great Together.
-          </h2>
+          <motion.h2 initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px -40px 0px" }} transition={{ duration: 0.65 }} className="text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
+            Tell Me What You Want to Automate.
+          </motion.h2>
 
           <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto">
             Looking to automate repetitive tasks, streamline your business processes, or build intelligent AI-powered workflows? Let's create solutions that save time and help your business grow.
           </p>
         </div>
 
+        <div className="max-w-3xl mx-auto mb-10 p-6 rounded-2xl border border-cyan-500/20 bg-cyan-500/5 text-left">
+          <h3 className="text-lg font-semibold text-white">Start with one workflow</h3>
+          <p className="mt-2 text-sm leading-relaxed text-slate-300">Share the task that takes too much time, the tools you use, and what a successful outcome looks like. Include your timeline and budget range if you have them.</p>
+          {initialTopic && <p role="status" className="mt-3 text-sm text-cyan-300">Your selected topic: {initialTopic}</p>}
+          <p className="mt-3 text-sm text-slate-400">The email link opens a draft in your email app. Nothing is sent automatically.</p>
+        </div>
+
         {/* Four Premium Glassmorphism Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           {contactCards.map((card, idx) => {
             const Icon = card.icon;
             return (
@@ -102,8 +116,7 @@ export default function ContactSection({ initialTopic = '' }: ContactSectionProp
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.08 }}
-                onClick={handleConnectClick}
-                className={`group relative rounded-3xl bg-slate-950/80 border border-slate-800/90 p-7 backdrop-blur-xl ${card.borderColor} ${card.glowColor} transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between cursor-pointer overflow-hidden`}
+                className={`group relative rounded-3xl bg-slate-950/80 border border-slate-800/90 p-5 sm:p-6 backdrop-blur-xl ${card.borderColor} ${card.glowColor} transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between overflow-hidden`}
               >
                 {/* Subtle Gradient Backlight on Hover */}
                 <div className={`absolute -top-24 -right-24 w-44 h-44 bg-gradient-to-br ${card.gradient} rounded-full blur-2xl opacity-40 group-hover:opacity-100 transition-opacity pointer-events-none`} />
@@ -111,7 +124,7 @@ export default function ContactSection({ initialTopic = '' }: ContactSectionProp
                 {/* Card Main Body */}
                 <div className="space-y-5 relative z-10">
                   {/* Top Row: Icon & Tag */}
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-wrap gap-3 items-center justify-between">
                     <div className={`w-12 h-12 rounded-2xl ${card.iconBg} border flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg`}>
                       <Icon className="w-6 h-6" />
                     </div>
@@ -134,9 +147,7 @@ export default function ContactSection({ initialTopic = '' }: ContactSectionProp
 
                 {/* Card Footer Arrow Indicator */}
                 <div className="pt-6 mt-6 border-t border-slate-900/80 flex items-center justify-between relative z-10">
-                  <span className="text-xs font-mono text-slate-500 group-hover:text-cyan-400 transition-colors font-medium">
-                    Discuss Scope
-                  </span>
+                  <a href={emailHref(card.title)} className="text-sm font-semibold text-cyan-300" aria-label={`Email about ${card.title}`}>Email about this service</a>
 
                   <div className="w-8 h-8 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-center text-slate-400 group-hover:bg-cyan-500 group-hover:text-slate-950 group-hover:border-cyan-400 transition-all duration-300">
                     <ArrowRight className="w-4 h-4 transform group-hover:translate-x-0.5 transition-transform" />
@@ -149,20 +160,22 @@ export default function ContactSection({ initialTopic = '' }: ContactSectionProp
 
         {/* Premium Center CTA Button */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-center">
-          <button
-            onClick={handleConnectClick}
+          <a
+            href={emailHref()}
             className="w-full sm:w-auto px-10 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-extrabold text-sm uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-3 cursor-pointer shadow-xl shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-[1.03] active:scale-98"
           >
             <Send className="w-4 h-4" />
-            <span>Let's Connect</span>
+            <span>Email Your Project Brief</span>
             <ArrowRight className="w-4 h-4" />
-          </button>
+          </a>
+          <button onClick={copyEmail} className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-700 text-sm text-slate-200">{copyStatus === 'Email address copied.' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}Copy email address</button>
         </div>
+        <p role="status" className="text-center text-sm text-cyan-300 mt-3 min-h-6">{copyStatus}</p>
 
         {/* Fast response & Direct Email note below CTA */}
         <div className="text-center mt-6">
-          <p className="text-xs font-mono text-slate-400">
-            Direct Email: <a href="mailto:yasserayob0@gmail.com" className="text-cyan-400 hover:underline">yasserayob0@gmail.com</a> • Typical response within 4 hours
+          <p className="text-sm text-slate-400 break-words">
+            Direct Email: <a href="mailto:yasserayob0@gmail.com" className="text-cyan-400 hover:underline">yasserayob0@gmail.com</a>
           </p>
         </div>
 

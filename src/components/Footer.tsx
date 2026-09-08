@@ -1,8 +1,9 @@
+import { preferredScrollBehavior } from './navigation';
 import { ArrowUp, Linkedin, Github, Briefcase, Globe } from 'lucide-react';
 
 export default function Footer() {
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: preferredScrollBehavior() });
   };
 
   return (
@@ -30,12 +31,12 @@ export default function Footer() {
             </div>
 
             <p className="text-xs sm:text-sm text-slate-400 max-w-sm leading-relaxed">
-              Building intelligent business systems through AI automation. We architect scalable GoHighLevel, n8n, and custom AI agent pipelines for modern enterprises.
+              Building intelligent business systems through AI automation. I build GoHighLevel, n8n, and custom AI agent pipelines for growing businesses.
             </p>
 
             <div className="flex items-center gap-2 text-[11px] font-mono text-emerald-400">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>All Autonomous Pipelines Operational • 99.9% Uptime</span>
+              <span>AI workflows, CRM automation & API integrations</span>
             </div>
           </div>
 
@@ -52,7 +53,7 @@ export default function Footer() {
               </li>
               <li>
                 <a href="#services" className="hover:text-cyan-400 transition-colors">
-                  Agency Services
+                  Automation Services
                 </a>
               </li>
               <li>
@@ -67,7 +68,7 @@ export default function Footer() {
               </li>
               <li>
                 <a href="#contact" className="hover:text-cyan-400 transition-colors">
-                  Contact & Audit Booking
+                  Discuss Your Project
                 </a>
               </li>
             </ul>
@@ -76,44 +77,36 @@ export default function Footer() {
           {/* Social Links (4 Cols) */}
           <div className="md:col-span-4 space-y-3">
             <h4 className="text-xs font-mono font-bold text-white uppercase tracking-wider">
-              Social & Verified Platforms
+              Professional Profiles
             </h4>
             <div className="flex flex-col space-y-2 text-xs">
               <a
-                href="https://www.linkedin.com"
-                target="_blank"
-                rel="noreferrer"
+                href="mailto:yasserayob0@gmail.com?subject=Request%20LinkedIn%20profile"
                 className="hover:text-cyan-400 transition-colors flex items-center gap-2"
               >
                 <Linkedin className="w-3.5 h-3.5 text-cyan-400" />
-                <span>LinkedIn Profile</span>
+                <span>Request LinkedIn Profile</span>
               </a>
               <a
-                href="https://github.com"
-                target="_blank"
-                rel="noreferrer"
+                href="mailto:yasserayob0@gmail.com?subject=Request%20GitHub%20profile"
                 className="hover:text-cyan-400 transition-colors flex items-center gap-2"
               >
                 <Github className="w-3.5 h-3.5 text-cyan-400" />
-                <span>GitHub Repositories</span>
+                <span>Request GitHub Profile</span>
               </a>
               <a
-                href="https://www.upwork.com"
-                target="_blank"
-                rel="noreferrer"
+                href="mailto:yasserayob0@gmail.com?subject=Request%20Upwork%20profile"
                 className="hover:text-cyan-400 transition-colors flex items-center gap-2"
               >
                 <Briefcase className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Upwork Verified Agency</span>
+                <span>Request Upwork Profile</span>
               </a>
               <a
-                href="https://www.onlinejobs.ph"
-                target="_blank"
-                rel="noreferrer"
+                href="mailto:yasserayob0@gmail.com?subject=Request%20OnlineJobs%20profile"
                 className="hover:text-cyan-400 transition-colors flex items-center gap-2"
               >
                 <Globe className="w-3.5 h-3.5 text-amber-400" />
-                <span>OnlineJobs Verified</span>
+                <span>Request OnlineJobs Profile</span>
               </a>
             </div>
           </div>
