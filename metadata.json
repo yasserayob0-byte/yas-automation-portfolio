@@ -1,0 +1,6 @@
+{
+  "name": "YAS Automation | Enterprise AI & Business Systems Agency",
+  "description": "Official website of YAS Automation, an enterprise-grade AI automation and autonomous business systems agency designed and developed by Yasser Usman.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
