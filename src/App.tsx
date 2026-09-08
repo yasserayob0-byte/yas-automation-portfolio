@@ -1,10 +1,11 @@
-﻿import { useEffect, useMemo, useRef, useState } from 'react';
+﻿import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import CustomCursor from './components/CustomCursor';
 import BackgroundEffects from './components/BackgroundEffects';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import AboutSection from './components/AboutSection';
 import ServicesSection from './components/ServicesSection';
+import HowIWorkSection from './components/HowIWorkSection';
 import GoHighLevelShowcase from './components/GoHighLevelShowcase';
 import ProjectsSection from './components/ProjectsSection';
 import TechStackSection from './components/TechStackSection';
@@ -13,7 +14,8 @@ import TestimonialsSection from './components/TestimonialsSection';
 import FaqSection from './components/FaqSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
-import CaseStudyTemplate from './components/CaseStudyTemplate';
+import CaseStudyBoundary from './components/CaseStudyBoundary';
+const CaseStudyTemplate = lazy(() => import('./components/CaseStudyTemplate'));
 import { resolveCaseStudy } from './data/resolveCaseStudy';
 import { focusSection } from './components/navigation';
 
@@ -75,10 +77,11 @@ export default function App() {
         <Navbar onOpenContact={handleOpenContact} />
         <main id="main-content" tabIndex={-1} className="relative z-10">
           {caseId && !study && <div role="status" className="pt-28 px-6 text-center text-slate-300">That case study is unavailable. <a href="#projects" className="text-cyan-300 underline">Browse all projects</a>.</div>}
-          <HeroSection onExploreWorkflows={() => navigateSection('ghl-showcase')} onBookAudit={() => handleOpenContact('Automation Project Consultation')} />
+          <HeroSection onExploreWorkflows={() => navigateSection('ghl-showcase')} onBookAudit={() => handleOpenContact('Discovery Call')} />
           <ProjectsSection onSelectProjectForAudit={(project) => handleOpenContact(`Project: ${project}`)} onOpenCaseStudy={openCase} />
           <ServicesSection onSelectService={(service) => handleOpenContact(`Service: ${service}`)} />
           <GoHighLevelShowcase onConsultWorkflow={(workflow) => handleOpenContact(`GoHighLevel Workflow: ${workflow}`)} />
+          <HowIWorkSection />
           <AboutSection onTalkWithYasser={() => handleOpenContact('Consultation with Yasser Usman')} />
           <TechStackSection />
           <WhyAutomationMatters />
@@ -87,7 +90,7 @@ export default function App() {
           <ContactSection initialTopic={contactTopic} />
         </main>
       </div>
-      {study && <main id="case-study-content" tabIndex={-1} className="relative z-10"><CaseStudyTemplate key={study.id} data={study} onBack={() => navigateSection('projects')} onNavigateProject={openCase} onContactClick={handleOpenContact} /></main>}
+      {study && <main id="case-study-content" tabIndex={-1} className="relative z-10"><CaseStudyBoundary key={study.id}><Suspense fallback={<div role="status" className="px-6 py-24 text-center text-slate-300">Loading case study...</div>}><CaseStudyTemplate key={study.id} data={study} onBack={() => navigateSection('projects')} onNavigateProject={openCase} onContactClick={handleOpenContact} /></Suspense></CaseStudyBoundary></main>}
       <Footer />
     </div>
   );

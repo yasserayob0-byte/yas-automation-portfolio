@@ -1,0 +1,46 @@
+/* A shared motion rhythm; only small transforms and opacity run continuously. */
+:root { --motion-ease: cubic-bezier(.22, 1, .36, 1); }
+button, a, .group { transition-timing-function: var(--motion-ease); }
+button:active:not(:disabled) { scale: .985; }
+:is(button, a) > .lucide { transition: transform 240ms var(--motion-ease); }
+@media (hover: hover) and (pointer: fine) {
+  :is(button, a):hover > :is(.lucide-arrow-right, .lucide-arrow-up-right) { transform: translateX(2px); }
+}
+.reveal-image { transition: opacity 480ms var(--motion-ease); }
+.reveal-image[data-image-state='loading'] {
+  opacity: .3;
+  background: #111827;
+  animation: image-wait 1.8s ease-in-out 3 alternate;
+}
+.reveal-image[data-image-state='ready'] { animation: image-arrive 540ms var(--motion-ease) both; }
+@keyframes image-wait { to { opacity: .55; } }
+@keyframes image-arrive { from { opacity: .25; } to { opacity: 1; } }
+.motion-glass { position: relative; isolation: isolate; }
+.motion-glass::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(120deg, transparent 15%, #ffffff06 40%, #ffffff0a 48%, transparent 65%);
+  opacity: 0; transition: opacity 450ms var(--motion-ease); z-index: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  .motion-glass:hover::after { opacity: 1; }
+}
+.motion-glass:focus-within::after { opacity: 1; }
+.ambient-particle {
+  position: absolute; width: 2px; height: 2px; border-radius: 50%;
+  background: #cbd5e1; opacity: .12;
+  animation: particle-drift 22s ease-in-out infinite alternate;
+}
+@keyframes particle-drift { to { transform: translate3d(9px, -20px, 0); opacity: .24; } }
+.ambient-orb { animation-duration: 32s; opacity: .45; }
+html[data-page-hidden='true'] *, html[data-page-hidden='true'] *::before, html[data-page-hidden='true'] *::after { animation-play-state: paused !important; }
+@media (max-width: 767px), (pointer: coarse) { .ambient-particle { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .reveal-image { animation: none !important; opacity: 1 !important; }
+  .ambient-particle { display: none; }
+  button:active:not(:disabled) { scale: 1; }
+  :is(button, a):hover > .lucide { transform: none; }
+}
+html[data-motion='off'] .reveal-image { animation: none !important; opacity: 1 !important; }
+html[data-motion='off'] .ambient-particle { display: none; }
+html[data-motion='off'] button:active:not(:disabled) { scale: 1; }
+html[data-motion='off'] :is(button, a):hover > .lucide { transform: none; }

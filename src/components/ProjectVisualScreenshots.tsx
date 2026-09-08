@@ -1,3 +1,4 @@
+import RevealImage from './RevealImage';
 import { createPortal } from 'react-dom';
 import { useModalFocus } from './useModalFocus';
 import { useState, useEffect, useCallback } from 'react';
@@ -11,88 +12,15 @@ import {
   ChevronRight,
   Workflow
 } from 'lucide-react';
-import fbMessengerImg from '../assets/images/fb_messenger_n8n_1787549985295.jpg';
-import jobScraperImg from '../assets/images/job_scraper_n8n_1787550004053.jpg';
-import leadCrmImg from '../assets/images/lead_crm_n8n_1787550019778.jpg';
-import emailSupportImg from '../assets/images/email_support_n8n_1787550036780.jpg';
-import ghlDentalImg from '../assets/images/ghl_dental_flow_1787550053544.jpg';
-import aiReceptionistImg from '../assets/images/ai_receptionist.jpg';
+import { PROJECT_ITEMS, PROJECT_IMAGE_MAP } from '../data/projectScreenshots';
 interface ScreenshotProps {
   projectId: string;
   className?: string;
   showFrame?: boolean;
 }
 
-interface ProjectVisualItem {
-  id: string;
-  img: string;
-  title: string;
-  category: string;
-  tag: string;
-}
-
-const PROJECT_ITEMS: ProjectVisualItem[] = [
-  {
-    id: 'proj-1',
-    img: fbMessengerImg,
-    title: 'AI-Powered Facebook Messenger Support Agent (n8n Execution)',
-    category: 'AI Agents',
-    tag: 'Succeeded in 6.289s'
-  },
-  {
-    id: 'proj-2',
-    img: jobScraperImg,
-    title: 'AI Jobs Scraper + Resume Optimizer (n8n Canvas)',
-    category: 'n8n Workflow',
-    tag: 'Published • Live Pipeline'
-  },
-  {
-    id: 'proj-3',
-    img: leadCrmImg,
-    title: 'End-to-End AI Lead Qualification & CRM Automation (n8n Workflow)',
-    category: 'CRM Automation',
-    tag: 'Executed Successfully'
-  },
-  {
-    id: 'proj-4',
-    img: emailSupportImg,
-    title: 'AI Email Support Automation (n8n Cloud Canvas)',
-    category: 'Custom APIs',
-    tag: 'Success in 333ms'
-  },
-  {
-    id: 'proj-5',
-    img: ghlDentalImg,
-    title: 'Dental Clinic Patient Journey Automation (GoHighLevel Suite)',
-    category: 'GoHighLevel CRM',
-    tag: '94.2% Show-Up Rate'
-  },
-{
-  id: 'proj-6',
-  img: aiReceptionistImg,
-  title: 'AI Receptionist & Appointment Booking Automation',
-  category: 'n8n AI Workflow',
-  tag: 'Complex AI Workflow'
-},
-];
-const PROJECT_IMAGE_MAP: Record<string, ProjectVisualItem> = {
-  'proj-1': PROJECT_ITEMS[0],
-  'ai-messenger-agent': PROJECT_ITEMS[0],
-  'proj-2': PROJECT_ITEMS[1],
-  'ai-job-scraper': PROJECT_ITEMS[1],
-  'proj-3': PROJECT_ITEMS[2],
-  'ai-lead-qualification': PROJECT_ITEMS[2],
-  'proj-4': PROJECT_ITEMS[3],
-  'ai-email-support': PROJECT_ITEMS[3],
-  'proj-5': PROJECT_ITEMS[4],
-  'dental-patient-journey': PROJECT_ITEMS[4],
-  'ghl-dental': PROJECT_ITEMS[4],
-  'proj-6': PROJECT_ITEMS[5],
-'ai-receptionist': PROJECT_ITEMS[5],
-};
-
 export default function ProjectVisualScreenshot({ projectId, className = '', showFrame = true }: ScreenshotProps) {
-  const initialData = PROJECT_IMAGE_MAP[projectId] || PROJECT_ITEMS[0];
+  const initialData = (Object.hasOwn(PROJECT_IMAGE_MAP, projectId) ? PROJECT_IMAGE_MAP[projectId] : PROJECT_ITEMS[0]);
   
   const initialIndex = PROJECT_ITEMS.findIndex(
     (item) => item.id === initialData.id
@@ -104,7 +32,7 @@ export default function ProjectVisualScreenshot({ projectId, className = '', sho
 
   // Sync index when projectId changes
   useEffect(() => {
-    const matched = PROJECT_IMAGE_MAP[projectId] || PROJECT_ITEMS[0];
+    const matched = (Object.hasOwn(PROJECT_IMAGE_MAP, projectId) ? PROJECT_IMAGE_MAP[projectId] : PROJECT_ITEMS[0]);
     const idx = PROJECT_ITEMS.findIndex((item) => item.id === matched.id);
     if (idx >= 0) {
       setCurrentIndex(idx);
@@ -112,6 +40,12 @@ export default function ProjectVisualScreenshot({ projectId, className = '', sho
   }, [projectId]);
 
   const modalRef = useModalFocus(isZoomed, () => { setIsZoomed(false); setLightboxZoom(1); });
+
+  const openScreenshot = () => {
+    setCurrentIndex(initialIndex);
+    setLightboxZoom(1);
+    setIsZoomed(true);
+  };
 
   const activeItem = PROJECT_ITEMS[currentIndex] || initialData;
 
@@ -130,6 +64,8 @@ export default function ProjectVisualScreenshot({ projectId, className = '', sho
     if (!isZoomed) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (['ArrowLeft', 'ArrowRight', '+', '=', '-'].includes(e.key)) e.preventDefault();
       if (e.key === 'ArrowLeft') {
         handlePrev();
       } else if (e.key === 'ArrowRight') {
@@ -172,11 +108,7 @@ export default function ProjectVisualScreenshot({ projectId, className = '', sho
           <button
             onClick={(e) => {
               e.stopPropagation();
-              const matched = PROJECT_IMAGE_MAP[projectId] || PROJECT_ITEMS[0];
-              const idx = PROJECT_ITEMS.findIndex((item) => item.id === matched.id);
-              if (idx >= 0) setCurrentIndex(idx);
-              setLightboxZoom(1);
-              setIsZoomed(true);
+              openScreenshot();
             }}
             aria-label="Enlarge Workflow Screenshot"
             className="p-1 rounded-md bg-slate-800/80 hover:bg-cyan-500 text-slate-400 hover:text-slate-950 transition-colors cursor-pointer"
@@ -195,18 +127,14 @@ export default function ProjectVisualScreenshot({ projectId, className = '', sho
           onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); event.currentTarget.click(); } }}
           onClick={(event) => {
             event.stopPropagation();
-            const matched = PROJECT_IMAGE_MAP[projectId] || PROJECT_ITEMS[0];
-            const idx = PROJECT_ITEMS.findIndex((item) => item.id === matched.id);
-            if (idx >= 0) setCurrentIndex(idx);
-            setLightboxZoom(1);
-            setIsZoomed(true);
+            openScreenshot();
           }}
         >
           {/* Subtle Grid Background Pattern */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b15_1px,transparent_1px),linear-gradient(to_bottom,#1e293b15_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />
 
           {/* Screenshot Image with object-contain centered to never crop nodes */}
-          <img
+          <RevealImage
             loading="lazy" decoding="async"
             src={initialData.img}
             alt={initialData.title}
@@ -347,7 +275,7 @@ export default function ProjectVisualScreenshot({ projectId, className = '', sho
             }}
           >
             <div className="w-full shrink-0">
-              <img
+              <RevealImage
                 src={activeItem.img}
                 alt={activeItem.title}
                 style={{

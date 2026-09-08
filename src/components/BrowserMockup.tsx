@@ -1,5 +1,5 @@
 import React from 'react';
-import { Lock, ShieldCheck, RefreshCw, Layers } from 'lucide-react';
+import { Lock, ShieldCheck, Layers } from 'lucide-react';
 
 interface BrowserMockupProps {
   url?: string;
@@ -8,8 +8,6 @@ interface BrowserMockupProps {
   className?: string;
   badge?: string;
   badgeColor?: string;
-  onRefresh?: () => void;
-  isSimulating?: boolean;
 }
 
 export default function BrowserMockup({
@@ -18,13 +16,11 @@ export default function BrowserMockup({
   children,
   className = '',
   badge,
-  badgeColor = 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30',
-  onRefresh,
-  isSimulating = false
+  badgeColor = 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30'
 }: BrowserMockupProps) {
   return (
     <div
-      className={`rounded-2xl overflow-hidden bg-slate-950/90 border border-slate-800/80 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] backdrop-blur-xl transition-all duration-300 ${className}`}
+      className={`motion-glass rounded-2xl overflow-hidden bg-slate-950/90 border border-slate-800/80 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] backdrop-blur-xl transition-all duration-300 ${className}`}
     >
       {/* Browser Window Header */}
       <div className="bg-slate-900/95 px-4 py-3 border-b border-slate-800/80 flex items-center justify-between gap-3 select-none">
@@ -40,19 +36,6 @@ export default function BrowserMockup({
           <Lock className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
           <span className="truncate text-slate-300 font-normal">{url}</span>
           <div className="ml-auto flex items-center gap-1 text-slate-500">
-            {onRefresh && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onRefresh();
-                }}
-                aria-label="Re-run simulation"
-                title="Re-run Simulation"
-                className="hover:text-cyan-400 transition-colors p-0.5"
-              >
-                <RefreshCw className={`w-3 h-3 ${isSimulating ? 'animate-spin text-cyan-400' : ''}`} />
-              </button>
-            )}
             <ShieldCheck className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
           </div>
         </div>

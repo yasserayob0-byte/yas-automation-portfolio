@@ -97,7 +97,7 @@ export interface TestimonialItem {
 }
 
 export interface CaseStudyData {
-  id?: string;
+  id: string;
   badge?: string;
   title: string;
   tagline: string;

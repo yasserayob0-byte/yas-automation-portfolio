@@ -239,7 +239,7 @@ export const AI_JOB_SCRAPER_CASE_STUDY: CaseStudyData = {
     category: 'AI Agents'
   },
   nextProject: {
-    id: 'proj-3',
+    id: 'proj-4',
     title: 'Multi-Platform Social Media Lead Ingestion Pipeline',
     category: 'Lead Automation'
   }
@@ -479,7 +479,7 @@ export const FB_MESSENGER_CASE_STUDY: CaseStudyData = {
 };
 
 export const LEAD_QUALIFICATION_CASE_STUDY: CaseStudyData = {
-  id: 'proj-3',
+  id: 'proj-4',
   badge: 'CRM & AI AUTOMATION CASE STUDY',
   title: 'End-to-End AI Lead Qualification & CRM Automation',
   tagline: 'An intelligent lead management workflow that captures, validates, scores, and routes incoming leads automatically, helping businesses focus on high-quality opportunities while reducing manual processing.',
@@ -720,14 +720,14 @@ export const LEAD_QUALIFICATION_CASE_STUDY: CaseStudyData = {
     category: 'n8n & Google Gemini'
   },
   nextProject: {
-    id: 'proj-4',
+    id: 'proj-3',
     title: 'AI Email Support Automation',
     category: 'Email Automation'
   }
 };
 
 export const AI_EMAIL_SUPPORT_CASE_STUDY: CaseStudyData = {
-  id: 'proj-4',
+  id: 'proj-3',
   badge: 'EMAIL AUTOMATION CASE STUDY',
   title: 'AI Email Support Automation',
   tagline: 'An AI-powered email workflow that classifies customer inquiries, generates intelligent responses, and streamlines support operations through automated routing and communication.',
@@ -955,7 +955,7 @@ export const AI_EMAIL_SUPPORT_CASE_STUDY: CaseStudyData = {
   ],
 
   prevProject: {
-    id: 'proj-3',
+    id: 'proj-4',
     title: 'End-to-End AI Lead Qualification & CRM Automation',
     category: 'AI Agents'
   },
@@ -1239,7 +1239,7 @@ export const PATIENT_JOURNEY_GHL_CASE_STUDY: CaseStudyData = {
   ],
 
   prevProject: {
-    id: 'proj-4',
+    id: 'proj-3',
     title: 'AI Email Support Automation',
     category: 'Custom APIs'
   },
@@ -1253,8 +1253,8 @@ export const PATIENT_JOURNEY_GHL_CASE_STUDY: CaseStudyData = {
 export const CASE_STUDIES_MAP: Record<string, CaseStudyData> = {
   'proj-1': FB_MESSENGER_CASE_STUDY,
   'proj-2': AI_JOB_SCRAPER_CASE_STUDY,
-  'proj-3': LEAD_QUALIFICATION_CASE_STUDY,
-  'proj-4': AI_EMAIL_SUPPORT_CASE_STUDY,
+  'proj-4': LEAD_QUALIFICATION_CASE_STUDY,
+  'proj-3': AI_EMAIL_SUPPORT_CASE_STUDY,
   'proj-5': PATIENT_JOURNEY_GHL_CASE_STUDY,
   'fb-messenger': FB_MESSENGER_CASE_STUDY,
   'job-scraper': AI_JOB_SCRAPER_CASE_STUDY,

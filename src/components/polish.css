@@ -1,0 +1,60 @@
+/* Shared visual finish. Existing grids, breakpoints, colors and content stay in place. */
+:root {
+  --radius-panel: 1.5rem;
+  --radius-inset: 1rem;
+  --shadow-panel: 0 12px 32px -20px rgb(0 0 0 / 65%), inset 0 1px 0 rgb(255 255 255 / 3%);
+  --shadow-panel-hover: 0 18px 40px -24px rgb(0 0 0 / 75%), inset 0 1px 0 rgb(255 255 255 / 5%);
+}
+body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+.section-title {
+  font-size: clamp(1.875rem, 3.5vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.16;
+  letter-spacing: -.035em;
+}
+.section-title + p { line-height: 1.75; margin-top: 1.25rem; }
+.section-intro { margin-bottom: clamp(2rem, 4vw, 3.5rem); }
+.polished-card {
+  border-radius: var(--radius-panel);
+  border-color: rgb(148 163 184 / 15%);
+  box-shadow: var(--shadow-panel);
+}
+.polished-card:hover { box-shadow: var(--shadow-panel-hover); }
+.polished-card h3 { line-height: 1.35; letter-spacing: -.02em; font-weight: 600; }
+.polished-card p, .polished-card dd { line-height: 1.75; }
+.polished-card .font-mono { letter-spacing: 0; }
+.polished-card :is(.rounded-xl, .rounded-2xl) { border-radius: var(--radius-inset); }
+.project-content { padding: clamp(1.25rem, 2.6vw, 2rem); }
+.project-story { padding-top: .25rem; }
+.project-story dt { font-size: .75rem; line-height: 1.5; font-weight: 600; letter-spacing: .025em; }
+.project-story dd { margin-top: .375rem; }
+.project-metrics { font-variant-numeric: tabular-nums; }
+.project-metrics > div { padding: .875rem .5rem; }
+.project-actions { gap: .75rem; flex-wrap: wrap; align-items: center; }
+.project-actions button { line-height: 1.4; }
+.service-card, .contact-card, .journey-card { padding: clamp(1.25rem, 2.2vw, 1.75rem); }
+.service-card h3, .contact-card h3 { font-size: 1.1875rem; }
+.journey-card > span { display: inline-block; margin-bottom: .25rem; font-variant-numeric: tabular-nums; }
+.journey-card h3 { font-size: 1.125rem; }
+.testimonial-card blockquote { font-style: normal; line-height: 1.8; }
+.faq-panel { border-radius: var(--radius-inset); box-shadow: inset 0 1px 0 #ffffff04; }
+.faq-panel > button { line-height: 1.55; }
+.faq-panel [role='region'] > div { font-size: .875rem; line-height: 1.8; }
+nav.rounded-full a { display: inline-flex; align-items: center; justify-content: center; border: 1px solid transparent; line-height: 1.4; }
+nav.rounded-full a[aria-current='location'] { box-shadow: inset 0 1px 0 rgb(255 255 255 / 4%); }
+#home h1 { letter-spacing: -.04em; line-height: 1.12; }
+#home h1 + p { line-height: 1.8; }
+#contact a[class*='px-10'] { font-weight: 700; text-transform: none; letter-spacing: 0; font-size: .9375rem; }
+footer ul { line-height: 1.6; }
+footer ul a { font-size: .8125rem; }
+#case-study-content h1 { letter-spacing: -.035em; line-height: 1.12; }
+#case-study-content h2 { letter-spacing: -.025em; }
+#case-study-content p { line-height: 1.75; }
+[role='dialog'] { box-shadow: 0 32px 100px -24px rgb(0 0 0 / 70%); }
+[role='dialog'] h3 { line-height: 1.4; }
+@media (max-width: 639px) {
+  .project-actions { align-items: stretch; }
+  .project-actions button { flex: 1 1 9rem; justify-content: center; text-align: center; }
+  .project-metrics > div { padding-inline: .375rem; }
+  .section-title { letter-spacing: -.025em; }
+}

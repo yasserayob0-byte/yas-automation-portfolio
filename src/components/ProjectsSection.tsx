@@ -9,6 +9,7 @@ import {
   X,
   ShieldCheck
 } from 'lucide-react';
+import { PROJECT_BUSINESS_STORIES } from '../data/businessMessaging';
 import { PROJECTS_DATA } from '../data/portfolioData';
 import type { ProjectItem } from '../types';
 import BrowserMockup from './BrowserMockup';
@@ -40,13 +41,13 @@ export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStu
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-14 space-y-4">
+        <div className="section-intro text-center max-w-3xl mx-auto mb-14 space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-slate-800 text-xs font-mono text-cyan-400">
             <Layers className="w-3.5 h-3.5" />
             <span>FEATURED AUTOMATION SOLUTIONS</span>
           </div>
-          <motion.h2 initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px -40px 0px" }} transition={{ duration: 0.65 }} className="text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
-            Featured Automation Solutions.
+          <motion.h2 initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px -40px 0px" }} transition={{ duration: 0.55 }} className="section-title text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
+            See What Your Team Could Stop Doing Manually.
           </motion.h2>
           <p className="text-base sm:text-lg text-slate-400">
             Explore real workflow screenshots, the problems each system solves, and how the integrations work. Project metrics are reported outcomes, not guarantees for a new deployment.
@@ -77,12 +78,12 @@ export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStu
             <motion.div
               key={project.id}
               layout="position"
-              whileHover={{ y: -5 }}
-              initial={{ opacity: 0, y: 20 }}
+              whileHover={{ y: -3 }}
+              initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: (idx % 2) * 0.08 }}
-              className="group relative rounded-3xl bg-slate-950/80 border border-slate-800/90 hover:border-cyan-500/50 transition-[border-color,box-shadow] duration-300 hover:shadow-[0_25px_60px_-15px_rgba(6,182,212,0.18)] flex flex-col overflow-hidden backdrop-blur-xl"
+              className="polished-card motion-glass group relative rounded-3xl bg-slate-950/80 border border-slate-800/90 hover:border-cyan-500/50 transition-[border-color,box-shadow] duration-300 hover:shadow-[0_25px_60px_-15px_rgba(6,182,212,0.18)] flex flex-col overflow-hidden backdrop-blur-xl"
             >
               {/* Top Large Project Screenshot */}
               <div className="p-4 sm:p-6 pb-0">
@@ -99,7 +100,7 @@ export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStu
               </div>
 
               {/* Bottom Card Content */}
-              <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between space-y-6">
+              <div className="project-content p-6 sm:p-8 flex-1 flex flex-col justify-between space-y-6">
                 <div className="space-y-4">
                   {/* Category & Client Type */}
                   <div className="flex items-center justify-between gap-2">
@@ -113,7 +114,7 @@ export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStu
 
                   {/* Project Title */}
                   <h3 className="text-xl sm:text-2xl font-bold text-white font-heading group-hover:text-cyan-300 transition-colors leading-snug">
-                    {project.title}
+                    {PROJECT_BUSINESS_STORIES[project.id]?.headline ?? project.title}
                   </h3>
 
                   {/* Short Professional Description */}
@@ -121,8 +122,17 @@ export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStu
                     {project.shortDescription}
                   </p>
 
+                  <dl className="project-story space-y-3 text-sm leading-relaxed">
+                    {Object.entries({ 'Business Problem': PROJECT_BUSINESS_STORIES[project.id]?.problem ?? project.problemSolved, 'Automation Solution': PROJECT_BUSINESS_STORIES[project.id]?.solution ?? project.fullOverview, 'Business Impact': PROJECT_BUSINESS_STORIES[project.id]?.impact ?? project.shortDescription }).map(([label, description]) => (
+                      <div key={label}>
+                        <dt className="font-semibold text-cyan-300">{label}</dt>
+                        <dd className="mt-1 text-slate-300">{description}</dd>
+                      </div>
+                    ))}
+                  </dl>
+
                   {/* Key Metrics Pill Grid */}
-                  <div className="grid grid-cols-3 gap-2 pt-2">
+                  <div className="project-metrics grid grid-cols-3 gap-2 pt-2">
                     {project.metrics.map((metric, mIdx) => (
                       <div
                         key={mIdx}
@@ -155,7 +165,7 @@ export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStu
 
                   <button onClick={() => setSelectedProject(project)} className="text-xs text-slate-400 hover:text-cyan-300 text-left">Inspect Full Screenshot &amp; Blueprint</button>
                   {/* Card Action Links */}
-                  <div className="flex items-center justify-between pt-2">
+                  <div className="project-actions flex items-center justify-between pt-2">
                     <button id={`case-link-${project.id}`}
                       aria-label={`View case study: ${project.title}`}
                       onClick={() => {
@@ -175,7 +185,7 @@ export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStu
                       onClick={() => onSelectProjectForAudit(project.title)}
                       className="text-xs font-mono text-slate-400 hover:text-white px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 transition-colors cursor-pointer"
                     >
-                      Discuss Similar Build
+                      Discuss Your Workflow
                     </button>
                   </div>
                 </div>
@@ -201,9 +211,9 @@ export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStu
 
             {/* Modal Box */}
             <motion.div ref={modalRef} tabIndex={-1} role="dialog" aria-modal="true" aria-label={selectedProject.title}
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              initial={{ opacity: 0, scale: 0.95, y: 14 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              exit={{ opacity: 0, scale: 0.95, y: 14 }}
               transition={{ duration: 0.3 }}
               className="relative w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl z-10 max-h-[90vh] overflow-y-auto"
             >

@@ -156,7 +156,6 @@
 /* Shared finish: restrained surfaces, generous rhythm, clear interaction states. */
 :root { --surface: rgba(13, 19, 31, .78); --edge: rgba(148, 163, 184, .14); --ease-out: cubic-bezier(.22, 1, .36, 1); }
 html { scroll-padding-top: 104px; }
-main > section { padding-block: clamp(4.5rem, 8vw, 7.5rem); }
 main > #home { padding-top: clamp(8rem, 12vw, 11rem); padding-bottom: 4rem; }
 h1, h2, h3 { text-wrap: balance; }
 p { text-wrap: pretty; }
@@ -165,7 +164,6 @@ button, a, input, textarea, select { -webkit-tap-highlight-color: transparent; }
 button:not(:disabled), a { touch-action: manipulation; }
 button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible { outline: 2px solid #67e8f9 !important; outline-offset: 5px; }
 button { transition-timing-function: var(--ease-out); }
-button:active:not(:disabled) { scale: .98; }
 .lucide { stroke-width: 1.7; flex-shrink: 0; }
 .glass-panel, .glass-panel-interactive { background: linear-gradient(145deg, rgba(24,34,51,.72), rgba(10,15,25,.9)); border-color: var(--edge); box-shadow: inset 0 1px 0 #ffffff08, 0 24px 64px -32px #000a; }
 .glass-panel-interactive { transition: background .35s, border-color .35s, box-shadow .35s; }

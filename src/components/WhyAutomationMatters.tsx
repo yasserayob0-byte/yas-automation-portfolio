@@ -117,13 +117,13 @@ export default function WhyAutomationMatters() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Title */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <div className="section-intro text-center max-w-3xl mx-auto mb-16 space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-xs font-mono text-cyan-400">
             <Sparkles className="w-3.5 h-3.5" />
             <span>BUSINESS IMPACT & ROI MATRIX</span>
           </div>
-          <motion.h2 initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px -40px 0px" }} transition={{ duration: 0.65 }} className="text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
-            Why Automation Matters.
+          <motion.h2 initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px -40px 0px" }} transition={{ duration: 0.55 }} className="section-title text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
+            What Could Your Team Do With More Time?
           </motion.h2>
           <p className="text-base sm:text-lg text-slate-400">
             In modern business, speed and consistency are the ultimate competitive moat. Well-scoped automation can reduce repetitive work and make customer follow-up more consistent.
@@ -167,14 +167,14 @@ export default function WhyAutomationMatters() {
                 return (
                   <motion.div
                     key={idx}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 14 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: idx * 0.08 }}
                     className={`p-6 rounded-3xl bg-slate-900/60 border border-slate-800 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:bg-slate-900/90 ${card.border} hover:shadow-xl group`}
                   >
                     <div className="flex items-center justify-between mb-4">
-                      <div className={`w-12 h-12 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-center ${card.color} group-hover:scale-110 transition-transform`}>
+                      <div className={`w-12 h-12 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-center ${card.color} group-hover:scale-[1.03] transition-transform`}>
                         <Icon className="w-6 h-6" />
                       </div>
                       <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-md bg-slate-950 border border-slate-800 text-cyan-300">

@@ -1,3 +1,6 @@
+import RevealImage from './RevealImage';
+import { PROJECT_BUSINESS_STORIES } from '../data/businessMessaging';
+import { TechnologyLogo } from './BrandLogos';
 import { createPortal } from 'react-dom';
 import { useModalFocus } from './useModalFocus';
 import { useEffect, useState } from 'react';
@@ -19,7 +22,6 @@ import {
   FileText,
   ChevronRight,
   ChevronLeft,
-  Database,
   Workflow,
   Activity
 } from 'lucide-react';
@@ -89,7 +91,7 @@ export default function CaseStudyTemplate({
               onClick={() => onContactClick?.(study.title)}
               className="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-md shadow-cyan-500/20 cursor-pointer"
             >
-              Discuss System
+              Request a Discovery Call
             </button>
           </div>
         </div>
@@ -118,7 +120,7 @@ export default function CaseStudyTemplate({
           {/* Title & Tagline */}
           <div className="space-y-4">
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold font-heading text-white tracking-tight leading-tight">
-              {study.title}
+              {PROJECT_BUSINESS_STORIES[study.id]?.headline ?? study.title}
             </h1>
             <p className="text-lg sm:text-xl text-slate-300 font-sans leading-relaxed">
               {study.tagline}
@@ -200,7 +202,7 @@ export default function CaseStudyTemplate({
             {/* Canvas Body Placeholder / Image */}
             <div className="min-h-[360px] sm:min-h-[460px] relative bg-gradient-to-b from-[#0a0f1d] via-[#080c18] to-[#0a0f1d] flex flex-col items-center justify-center p-6 text-center">
               {study.heroScreenshot?.imageUrl ? (
-                <img
+                <RevealImage
                   src={study.heroScreenshot.imageUrl}
                   alt={study.heroScreenshot.title}
                   className="w-full h-full object-contain max-h-[500px] rounded-xl"
@@ -285,14 +287,14 @@ export default function CaseStudyTemplate({
               <span>02. THE BOTTLENECK</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold font-heading text-white">
-              Business Challenge
+              Business Problem
             </h2>
           </div>
 
           <div className="lg:col-span-8 space-y-6">
             <div className="p-7 rounded-3xl bg-rose-950/10 border border-rose-500/20 backdrop-blur-xl space-y-6">
               <p className="text-base text-rose-200/90 leading-relaxed">
-                {study.challenge.summary}
+                {PROJECT_BUSINESS_STORIES[study.id]?.problem ?? study.challenge.summary}
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
@@ -324,14 +326,14 @@ export default function CaseStudyTemplate({
               <span>03. STRATEGIC BLUEPRINT</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold font-heading text-white">
-              The Solution
+              Automation Solution
             </h2>
           </div>
 
           <div className="lg:col-span-8 space-y-6">
             <div className="p-7 rounded-3xl bg-slate-950/80 border border-emerald-500/20 backdrop-blur-xl space-y-6">
               <p className="text-base text-slate-300 leading-relaxed">
-                {study.solution.summary}
+                {PROJECT_BUSINESS_STORIES[study.id]?.solution ?? study.solution.summary}
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
@@ -522,7 +524,7 @@ export default function CaseStudyTemplate({
                 className="p-5 rounded-2xl bg-slate-950/80 border border-slate-800 flex items-start gap-4 hover:border-slate-700 transition-colors"
               >
                 <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 text-cyan-400 flex items-center justify-center shrink-0">
-                  <Database className="w-5 h-5" />
+                  <TechnologyLogo name={tech.name} className="w-6 h-6" decorative />
                 </div>
                 <div className="space-y-1 min-w-0">
                   <div className="text-sm font-bold text-white truncate">{tech.name}</div>
@@ -614,10 +616,10 @@ export default function CaseStudyTemplate({
               <span>07. MEASURABLE OUTCOMES</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-white">
-              Business Value & Delivered Impact
+              Business Impact
             </h2>
             <p className="text-sm text-slate-300">
-              {study.businessValue.summary}
+              {PROJECT_BUSINESS_STORIES[study.id]?.impact ?? study.businessValue.summary}
             </p>
           </div>
 
@@ -761,7 +763,7 @@ export default function CaseStudyTemplate({
                       className="w-full shrink-0"
                     >
                       {study.gallery[activeGallerySlideIndex]?.imageUrl ? (
-                        <img
+                        <RevealImage
                           src={study.gallery[activeGallerySlideIndex].imageUrl}
                           alt={study.gallery[activeGallerySlideIndex].title}
                           className="max-h-[520px] w-full object-contain rounded-xl shadow-2xl transition-transform duration-300 group-hover:scale-[1.02]"
@@ -831,7 +833,7 @@ export default function CaseStudyTemplate({
                         {/* Thumbnail Image Container */}
                         <div className="h-28 sm:h-32 bg-slate-900 relative flex items-center justify-center p-2 overflow-hidden">
                           {item.imageUrl ? (
-                            <img
+                            <RevealImage
                               src={item.imageUrl}
                               alt={item.title}
                               className={`w-full h-full object-cover rounded-lg transition-transform duration-300 ${
@@ -981,7 +983,7 @@ export default function CaseStudyTemplate({
           </div>
           <div className="flex-1 flex items-center justify-center max-w-7xl w-full mx-auto overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/90 p-4">
             {study.heroScreenshot?.imageUrl ? (
-              <img
+              <RevealImage
                 src={study.heroScreenshot.imageUrl}
                 alt="Full size preview"
                 className="max-w-full max-h-full object-contain"
@@ -1124,7 +1126,7 @@ export default function CaseStudyTemplate({
           >
             {study.gallery[activeGallerySlideIndex]?.imageUrl ? (
               <div className="overflow-auto max-w-full max-h-full flex items-center justify-center">
-                <img
+                <RevealImage
                   src={study.gallery[activeGallerySlideIndex].imageUrl}
                   alt={study.gallery[activeGallerySlideIndex].title}
                   style={{ width: `${lightboxZoomLevel * 100}%`, maxWidth: 'none' }}

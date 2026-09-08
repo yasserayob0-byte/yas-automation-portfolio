@@ -1,3 +1,4 @@
+import RevealImage from './RevealImage';
 import { useMotionPreference } from './MotionPreferences';
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -409,12 +410,12 @@ export default function GoHighLevelShowcase({ onConsultWorkflow }: GoHighLevelSh
               <span>GOHIGHLEVEL SHOWCASE</span>
             </div>
             
-            <motion.h2 initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px -40px 0px" }} transition={{ duration: 0.65 }} className="text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
-              Dental Clinic Patient Journey Automation
+            <motion.h2 initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px -40px 0px" }} transition={{ duration: 0.55 }} className="section-title text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
+              Keep Patients Moving From Inquiry to Appointment
             </motion.h2>
             
             <p className="text-base sm:text-lg text-cyan-300 font-medium mt-2 max-w-2xl">
-              Follow six connected workflows from a patient inquiry through post-appointment follow-up.
+              Help clinic staff manage bookings, reminders, cancellations, and follow-up through six connected GoHighLevel workflows.
             </p>
           </div>
 
@@ -572,7 +573,7 @@ export default function GoHighLevelShowcase({ onConsultWorkflow }: GoHighLevelSh
       </span>
     </div>
 
-    <img
+    <RevealImage
       decoding="async"
       src={activeSlide.image}
       alt={activeSlide.title}

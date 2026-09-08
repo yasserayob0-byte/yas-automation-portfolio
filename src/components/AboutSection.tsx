@@ -76,24 +76,24 @@ export default function AboutSection({ onTalkWithYasser }: AboutSectionProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 space-y-4">
+        <div className="section-intro text-center max-w-3xl mx-auto mb-10 space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-slate-800 text-xs font-mono text-cyan-400">
             <UserCheck className="w-3.5 h-3.5" />
             <span>BACKGROUND & EXPERTISE</span>
           </div>
 
-          <motion.h2 initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px -40px 0px" }} transition={{ duration: 0.65 }} className="text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
-            About Me
+          <motion.h2 initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px -40px 0px" }} transition={{ duration: 0.55 }} className="section-title text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
+            Work Directly With Your Automation Specialist
           </motion.h2>
 
           <p className="text-base sm:text-lg text-slate-300 font-medium leading-relaxed">
-            Passionate about building automation systems that simplify business operations and help companies work smarter.
+            I turn day-to-day bottlenecks into practical workflows, with clear communication from the first conversation through handover.
           </p>
         </div>
 
         {/* Main Content Presentation Card */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
@@ -123,14 +123,14 @@ export default function AboutSection({ onTalkWithYasser }: AboutSectionProps) {
             return (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.08 }}
                 className={`group p-5 rounded-2xl bg-slate-950/70 border border-slate-800/80 ${card.borderColor} transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl backdrop-blur-xl flex flex-col justify-between`}
               >
                 <div>
-                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${card.color} border border-slate-800 flex items-center justify-center ${card.iconColor} mb-5 group-hover:scale-110 transition-transform`}>
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${card.color} border border-slate-800 flex items-center justify-center ${card.iconColor} mb-5 group-hover:scale-[1.03] transition-transform`}>
                     <Icon className="w-6 h-6" />
                   </div>
                   
@@ -149,7 +149,7 @@ export default function AboutSection({ onTalkWithYasser }: AboutSectionProps) {
 
         {/* "My Approach" Section Card */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}

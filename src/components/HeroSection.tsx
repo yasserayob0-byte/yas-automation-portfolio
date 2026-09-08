@@ -1,7 +1,8 @@
+import RevealImage from './RevealImage';
 import { useMotionPreference } from './MotionPreferences';
 import { preferredScrollBehavior } from './navigation';
 import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion, useScroll, useTransform, useInView } from 'motion/react';
 import {
   ArrowRight,
   ChevronDown,
@@ -30,10 +31,12 @@ interface HeroSectionProps {
 
 export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSectionProps) {
   const heroRef = useRef<HTMLElement>(null);
-  const { enabled: motionEnabled } = useMotionPreference();
+  const { enabled: motionEnabled, ambientEnabled } = useMotionPreference();
   const reduceMotion = !motionEnabled;
+  const heroVisible = useInView(heroRef);
+  const floatEnabled = ambientEnabled && heroVisible;
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
-  const portraitY = useTransform(scrollYProgress, [0, 1], [0, 48]);
+  const portraitY = useTransform(scrollYProgress, [0, 1], [0, 24]);
   const handleScrollToProjects = () => {
     const el = document.getElementById('projects');
     if (el) {
@@ -73,30 +76,30 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
 
             {/* Main Headline */}
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               className="text-4xl sm:text-5xl lg:text-[3.4rem] font-bold tracking-tight font-heading leading-[1.08] text-balance text-white"
             >
-              AI Automation That Helps Your{' '}
+              Less Busywork. More Time to{' '}
               <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">
-                Business Scale
+                Grow Your Business
               </span>
             </motion.h1>
 
             {/* Subheadline */}
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
               className="text-base sm:text-lg text-slate-300 font-normal leading-relaxed max-w-xl"
             >
-              I design and build AI-powered automation systems that eliminate repetitive tasks, streamline business operations, and improve customer experiences using n8n, GoHighLevel, and modern AI technologies.
+              I help businesses respond to customers sooner, follow up with leads, and book appointments with less manual work. I connect your existing tools with AI and automation so your team can focus on customers.
             </motion.p>
 
             {/* Action Buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.25 }}
               className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2"
@@ -106,7 +109,7 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
                 onClick={handleScrollToProjects}
                 className="px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 via-sky-400 to-indigo-600 text-slate-950 font-bold text-sm hover:shadow-[0_0_35px_rgba(6,182,212,0.45)] hover:scale-[1.02] transition-all flex items-center justify-center gap-2 group cursor-pointer shadow-lg"
               >
-                <span>Explore Automation Projects</span>
+                <span>See the Business Use Cases</span>
                 <ArrowRight className="w-4 h-4 text-slate-950 group-hover:translate-x-1 transition-transform" />
               </button>
 
@@ -115,13 +118,13 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
                 onClick={onBookAudit}
                 className="px-7 py-4 rounded-full bg-slate-900/80 hover:bg-slate-800/90 border border-slate-700/80 hover:border-cyan-500/40 text-slate-200 text-sm font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer backdrop-blur-md"
               >
-                <span>Discuss Your Project</span>
+                <span>Request a Discovery Call</span>
               </button>
             </motion.div>
 
             {/* Tools I Work With Row (Logos Only) */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.35 }}
               className="pt-6 border-t border-slate-800/80 space-y-3"
@@ -131,37 +134,37 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
               </div>
               <div className="flex flex-wrap items-center gap-4 sm:gap-6">
                 <div
-                  className="p-2 sm:p-2.5 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-cyan-500/40 hover:bg-slate-800/60 transition-all hover:scale-105"
+                  className="p-2 sm:p-2.5 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-cyan-500/40 hover:bg-slate-800/60 group transition-all duration-300"
                   title="n8n"
                 >
                   <N8nLogo className="w-6 h-6 sm:w-7 sm:h-7" />
                 </div>
                 <div
-                  className="p-2 sm:p-2.5 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-cyan-500/40 hover:bg-slate-800/60 transition-all hover:scale-105"
+                  className="p-2 sm:p-2.5 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-cyan-500/40 hover:bg-slate-800/60 group transition-all duration-300"
                   title="GoHighLevel"
                 >
                   <GhlLogo className="w-6 h-6 sm:w-7 sm:h-7" />
                 </div>
                 <div
-                  className="p-2 sm:p-2.5 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-cyan-500/40 hover:bg-slate-800/60 transition-all hover:scale-105"
+                  className="p-2 sm:p-2.5 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-cyan-500/40 hover:bg-slate-800/60 group transition-all duration-300"
                   title="OpenAI"
                 >
                   <OpenAiLogo className="w-6 h-6 sm:w-7 sm:h-7" />
                 </div>
                 <div
-                  className="p-2 sm:p-2.5 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-cyan-500/40 hover:bg-slate-800/60 transition-all hover:scale-105"
+                  className="p-2 sm:p-2.5 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-cyan-500/40 hover:bg-slate-800/60 group transition-all duration-300"
                   title="Google Gemini"
                 >
                   <GeminiLogo className="w-6 h-6 sm:w-7 sm:h-7" />
                 </div>
                 <div
-                  className="p-2 sm:p-2.5 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-cyan-500/40 hover:bg-slate-800/60 transition-all hover:scale-105"
+                  className="p-2 sm:p-2.5 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-cyan-500/40 hover:bg-slate-800/60 group transition-all duration-300"
                   title="Slack"
                 >
                   <SlackLogo className="w-6 h-6 sm:w-7 sm:h-7" />
                 </div>
                 <div
-                  className="p-2 sm:p-2.5 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-cyan-500/40 hover:bg-slate-800/60 transition-all hover:scale-105"
+                  className="p-2 sm:p-2.5 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-cyan-500/40 hover:bg-slate-800/60 group transition-all duration-300"
                   title="Airtable"
                 >
                   <AirtableLogo className="w-6 h-6 sm:w-7 sm:h-7" />
@@ -172,7 +175,7 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
           </div>
 
           {/* Right Column: Professional Portrait with Animated Workflow Lines & Floating Tech Cards (5 Cols) */}
-          <motion.div style={{ y: reduceMotion ? 0 : portraitY }} initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.9, delay: 0.2 }} className="hero-portrait lg:col-span-5 flex items-center justify-center relative">
+          <motion.div style={{ y: reduceMotion ? 0 : portraitY }} initial={{ opacity: 0, scale: 0.985 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="hero-portrait lg:col-span-5 flex items-center justify-center relative">
             <div className="relative w-full max-w-sm sm:max-w-md aspect-square flex items-center justify-center">
               
               {/* Soft Ambient Glow Halo */}
@@ -195,8 +198,6 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
                   strokeWidth="1.5"
                   strokeDasharray="4 4"
                   fill="none"
-                  animate={{ strokeDashoffset: reduceMotion ? 0 : [0, -40] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
                 />
 
                 {/* Workflow line connecting top-right to center */}
@@ -206,8 +207,6 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
                   strokeWidth="1.5"
                   strokeDasharray="5 5"
                   fill="none"
-                  animate={{ strokeDashoffset: reduceMotion ? 0 : [0, -50] }}
-                  transition={{ duration: 7, repeat: Infinity, ease: 'linear' }}
                 />
 
                 {/* Workflow line connecting bottom-left to bottom-right */}
@@ -217,8 +216,6 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
                   strokeWidth="1.5"
                   strokeDasharray="6 6"
                   fill="none"
-                  animate={{ strokeDashoffset: reduceMotion ? 0 : [0, 60] }}
-                  transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
                 />
 
                 {/* Orbit concentric circle rings */}
@@ -231,7 +228,7 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
                 <div className="w-full h-full rounded-[22px] overflow-hidden bg-slate-950 relative flex flex-col justify-end">
                   
                   {/* Business Portrait Image */}
-                  <img
+                  <RevealImage
                     fetchPriority="high"
                     src={portraitImg}
                     alt="Yasser Usman - AI Automation Specialist"
@@ -263,8 +260,8 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
 
               {/* 1. AI Agent (Top-Left) */}
               <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                animate={{ y: floatEnabled ? [0, -3, 0] : 0 }}
+                transition={{ duration: 7, repeat: floatEnabled ? Infinity : 0, ease: 'easeInOut' }}
                 className="absolute -top-3 left-2 sm:-left-4 z-20"
               >
                 <div className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-slate-900/90 border border-purple-500/40 shadow-[0_10px_25px_-5px_rgba(168,85,247,0.3)] backdrop-blur-md">
@@ -280,8 +277,8 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
 
               {/* 2. API (Top-Right) */}
               <motion.div
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+                animate={{ y: floatEnabled ? [0, 3, 0] : 0 }}
+                transition={{ duration: 8, repeat: floatEnabled ? Infinity : 0, ease: 'easeInOut', delay: 0.5 }}
                 className="absolute -top-2 right-2 sm:-right-4 z-20"
               >
                 <div className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-slate-900/90 border border-emerald-500/40 shadow-[0_10px_25px_-5px_rgba(16,185,129,0.3)] backdrop-blur-md">
@@ -297,8 +294,8 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
 
               {/* 3. n8n (Middle-Left) */}
               <motion.div
-                animate={{ x: [0, -6, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+                animate={{ x: floatEnabled ? [0, -2, 0] : 0 }}
+                transition={{ duration: 5, repeat: floatEnabled ? Infinity : 0, ease: 'easeInOut', delay: 1 }}
                 className="absolute top-1/2 -translate-y-1/2 -left-6 sm:-left-10 z-20"
               >
                 <div className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-slate-900/90 border border-rose-500/40 shadow-[0_10px_25px_-5px_rgba(244,63,94,0.3)] backdrop-blur-md">
@@ -314,8 +311,8 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
 
               {/* 4. GoHighLevel (Middle-Right) */}
               <motion.div
-                animate={{ x: [0, 6, 0] }}
-                transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+                animate={{ x: floatEnabled ? [0, 2, 0] : 0 }}
+                transition={{ duration: 5.2, repeat: floatEnabled ? Infinity : 0, ease: 'easeInOut', delay: 1.5 }}
                 className="absolute top-1/2 -translate-y-1/2 -right-6 sm:-right-10 z-20"
               >
                 <div className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-slate-900/90 border border-blue-500/40 shadow-[0_10px_25px_-5px_rgba(59,130,246,0.3)] backdrop-blur-md">
@@ -331,8 +328,8 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
 
               {/* 5. Gemini (Bottom-Center) */}
               <motion.div
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+                animate={{ y: floatEnabled ? [0, 3, 0] : 0 }}
+                transition={{ duration: 4.8, repeat: floatEnabled ? Infinity : 0, ease: 'easeInOut', delay: 2 }}
                 className="absolute -bottom-4 left-1/2 -translate-x-1/2 z-20"
               >
                 <div className="flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-slate-900/95 border border-cyan-500/50 shadow-[0_10px_30px_-5px_rgba(6,182,212,0.35)] backdrop-blur-md">
@@ -353,7 +350,7 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
 
         {/* Four Professional Portfolio Statistics Cards */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
@@ -467,8 +464,8 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
               Explore My Work
             </span>
             <motion.div
-              animate={{ y: [0, 6, 0] }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+              animate={{ y: floatEnabled ? [0, 3, 0] : 0 }}
+              transition={{ duration: 3.6, repeat: floatEnabled ? Infinity : 0, ease: 'easeInOut' }}
               className="p-1 rounded-full border border-slate-800 group-hover:border-cyan-500/40 transition-colors bg-slate-900/60"
             >
               <ChevronDown className="w-4 h-4 text-cyan-400" />

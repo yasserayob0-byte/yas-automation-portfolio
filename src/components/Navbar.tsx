@@ -118,7 +118,7 @@ export default function Navbar({ onOpenContact }: NavbarProps) {
           <div className="hidden sm:flex items-center gap-3">
             <div className="hidden min-[1700px]:flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] text-emerald-400 font-mono">
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span>Discuss project availability</span>
+              <span>Start with a discovery call</span>
             </div>
 
             <button
@@ -128,7 +128,7 @@ export default function Navbar({ onOpenContact }: NavbarProps) {
               <span className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-sky-400 to-indigo-500 rounded-full animate-gradient-x opacity-80 group-hover:opacity-100 transition-opacity" />
               <span className="relative flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-950 text-xs font-semibold text-white group-hover:bg-slate-900 transition-colors">
                 <Sparkles className="w-3.5 h-3.5 text-cyan-400 group-hover:rotate-12 transition-transform" />
-                <span>Discuss a Project</span>
+                <span>Discovery Call</span>
                 <ArrowUpRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-cyan-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </span>
             </button>
@@ -184,7 +184,7 @@ export default function Navbar({ onOpenContact }: NavbarProps) {
                   className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2"
                 >
                   <Sparkles className="w-4 h-4" />
-                  <span>Discuss Your Project</span>
+                  <span>Request a Discovery Call</span>
                 </button>
               </div>
             </div>

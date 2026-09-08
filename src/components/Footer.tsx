@@ -1,5 +1,6 @@
+import { GithubLogo } from './BrandLogos';
 import { preferredScrollBehavior } from './navigation';
-import { ArrowUp, Linkedin, Github, Briefcase, Globe } from 'lucide-react';
+import { ArrowUp, Linkedin, Briefcase, Globe } from 'lucide-react';
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -68,7 +69,7 @@ export default function Footer() {
               </li>
               <li>
                 <a href="#contact" className="hover:text-cyan-400 transition-colors">
-                  Discuss Your Project
+                  Request a Discovery Call
                 </a>
               </li>
             </ul>
@@ -91,7 +92,7 @@ export default function Footer() {
                 href="mailto:yasserayob0@gmail.com?subject=Request%20GitHub%20profile"
                 className="hover:text-cyan-400 transition-colors flex items-center gap-2"
               >
-                <Github className="w-3.5 h-3.5 text-cyan-400" />
+                <GithubLogo className="w-3.5 h-3.5" decorative />
                 <span>Request GitHub Profile</span>
               </a>
               <a

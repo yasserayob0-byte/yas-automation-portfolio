@@ -33,21 +33,9 @@ import {
   JsonLogo
 } from './BrandLogos';
 
-interface TechStackSectionProps {
-  onExploreApiBridge?: () => void;
-}
-
-export default function TechStackSection({ onExploreApiBridge }: TechStackSectionProps) {
-  const [selectedTech, setSelectedTech] = useState<TechItem | null>(null);
-  const modalRef = useModalFocus(!!selectedTech, () => setSelectedTech(null));
-  const [viewMode, setViewMode] = useState<'marquee' | 'grid'>('grid');
-  const [activeCategory, setActiveCategory] = useState<string>('All');
-  const [searchQuery, setSearchQuery] = useState<string>('');
-
-  const categories = ['All', 'Core CRM', 'Orchestration', 'AI & LLMs', 'Protocols & APIs', 'Productivity & DB'];
 
   // Helper to render official brand logo
-  const renderBrandLogo = (logoKey: TechItem['logoKey'], className: string = "w-10 h-10") => {
+const renderBrandLogo = (logoKey: TechItem['logoKey'], className: string = "w-10 h-10") => {
     switch (logoKey) {
       case 'n8n':
         return <N8nLogo className={className} />;
@@ -84,6 +72,16 @@ export default function TechStackSection({ onExploreApiBridge }: TechStackSectio
     }
   };
 
+
+export default function TechStackSection() {
+  const [selectedTech, setSelectedTech] = useState<TechItem | null>(null);
+  const modalRef = useModalFocus(!!selectedTech, () => setSelectedTech(null));
+  const [viewMode, setViewMode] = useState<'marquee' | 'grid'>('grid');
+  const [activeCategory, setActiveCategory] = useState<string>('All');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  const categories = ['All', 'Core CRM', 'Orchestration', 'AI & LLMs', 'Protocols & APIs', 'Productivity & DB'];
+
   // Divide 15 items into 2 balanced rows for the infinite marquee (8 items row 1, 7 items row 2)
   const rowOneItems = TECH_STACK.slice(0, 8);
   const rowTwoItems = TECH_STACK.slice(8);
@@ -106,16 +104,16 @@ export default function TechStackSection({ onExploreApiBridge }: TechStackSectio
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-14 space-y-4">
+        <div className="section-intro text-center max-w-3xl mx-auto mb-14 space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-xs font-mono text-cyan-400">
             <Cpu className="w-3.5 h-3.5" />
             <span>CORE TECHNOLOGIES & PLATFORMS</span>
           </div>
-          <motion.h2 initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px -40px 0px" }} transition={{ duration: 0.65 }} className="text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
-            Core Technologies I Use.
+          <motion.h2 initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px -40px 0px" }} transition={{ duration: 0.55 }} className="section-title text-3xl sm:text-5xl font-extrabold font-heading text-white tracking-tight">
+            Make Your Existing Tools Work Together.
           </motion.h2>
           <p className="text-base sm:text-lg text-slate-400">
-            Enterprise-grade workflow orchestration, frontier generative AI models, cloud databases, and low-latency API protocols powering autonomous business systems.
+            The tools below support faster replies, connected records, and dependable follow-up. I choose the right combination for your workflow, budget, and team.
           </p>
 
           {/* View Mode Toggle Switch */}
@@ -184,8 +182,8 @@ export default function TechStackSection({ onExploreApiBridge }: TechStackSectio
                   <div className="relative z-10 space-y-4">
                     {/* Top Row: Official Brand Logo + Category Tag */}
                     <div className="flex flex-wrap gap-3 items-center justify-between">
-                      <div className="w-14 h-14 rounded-2xl bg-slate-950/95 border border-slate-800 group-hover:border-cyan-500/50 p-2.5 flex items-center justify-center transition-all duration-300 shadow-inner group-hover:scale-110 group-hover:shadow-[0_0_22px_rgba(6,182,212,0.3)]">
-                        {renderBrandLogo(item.logoKey, "w-8 h-8 group-hover:scale-105 transition-transform")}
+                      <div className="w-14 h-14 rounded-2xl bg-slate-950/95 border border-slate-800 group-hover:border-cyan-500/50 p-2.5 flex items-center justify-center transition-all duration-300 shadow-inner group-hover:shadow-[0_0_22px_rgba(6,182,212,0.3)]">
+                        {renderBrandLogo(item.logoKey, "w-8 h-8")}
                       </div>
 
                       <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-slate-950/80 border border-slate-800 text-slate-400 group-hover:text-cyan-300 group-hover:border-cyan-500/30 transition-colors">
@@ -259,8 +257,8 @@ export default function TechStackSection({ onExploreApiBridge }: TechStackSectio
                   <div className="relative z-10 space-y-4">
                     {/* Top Row: Official Brand Logo + Category Tag */}
                     <div className="flex items-center justify-between">
-                      <div className="w-14 h-14 rounded-2xl bg-slate-950/95 border border-slate-800 group-hover:border-cyan-500/50 p-2.5 flex items-center justify-center transition-all duration-300 shadow-inner group-hover:scale-110 group-hover:shadow-[0_0_22px_rgba(6,182,212,0.3)]">
-                        {renderBrandLogo(item.logoKey, "w-8 h-8 group-hover:scale-105 transition-transform")}
+                      <div className="w-14 h-14 rounded-2xl bg-slate-950/95 border border-slate-800 group-hover:border-cyan-500/50 p-2.5 flex items-center justify-center transition-all duration-300 shadow-inner group-hover:shadow-[0_0_22px_rgba(6,182,212,0.3)]">
+                        {renderBrandLogo(item.logoKey, "w-8 h-8")}
                       </div>
 
                       <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-slate-950/80 border border-slate-800 text-slate-400 group-hover:text-cyan-300 group-hover:border-cyan-500/30 transition-colors">
@@ -373,8 +371,8 @@ export default function TechStackSection({ onExploreApiBridge }: TechStackSectio
                 <div className="space-y-4">
                   {/* Logo + Category */}
                   <div className="flex items-center justify-between">
-                    <div className="w-14 h-14 rounded-2xl bg-slate-950 border border-slate-800 group-hover:border-cyan-500/40 p-2.5 flex items-center justify-center transition-all duration-300 shadow-inner group-hover:scale-110">
-                      {renderBrandLogo(item.logoKey, "w-8 h-8 group-hover:scale-105 transition-transform")}
+                    <div className="w-14 h-14 rounded-2xl bg-slate-950 border border-slate-800 group-hover:border-cyan-500/40 p-2.5 flex items-center justify-center transition-all duration-300 shadow-inner">
+                      {renderBrandLogo(item.logoKey, "w-8 h-8")}
                     </div>
                     <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-slate-950 border border-slate-800 text-slate-400">
                       {item.category}
@@ -443,7 +441,6 @@ export default function TechStackSection({ onExploreApiBridge }: TechStackSectio
 
           <a
             href="#contact"
-            onClick={onExploreApiBridge}
             className="shrink-0 px-6 py-3 rounded-full bg-slate-900 hover:bg-cyan-500 hover:text-slate-950 text-cyan-300 border border-cyan-500/30 text-xs font-bold uppercase tracking-wider hover:shadow-[0_0_25px_rgba(6,182,212,0.3)] transition-all flex items-center gap-2 cursor-pointer"
           >
             <span>Request Custom API Bridge</span>
@@ -457,9 +454,9 @@ export default function TechStackSection({ onExploreApiBridge }: TechStackSectio
         {selectedTech && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
             <motion.div ref={modalRef} tabIndex={-1} role="dialog" aria-modal="true" aria-label={selectedTech.name}
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              initial={{ opacity: 0, scale: 0.95, y: 14 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              exit={{ opacity: 0, scale: 0.95, y: 14 }}
               className="relative w-full max-w-2xl rounded-3xl bg-slate-900 border border-slate-800 p-7 sm:p-8 shadow-2xl space-y-6 max-h-[90dvh] overflow-y-auto"
             >
               {/* Background gradient banner */}

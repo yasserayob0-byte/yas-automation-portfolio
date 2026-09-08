@@ -1,20 +1,32 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# YAS Automation portfolio
 
-# Run and deploy your AI Studio app
+Static React + TypeScript site built with Vite. No backend or AI API key is required.
 
-This contains everything you need to run your app locally.
+## Development
 
-View your app in AI Studio: https://ai.studio/apps/e8fed2d0-a427-4eae-b077-f422474fdd59
+Use Node.js 22 LTS or newer.
 
-## Run Locally
+```sh
+npm ci
+npm run dev
+```
 
-**Prerequisites:**  Node.js
+On Windows PowerShell, use npm.cmd if script execution is restricted.
 
+## Validation
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```sh
+npm run build
+npm test
+npm audit
+```
+
+The build includes strict TypeScript and unused-symbol checks. Tests verify all six case-study renders, canonical project IDs, screenshot associations and unknown-route handling. They do not replace interactive browser testing.
+
+## Deployment
+
+Publish the contents of dist/ to a static HTTPS host after a successful build. Case-study navigation uses URL fragments and needs no server-side route rewrites. Keep existing hashed assets available during deployments so open sessions can finish loading; the case-study boundary offers recovery if a chunk is unavailable.
+
+Use npm run preview to inspect the production output locally. Validate phone/tablet/desktop layouts, keyboard navigation, nested screenshot dialogs, reduced motion and email links on the target host before release. Configure host-specific caching and security headers there.
+
+Brand sources are documented in src/assets/logos/SOURCES.md. Original project content and screenshots are retained.

@@ -21,7 +21,7 @@ export default function FaqSection() {
             <HelpCircle className="w-3.5 h-3.5" />
             <span>COMMONLY ASKED QUESTIONS</span>
           </div>
-          <motion.h2 initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px -40px 0px" }} transition={{ duration: 0.65 }} className="text-2xl sm:text-4xl font-extrabold font-heading text-white tracking-tight">
+          <motion.h2 initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px -40px 0px" }} transition={{ duration: 0.55 }} className="section-title text-2xl sm:text-4xl font-extrabold font-heading text-white tracking-tight">
             Frequently Asked Questions.
           </motion.h2>
         </div>
@@ -33,7 +33,7 @@ export default function FaqSection() {
             return (
               <div
                 key={idx}
-                className="rounded-2xl bg-slate-950/70 border border-slate-800/80 overflow-hidden transition-colors"
+                className="faq-panel rounded-2xl bg-slate-950/70 border border-slate-800/80 overflow-hidden transition-colors"
               >
                 <button
                   id={`faq-question-${idx}`}
