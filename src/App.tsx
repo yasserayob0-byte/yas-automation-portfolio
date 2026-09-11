@@ -50,6 +50,9 @@ export default function App() {
         document.getElementById(`case-link-${returnPoint.current.projectId}`)?.focus({ preventScroll: true });
       } else if (hash && !caseId) {
         focusSection(hash.slice(1));
+      } else if (!hash) {
+        // Root homepage: do not restore a previous section or add a fragment.
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
       }
     });
     return () => cancelAnimationFrame(frame);
