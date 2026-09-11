@@ -1,3 +1,4 @@
+import Section from './Section';
 import RevealImage from './RevealImage';
 import { useMotionPreference } from './MotionPreferences';
 import { useEffect, useRef, useState } from 'react';
@@ -395,7 +396,7 @@ export default function GoHighLevelShowcase({ onConsultWorkflow }: GoHighLevelSh
   };
 
   return (
-    <section id="ghl-showcase" className="py-24 relative overflow-hidden bg-slate-950/70 border-y border-slate-800/80">
+    <Section timing={0.08} id="ghl-showcase" className="py-24 relative overflow-hidden bg-slate-950/70 border-y border-slate-800/80">
       {/* Soft Apple-inspired ambient glowing background orbs */}
       <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[140px] pointer-events-none -z-10" />
       <div className="absolute bottom-10 right-1/4 w-[450px] h-[450px] bg-blue-600/10 rounded-full blur-[140px] pointer-events-none -z-10" />
@@ -589,6 +590,6 @@ export default function GoHighLevelShowcase({ onConsultWorkflow }: GoHighLevelSh
         </div>
 
       </div>
-    </section>
+    </Section>
   );
 }

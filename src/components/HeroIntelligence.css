@@ -1,0 +1,9 @@
+﻿.agency-network{position:absolute;width:115%;max-width:none;height:110%;left:-18%;top:-3%;z-index:0;opacity:.82;pointer-events:none}
+.agency-orbit{transform-origin:440px 350px;animation:agency-orbit 100s linear infinite}
+.agency-node{animation:agency-node 8s ease-in-out infinite}
+@keyframes agency-orbit{to{transform:rotate(360deg)}}
+@keyframes agency-node{50%{opacity:.3}}
+#home[data-ambient-active="false"] .agency-network *{animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){.agency-network *{animation:none!important}}
+
+@media(max-width:767px){.agency-network{opacity:.6}.agency-orbit{display:none}}

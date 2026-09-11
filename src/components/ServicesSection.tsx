@@ -1,3 +1,4 @@
+import Section from './Section';
 import { motion } from 'motion/react';
 import {
   Sparkles,
@@ -84,7 +85,7 @@ export default function ServicesSection({ onSelectService }: ServicesSectionProp
   ];
 
   return (
-    <section id="services" className="py-24 relative overflow-hidden bg-slate-950/50">
+    <Section timing={0.04} id="services" className="py-24 relative overflow-hidden bg-slate-950/50">
       {/* Subtle Background Ambience */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-3xl pointer-events-none -z-10" />
 
@@ -159,6 +160,6 @@ export default function ServicesSection({ onSelectService }: ServicesSectionProp
         </div>
 
       </div>
-    </section>
+    </Section>
   );
 }

@@ -1,3 +1,5 @@
+import './TechStackSection.css';
+import Section from './Section';
 import { createPortal } from 'react-dom';
 import { useModalFocus } from './useModalFocus';
 import { useState } from 'react';
@@ -96,7 +98,7 @@ export default function TechStackSection() {
   });
 
   return (
-    <section id="tech-stack" className="py-24 relative overflow-hidden bg-slate-950/60">
+    <Section timing={0.08} id="tech-stack" className="py-24 relative overflow-hidden bg-slate-950/60">
       {/* Ambient background glow accents */}
       <div className="absolute top-1/3 -left-32 w-96 h-96 bg-cyan-500/10 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-indigo-500/10 rounded-full blur-[140px] pointer-events-none" />
@@ -182,7 +184,7 @@ export default function TechStackSection() {
                   <div className="relative z-10 space-y-4">
                     {/* Top Row: Official Brand Logo + Category Tag */}
                     <div className="flex flex-wrap gap-3 items-center justify-between">
-                      <div className="w-14 h-14 rounded-2xl bg-slate-950/95 border border-slate-800 group-hover:border-cyan-500/50 p-2.5 flex items-center justify-center transition-all duration-300 shadow-inner group-hover:shadow-[0_0_22px_rgba(6,182,212,0.3)]">
+                      <div className="tech-stack-icon">
                         {renderBrandLogo(item.logoKey, "w-8 h-8")}
                       </div>
 
@@ -257,7 +259,7 @@ export default function TechStackSection() {
                   <div className="relative z-10 space-y-4">
                     {/* Top Row: Official Brand Logo + Category Tag */}
                     <div className="flex items-center justify-between">
-                      <div className="w-14 h-14 rounded-2xl bg-slate-950/95 border border-slate-800 group-hover:border-cyan-500/50 p-2.5 flex items-center justify-center transition-all duration-300 shadow-inner group-hover:shadow-[0_0_22px_rgba(6,182,212,0.3)]">
+                      <div className="tech-stack-icon">
                         {renderBrandLogo(item.logoKey, "w-8 h-8")}
                       </div>
 
@@ -371,7 +373,7 @@ export default function TechStackSection() {
                 <div className="space-y-4">
                   {/* Logo + Category */}
                   <div className="flex items-center justify-between">
-                    <div className="w-14 h-14 rounded-2xl bg-slate-950 border border-slate-800 group-hover:border-cyan-500/40 p-2.5 flex items-center justify-center transition-all duration-300 shadow-inner">
+                    <div className="tech-stack-icon">
                       {renderBrandLogo(item.logoKey, "w-8 h-8")}
                     </div>
                     <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-slate-950 border border-slate-800 text-slate-400">
@@ -468,8 +470,8 @@ export default function TechStackSection() {
               {/* Modal Header */}
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-2xl bg-slate-950 border border-slate-800 p-3 flex items-center justify-center shadow-lg">
-                    {renderBrandLogo(selectedTech.logoKey, "w-10 h-10")}
+                  <div className="tech-stack-icon">
+                    {renderBrandLogo(selectedTech.logoKey, "w-8 h-8")}
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
@@ -553,6 +555,6 @@ export default function TechStackSection() {
         )}
       </AnimatePresence>, document.body)}
 
-    </section>
+    </Section>
   );
 }

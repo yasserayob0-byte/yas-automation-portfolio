@@ -1,0 +1,4 @@
+﻿.tech-stack-icon{display:grid;place-items:center;flex:0 0 56px;width:56px;height:56px;padding:11px;border:1px solid #1e293b;border-radius:16px;background:#020617;color:#38bdf8;box-shadow:inset 0 1px 8px #0003;transition:border-color .3s,box-shadow .3s,color .3s}
+.tech-stack-icon>svg,.tech-stack-icon>.technology-logo{width:32px;height:32px;flex-shrink:0}
+.group:hover .tech-stack-icon,.group:focus-visible .tech-stack-icon{border-color:#06b6d466;color:#67e8f9;box-shadow:0 0 22px #06b6d422}
+@media(prefers-reduced-motion:reduce){.tech-stack-icon{transition:none}}

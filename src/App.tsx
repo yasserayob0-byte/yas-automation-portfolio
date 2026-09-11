@@ -3,6 +3,7 @@ import CustomCursor from './components/CustomCursor';
 import BackgroundEffects from './components/BackgroundEffects';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
+import ServicesPreview from './components/ServicesPreview';
 import AboutSection from './components/AboutSection';
 import ServicesSection from './components/ServicesSection';
 import HowIWorkSection from './components/HowIWorkSection';
@@ -78,6 +79,7 @@ export default function App() {
         <main id="main-content" tabIndex={-1} className="relative z-10">
           {caseId && !study && <div role="status" className="pt-28 px-6 text-center text-slate-300">That case study is unavailable. <a href="#projects" className="text-cyan-300 underline">Browse all projects</a>.</div>}
           <HeroSection onExploreWorkflows={() => navigateSection('ghl-showcase')} onBookAudit={() => handleOpenContact('Discovery Call')} />
+          <ServicesPreview onSelectService={(service) => handleOpenContact(`Service: ${service}`)} />
           <ProjectsSection onSelectProjectForAudit={(project) => handleOpenContact(`Project: ${project}`)} onOpenCaseStudy={openCase} />
           <ServicesSection onSelectService={(service) => handleOpenContact(`Service: ${service}`)} />
           <GoHighLevelShowcase onConsultWorkflow={(workflow) => handleOpenContact(`GoHighLevel Workflow: ${workflow}`)} />

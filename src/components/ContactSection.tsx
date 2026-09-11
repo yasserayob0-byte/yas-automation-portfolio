@@ -1,3 +1,5 @@
+import { useMagnetic } from './useMagnetic';
+import Section from './Section';
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import {
@@ -16,6 +18,7 @@ interface ContactSectionProps {
 }
 
 export default function ContactSection({ initialTopic = '' }: ContactSectionProps) {
+  const magnetic = useMagnetic();
   const [copyStatus, setCopyStatus] = useState('');
   const contactCards = [
     {
@@ -76,7 +79,7 @@ export default function ContactSection({ initialTopic = '' }: ContactSectionProp
   };
 
   return (
-    <section id="contact" className="py-24 relative overflow-hidden bg-slate-950/90 border-t border-slate-800">
+    <Section timing={0.00} id="contact" className="py-24 relative overflow-hidden bg-slate-950/90 border-t border-slate-800">
       {/* Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-cyan-500/10 rounded-full blur-[160px] pointer-events-none" />
 
@@ -161,8 +164,9 @@ export default function ContactSection({ initialTopic = '' }: ContactSectionProp
         {/* Premium Center CTA Button */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-center">
           <a
+            {...magnetic}
             href={emailHref()}
-            className="w-full sm:w-auto px-10 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-extrabold text-sm uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-3 cursor-pointer shadow-xl shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-[1.03] active:scale-98"
+            className="magnetic-button w-full sm:w-auto px-10 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-extrabold text-sm uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-3 cursor-pointer shadow-xl shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-[1.03] active:scale-98"
           >
             <Send className="w-4 h-4" />
             <span>Request a Discovery Call</span>
@@ -180,6 +184,6 @@ export default function ContactSection({ initialTopic = '' }: ContactSectionProp
         </div>
 
       </div>
-    </section>
+    </Section>
   );
 }

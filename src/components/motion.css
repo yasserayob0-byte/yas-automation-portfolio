@@ -44,3 +44,45 @@ html[data-motion='off'] .reveal-image { animation: none !important; opacity: 1 !
 html[data-motion='off'] .ambient-particle { display: none; }
 html[data-motion='off'] button:active:not(:disabled) { scale: 1; }
 html[data-motion='off'] :is(button, a):hover > .lucide { transform: none; }
+
+/* Ambient depth uses prepainted gradients, not animated blur or background position. */
+.hero-ambient {
+  position: absolute; inset: -12% 0; pointer-events: none;
+  background: radial-gradient(ellipse at 72% 36%, #6366f111, transparent 56%), radial-gradient(ellipse at 18% 16%, #06b6d40b, transparent 50%);
+  animation: hero-light 24s ease-in-out infinite alternate;
+}
+@keyframes hero-light { to { transform: translate3d(1.5%, 2%, 0); opacity: .6; } }
+.portrait-aura {
+  background: radial-gradient(ellipse, #22d3ee24, #6366f115 38%, transparent 70%);
+  animation: portrait-light 12s ease-in-out infinite alternate;
+}
+@keyframes portrait-light { to { transform: scale(1.055); opacity: .6; } }
+.portrait-float { animation: portrait-float 9s ease-in-out infinite alternate; }
+@keyframes portrait-float { to { translate: 0 -4px; } }
+#home[data-ambient-active='false'] :is(.hero-ambient, .portrait-aura, .portrait-float) { animation-play-state: paused; }
+.bg-grid-pattern { animation: grid-breathe 20s ease-in-out infinite alternate; }
+@keyframes grid-breathe { from { opacity: .12; } to { opacity: .2; } }
+.magnetic-button > * {
+  translate: var(--magnetic-x, 0px) var(--magnetic-y, 0px);
+  transition: translate 220ms var(--motion-ease), transform 220ms var(--motion-ease);
+}
+nav.rounded-full a { position: relative; }
+nav.rounded-full a::after {
+  content: ''; position: absolute; inset-inline: 25%; bottom: 5px; height: 1px;
+  background: #67e8f9; transform: scaleX(0); opacity: .7;
+  transition: transform 280ms var(--motion-ease);
+}
+nav.rounded-full a:is(:hover, :focus-visible, [aria-current='location'])::after { transform: scaleX(1); }
+#mobile-navigation a[aria-current='location'] { color: #67e8f9; background: #22d3ee0a; box-shadow: inset 2px 0 #67e8f9; }
+@media (hover: hover) and (pointer: fine) {
+  #projects .polished-card:hover { border-color: #67e8f94d; box-shadow: 0 18px 40px -24px #000b, 0 0 0 1px #67e8f90a, inset 0 1px #ffffff08; }
+  #tech-stack .group:hover .technology-logo__image { animation: logo-lift 1.8s ease-in-out 1; }
+}
+@keyframes logo-lift { 50% { translate: 0 -1.5px; } }
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  .hero-ambient, .portrait-aura, .portrait-float, .bg-grid-pattern { animation: none; }
+  .magnetic-button > * { translate: none; }
+}
+html[data-motion='off'] .magnetic-button > * { translate: none; }
+html[data-motion='off'] .technology-logo__image { animation: none; }
+html[data-motion='off'] .portrait-float { translate: none; }

@@ -1,3 +1,4 @@
+import Section from './Section';
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import {
@@ -110,7 +111,7 @@ export default function WhyAutomationMatters() {
   ];
 
   return (
-    <section id="impact" className="py-24 relative overflow-hidden bg-slate-950/70 border-t border-slate-800/80">
+    <Section timing={0.00} id="impact" className="py-24 relative overflow-hidden bg-slate-950/70 border-t border-slate-800/80">
       {/* Ambient background glows */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-cyan-500/8 rounded-full blur-[160px] pointer-events-none" />
 
@@ -372,6 +373,6 @@ export default function WhyAutomationMatters() {
         )}
 
       </div>
-    </section>
+    </Section>
   );
 }

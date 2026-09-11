@@ -1,9 +1,10 @@
+import Section from './Section';
 import { motion } from 'motion/react';
 import { CLIENT_JOURNEY } from '../data/businessMessaging';
 
 export default function HowIWorkSection() {
   return (
-    <section id="how-i-work" aria-labelledby="how-i-work-heading" className="py-24 relative bg-slate-950/50">
+    <Section timing={0.00} id="how-i-work" aria-labelledby="how-i-work-heading" className="py-24 relative bg-slate-950/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="section-intro text-center max-w-3xl mx-auto mb-14 space-y-4">
           <p className="text-xs font-mono text-cyan-400 uppercase tracking-wider">A clear path from idea to daily use</p>
@@ -20,6 +21,6 @@ export default function HowIWorkSection() {
           ))}
         </ol>
       </div>
-    </section>
+    </Section>
   );
 }

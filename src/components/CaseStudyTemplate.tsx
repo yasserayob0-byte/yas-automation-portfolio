@@ -1,3 +1,4 @@
+import Section from './Section';
 import RevealImage from './RevealImage';
 import { PROJECT_BUSINESS_STORIES } from '../data/businessMessaging';
 import { TechnologyLogo } from './BrandLogos';
@@ -154,7 +155,7 @@ export default function CaseStudyTemplate({
         {/* =========================================================================
             2. LARGE WORKFLOW SCREENSHOT
         ========================================================================= */}
-        <section className="space-y-4">
+        <Section timing={0.04} className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Workflow className="w-4 h-4 text-cyan-400" />
@@ -236,12 +237,12 @@ export default function CaseStudyTemplate({
               </div>
             )}
           </div>
-        </section>
+        </Section>
 
         {/* =========================================================================
             3. PROJECT OVERVIEW
         ========================================================================= */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <Section timing={0.04} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <div className="lg:col-span-4 space-y-2">
             <div className="inline-flex items-center gap-2 text-xs font-mono text-cyan-400">
               <FileText className="w-3.5 h-3.5" />
@@ -275,12 +276,12 @@ export default function CaseStudyTemplate({
               )}
             </div>
           </div>
-        </section>
+        </Section>
 
         {/* =========================================================================
             4. BUSINESS CHALLENGE
         ========================================================================= */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <Section timing={0.04} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <div className="lg:col-span-4 space-y-2">
             <div className="inline-flex items-center gap-2 text-xs font-mono text-rose-400">
               <AlertCircle className="w-3.5 h-3.5" />
@@ -314,12 +315,12 @@ export default function CaseStudyTemplate({
               </div>
             </div>
           </div>
-        </section>
+        </Section>
 
         {/* =========================================================================
             5. SOLUTION
         ========================================================================= */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <Section timing={0.04} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <div className="lg:col-span-4 space-y-2">
             <div className="inline-flex items-center gap-2 text-xs font-mono text-emerald-400">
               <Zap className="w-3.5 h-3.5" />
@@ -353,12 +354,12 @@ export default function CaseStudyTemplate({
               </div>
             </div>
           </div>
-        </section>
+        </Section>
 
         {/* =========================================================================
             6. WORKFLOW ARCHITECTURE
         ========================================================================= */}
-        <section className="space-y-8">
+        <Section timing={0.04} className="space-y-8">
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-xs font-mono text-cyan-400">
               <Workflow className="w-3.5 h-3.5" />
@@ -407,13 +408,13 @@ export default function CaseStudyTemplate({
               </div>
             ))}
           </div>
-        </section>
+        </Section>
 
         {/* =========================================================================
             6.5 WORKFLOW MODULES (If provided)
         ========================================================================= */}
         {study.workflowModules && study.workflowModules.length > 0 && (
-          <section className="space-y-8">
+          <Section timing={0.04} className="space-y-8">
             <div className="text-center max-w-3xl mx-auto space-y-3">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-xs font-mono text-cyan-400">
                 <Layers className="w-3.5 h-3.5" />
@@ -458,13 +459,13 @@ export default function CaseStudyTemplate({
                 </div>
               ))}
             </div>
-          </section>
+          </Section>
         )}
 
         {/* =========================================================================
             7. KEY FEATURES
         ========================================================================= */}
-        <section className="space-y-8">
+        <Section timing={0.04} className="space-y-8">
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-xs font-mono text-cyan-400">
               <Sparkles className="w-3.5 h-3.5" />
@@ -501,12 +502,12 @@ export default function CaseStudyTemplate({
               </div>
             ))}
           </div>
-        </section>
+        </Section>
 
         {/* =========================================================================
             8. TECHNOLOGY STACK & DEMONSTRATED SKILLS
         ========================================================================= */}
-        <section className="space-y-8">
+        <Section timing={0.04} className="space-y-8">
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-xs font-mono text-cyan-400">
               <Code2 className="w-3.5 h-3.5" />
@@ -555,13 +556,13 @@ export default function CaseStudyTemplate({
               </div>
             </div>
           )}
-        </section>
+        </Section>
 
         {/* =========================================================================
             8.5 TECHNICAL OVERVIEW & STRATEGIC VALUE (Why This Solution Matters)
         ========================================================================= */}
         {(study.technicalOverview || study.whyItMatters) && (
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Section timing={0.04} className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {study.technicalOverview && (
               <div className="p-7 rounded-3xl bg-slate-950/80 border border-slate-800 space-y-3 flex flex-col justify-between">
                 <div className="space-y-3">
@@ -603,13 +604,13 @@ export default function CaseStudyTemplate({
                 </div>
               </div>
             )}
-          </section>
+          </Section>
         )}
 
         {/* =========================================================================
             9. BUSINESS VALUE & QUANTIFIED ROI
         ========================================================================= */}
-        <section className="p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-slate-950 via-slate-900/60 to-slate-950 border border-cyan-500/30 shadow-2xl relative overflow-hidden space-y-8">
+        <Section timing={0.04} className="p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-slate-950 via-slate-900/60 to-slate-950 border border-cyan-500/30 shadow-2xl relative overflow-hidden space-y-8">
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-xs font-mono text-emerald-400">
               <TrendingUp className="w-3.5 h-3.5" />
@@ -649,12 +650,12 @@ export default function CaseStudyTemplate({
               </div>
             ))}
           </div>
-        </section>
+        </Section>
 
         {/* =========================================================================
             10. WORKFLOW GALLERY & PRODUCTION SHOWCASE
         ========================================================================= */}
-        <section id="workflow-gallery" className="space-y-8">
+        <Section timing={0.04} id="workflow-gallery" className="space-y-8">
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-xs font-mono text-cyan-400">
               <Workflow className="w-3.5 h-3.5" />
@@ -914,12 +915,12 @@ export default function CaseStudyTemplate({
 
             </div>
           )}
-        </section>
+        </Section>
 
         {/* =========================================================================
             11. PREVIOUS / NEXT PROJECT FOOTER NAVIGATION
         ========================================================================= */}
-        <section className="pt-12 border-t border-slate-800/80">
+        <Section timing={0.04} className="pt-12 border-t border-slate-800/80">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {/* Previous Project Card */}
             {study.prevProject && (
@@ -959,7 +960,7 @@ export default function CaseStudyTemplate({
               </button>
             )}
           </div>
-        </section>
+        </Section>
 
       </div>
 

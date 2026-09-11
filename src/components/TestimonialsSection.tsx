@@ -1,10 +1,11 @@
+import Section from './Section';
 import { motion } from 'motion/react';
 import { MessageSquareQuote } from 'lucide-react';
 import { TESTIMONIALS } from '../data/portfolioData';
 
 export default function TestimonialsSection() {
   return (
-    <section className="py-24 relative overflow-hidden bg-slate-950/60 border-t border-slate-800/80">
+    <Section timing={0.04} className="py-24 relative overflow-hidden bg-slate-950/60 border-t border-slate-800/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
@@ -68,6 +69,6 @@ export default function TestimonialsSection() {
         </div>
 
       </div>
-    </section>
+    </Section>
   );
 }

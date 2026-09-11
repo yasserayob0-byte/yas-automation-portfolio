@@ -1,3 +1,4 @@
+import Section from './Section';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronDown, HelpCircle } from 'lucide-react';
@@ -12,7 +13,7 @@ export default function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-20 relative overflow-hidden">
+    <Section timing={0.08} className="py-20 relative overflow-hidden">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Heading */}
@@ -72,6 +73,6 @@ export default function FaqSection() {
         </div>
 
       </div>
-    </section>
+    </Section>
   );
 }

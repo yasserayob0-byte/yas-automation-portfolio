@@ -1,3 +1,4 @@
+import Section from './Section';
 import { motion } from 'motion/react';
 import {
   Sparkles,
@@ -68,7 +69,7 @@ export default function AboutSection({ onTalkWithYasser }: AboutSectionProps) {
   ];
 
   return (
-    <section id="about" className="py-24 relative overflow-hidden">
+    <Section timing={0.04} id="about" className="py-24 relative overflow-hidden">
       {/* Background Subtle Gradient Highlights */}
       <div className="absolute top-1/3 -left-32 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
       <div className="absolute bottom-10 -right-32 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
@@ -186,6 +187,6 @@ export default function AboutSection({ onTalkWithYasser }: AboutSectionProps) {
         </motion.div>
 
       </div>
-    </section>
+    </Section>
   );
 }

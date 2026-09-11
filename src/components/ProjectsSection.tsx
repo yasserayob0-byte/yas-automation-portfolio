@@ -1,3 +1,4 @@
+import Section from './Section';
 import { createPortal } from 'react-dom';
 import { useModalFocus } from './useModalFocus';
 import { useState } from 'react';
@@ -37,7 +38,7 @@ export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStu
       );
 
   return (
-    <section id="projects" className="py-24 relative overflow-hidden">
+    <Section timing={0.00} id="projects" className="py-24 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Heading */}
@@ -349,6 +350,6 @@ export default function ProjectsSection({ onSelectProjectForAudit, onOpenCaseStu
           </div>
         )}
       </AnimatePresence>, document.body)}
-    </section>
+    </Section>
   );
 }
