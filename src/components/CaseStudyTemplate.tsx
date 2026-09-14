@@ -1,3 +1,4 @@
+import DiscoveryCallButton from './DiscoveryCallButton';
 import Section from './Section';
 import RevealImage from './RevealImage';
 import { PROJECT_BUSINESS_STORIES } from '../data/businessMessaging';
@@ -32,15 +33,13 @@ interface CaseStudyTemplateProps {
   data: CaseStudyData;
   onBack?: () => void;
   onNavigateProject?: (projectId: string) => void;
-  onContactClick?: (subjectTopic?: string) => void;
 }
 
 
 export default function CaseStudyTemplate({
   data,
   onBack,
-  onNavigateProject,
-  onContactClick
+  onNavigateProject
 }: CaseStudyTemplateProps) {
   const study = data;
 
@@ -88,12 +87,11 @@ export default function CaseStudyTemplate({
               <span>Production-Grade Architecture</span>
             </span>
 
-            <button
-              onClick={() => onContactClick?.(study.title)}
+            <DiscoveryCallButton
               className="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-md shadow-cyan-500/20 cursor-pointer"
             >
               Request a Discovery Call
-            </button>
+            </DiscoveryCallButton>
           </div>
         </div>
       </div>

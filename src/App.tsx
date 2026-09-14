@@ -13,7 +13,7 @@ import TechStackSection from './components/TechStackSection';
 import WhyAutomationMatters from './components/WhyAutomationMatters';
 import TestimonialsSection from './components/TestimonialsSection';
 import FaqSection from './components/FaqSection';
-import ContactSection from './components/ContactSection';
+import BookingSection from './components/BookingSection';
 import Footer from './components/Footer';
 import CaseStudyBoundary from './components/CaseStudyBoundary';
 const CaseStudyTemplate = lazy(() => import('./components/CaseStudyTemplate'));
@@ -64,7 +64,7 @@ export default function App() {
   };
   const handleOpenContact = (topic = '') => {
     setContactTopic(topic);
-    navigateSection('contact');
+    navigateSection('booking');
   };
   const openCase = (id: string) => {
     if (!resolveCaseStudy(id)) return;
@@ -78,10 +78,10 @@ export default function App() {
       <BackgroundEffects />
       <a onClick={(event) => { event.preventDefault(); focusSection(study ? 'case-study-content' : 'main-content'); }} href={study ? '#case-study-content' : '#main-content'} className="skip-link">Skip to content</a>
       <div hidden={!!study}>
-        <Navbar onOpenContact={handleOpenContact} />
+        <Navbar />
         <main id="main-content" tabIndex={-1} className="relative z-10">
           {caseId && !study && <div role="status" className="pt-28 px-6 text-center text-slate-300">That case study is unavailable. <a href="#projects" className="text-cyan-300 underline">Browse all projects</a>.</div>}
-          <HeroSection onExploreWorkflows={() => navigateSection('ghl-showcase')} onBookAudit={() => handleOpenContact('Discovery Call')} />
+          <HeroSection onExploreWorkflows={() => navigateSection('ghl-showcase')} />
           <ServicesPreview onSelectService={(service) => handleOpenContact(`Service: ${service}`)} />
           <ProjectsSection onSelectProjectForAudit={(project) => handleOpenContact(`Project: ${project}`)} onOpenCaseStudy={openCase} />
           <ServicesSection onSelectService={(service) => handleOpenContact(`Service: ${service}`)} />
@@ -92,10 +92,10 @@ export default function App() {
           <WhyAutomationMatters />
           <TestimonialsSection />
           <FaqSection />
-          <ContactSection initialTopic={contactTopic} />
+          <BookingSection initialTopic={contactTopic} />
         </main>
       </div>
-      {study && <main id="case-study-content" tabIndex={-1} className="relative z-10"><CaseStudyBoundary key={study.id}><Suspense fallback={<div role="status" className="px-6 py-24 text-center text-slate-300">Loading case study...</div>}><CaseStudyTemplate key={study.id} data={study} onBack={() => navigateSection('projects')} onNavigateProject={openCase} onContactClick={handleOpenContact} /></Suspense></CaseStudyBoundary></main>}
+      {study && <main id="case-study-content" tabIndex={-1} className="relative z-10"><CaseStudyBoundary key={study.id}><Suspense fallback={<div role="status" className="px-6 py-24 text-center text-slate-300">Loading case study...</div>}><CaseStudyTemplate key={study.id} data={study} onBack={() => navigateSection('projects')} onNavigateProject={openCase} /></Suspense></CaseStudyBoundary></main>}
       <Footer />
     </div>
   );

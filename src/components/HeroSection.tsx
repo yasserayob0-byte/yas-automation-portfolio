@@ -1,3 +1,4 @@
+import DiscoveryCallButton from './DiscoveryCallButton';
 ﻿import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
 import { ArrowRight, CalendarDays } from 'lucide-react';
@@ -10,11 +11,11 @@ import transparentPortrait from '../assets/images/yasser-portrait-transparent.pn
 import { heroRobotSrc } from '../data/heroVisualAssets';
 import './HeroSection.css';
 
-interface HeroSectionProps { onExploreWorkflows: () => void; onBookAudit: () => void; }
+interface HeroSectionProps { onExploreWorkflows: () => void; }
 const stats = [['5+', 'Automation Projects'], ['100%', 'Client-Focused'], ['\u221e', 'Continuous Learning'], ['AI', 'Real Business Impact']];
 const technologies = ['n8n', 'GoHighLevel', 'OpenAI', 'Airtable', 'Google Sheets', 'Make', 'Twilio', 'Vapi', 'Slack', 'Notion'];
 
-export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSectionProps) {
+export default function HeroSection({ onExploreWorkflows }: HeroSectionProps) {
   const ref = useRef<HTMLElement>(null);
   const visible = useInView(ref);
   const { enabled, ambientEnabled } = useMotionPreference();
@@ -29,7 +30,7 @@ export default function HeroSection({ onExploreWorkflows, onBookAudit }: HeroSec
         <motion.p {...entrance(.16)}>I help businesses respond to customers sooner, follow up with leads, and book appointments with less manual work. I connect your existing tools with AI and automation so your team can focus on what matters &mdash; your customers.</motion.p>
         <motion.div {...entrance(.24)} className="agency-actions">
           <button {...magnetic} className="agency-button agency-primary magnetic-button" onClick={() => document.getElementById('projects') ? focusSection('projects') : onExploreWorkflows()}>See the Business Use Cases <ArrowRight size={16} aria-hidden="true" /></button>
-          <button {...magnetic} className="agency-button agency-secondary magnetic-button" onClick={onBookAudit}><CalendarDays size={17} aria-hidden="true" />Request a Discovery Call</button>
+          <DiscoveryCallButton {...magnetic} className="agency-button agency-secondary magnetic-button"><CalendarDays size={17} aria-hidden="true" />Request a Discovery Call</DiscoveryCallButton>
         </motion.div>
       </div>
       <motion.div {...entrance(.12)} className="agency-visual" data-has-robot={!!heroRobotSrc}>

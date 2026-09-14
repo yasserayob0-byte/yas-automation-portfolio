@@ -1,3 +1,4 @@
+import DiscoveryCallButton from './DiscoveryCallButton';
 import { GithubLogo } from './BrandLogos';
 import { preferredScrollBehavior } from './navigation';
 import { ArrowUp, Linkedin, Briefcase, Globe } from 'lucide-react';
@@ -68,9 +69,9 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#contact" className="hover:text-cyan-400 transition-colors">
+                <DiscoveryCallButton className="hover:text-cyan-400 transition-colors">
                   Request a Discovery Call
-                </a>
+                </DiscoveryCallButton>
               </li>
             </ul>
           </div>
@@ -81,34 +82,30 @@ export default function Footer() {
               Professional Profiles
             </h4>
             <div className="flex flex-col space-y-2 text-xs">
-              <a
-                href="mailto:yasserayob0@gmail.com?subject=Request%20LinkedIn%20profile"
+              <DiscoveryCallButton emailOnly
                 className="hover:text-cyan-400 transition-colors flex items-center gap-2"
               >
                 <Linkedin className="w-3.5 h-3.5 text-cyan-400" />
                 <span>Request LinkedIn Profile</span>
-              </a>
-              <a
-                href="mailto:yasserayob0@gmail.com?subject=Request%20GitHub%20profile"
+              </DiscoveryCallButton>
+              <DiscoveryCallButton emailOnly
                 className="hover:text-cyan-400 transition-colors flex items-center gap-2"
               >
                 <GithubLogo className="w-3.5 h-3.5" decorative />
                 <span>Request GitHub Profile</span>
-              </a>
-              <a
-                href="mailto:yasserayob0@gmail.com?subject=Request%20Upwork%20profile"
+              </DiscoveryCallButton>
+              <DiscoveryCallButton emailOnly
                 className="hover:text-cyan-400 transition-colors flex items-center gap-2"
               >
                 <Briefcase className="w-3.5 h-3.5 text-emerald-400" />
                 <span>Request Upwork Profile</span>
-              </a>
-              <a
-                href="mailto:yasserayob0@gmail.com?subject=Request%20OnlineJobs%20profile"
+              </DiscoveryCallButton>
+              <DiscoveryCallButton emailOnly
                 className="hover:text-cyan-400 transition-colors flex items-center gap-2"
               >
                 <Globe className="w-3.5 h-3.5 text-amber-400" />
                 <span>Request OnlineJobs Profile</span>
-              </a>
+              </DiscoveryCallButton>
             </div>
           </div>
 

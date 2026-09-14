@@ -1,3 +1,4 @@
+import DiscoveryCallButton from './DiscoveryCallButton';
 import { useMagnetic } from './useMagnetic';
 import Section from './Section';
 import { useState } from 'react';
@@ -67,11 +68,6 @@ export default function ContactSection({ initialTopic = '' }: ContactSectionProp
     }
   ];
 
-  const emailHref = (topic = initialTopic) => {
-    const subject = encodeURIComponent(topic ? "Discovery Call: " + topic : "Discovery Call Request");
-    const body = encodeURIComponent("Hi Yasser,\n\nI would like to arrange a discovery call.\n\nBusiness / team:\nThe task or bottleneck I want to improve:\nTools we currently use:\nWhat a useful outcome would look like:\nMy time zone and preferred call times:\n\nOptional timeline or budget range:");
-    return `mailto:yasserayob0@gmail.com?subject=${subject}&body=${body}`;
-  };
 
   const copyEmail = async () => {
     try { await navigator.clipboard.writeText('yasserayob0@gmail.com'); setCopyStatus('Email address copied.'); }
@@ -105,7 +101,7 @@ export default function ContactSection({ initialTopic = '' }: ContactSectionProp
           <h3 className="text-lg font-semibold text-white">What we will cover on the call</h3>
           <p className="mt-2 text-sm leading-relaxed text-slate-300">We will walk through your current process, the tools and people involved, and the outcome you want. You do not need a technical brief; one recurring problem is enough to start.</p>
           {initialTopic && <p role="status" className="mt-3 text-sm text-cyan-300">Your selected topic: {initialTopic}</p>}
-          <p className="mt-3 text-sm text-slate-400">Request a call by email and include your time zone and preferred times. I will reply to arrange a time. The button opens a draft; it does not book a meeting automatically.</p>
+          <p className="mt-3 text-sm text-slate-400">Choose an available date and time in the booking section. You can also copy my email address if you prefer to get in touch directly.</p>
         </div>
 
         {/* Four Premium Glassmorphism Cards Grid */}
@@ -150,7 +146,7 @@ export default function ContactSection({ initialTopic = '' }: ContactSectionProp
 
                 {/* Card Footer Arrow Indicator */}
                 <div className="pt-6 mt-6 border-t border-slate-900/80 flex items-center justify-between relative z-10">
-                  <a href={emailHref(card.title)} className="text-sm font-semibold text-cyan-300" aria-label={`Request a discovery call about ${card.title}`}>Discuss this on a discovery call</a>
+                  <DiscoveryCallButton className="text-sm font-semibold text-cyan-300" aria-label={`Request a discovery call about ${card.title}`}>Discuss this on a discovery call</DiscoveryCallButton>
 
                   <div className="w-8 h-8 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-center text-slate-400 group-hover:bg-cyan-500 group-hover:text-slate-950 group-hover:border-cyan-400 transition-all duration-300">
                     <ArrowRight className="w-4 h-4 transform group-hover:translate-x-0.5 transition-transform" />
@@ -163,15 +159,14 @@ export default function ContactSection({ initialTopic = '' }: ContactSectionProp
 
         {/* Premium Center CTA Button */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-center">
-          <a
+          <DiscoveryCallButton
             {...magnetic}
-            href={emailHref()}
             className="magnetic-button w-full sm:w-auto px-10 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-extrabold text-sm uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-3 cursor-pointer shadow-xl shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-[1.03] active:scale-98"
           >
             <Send className="w-4 h-4" />
             <span>Request a Discovery Call</span>
             <ArrowRight className="w-4 h-4" />
-          </a>
+          </DiscoveryCallButton>
           <button onClick={copyEmail} className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-700 text-sm text-slate-200">{copyStatus === 'Email address copied.' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}Copy email address</button>
         </div>
         <p role="status" className="text-center text-sm text-cyan-300 mt-3 min-h-6">{copyStatus}</p>
@@ -179,7 +174,7 @@ export default function ContactSection({ initialTopic = '' }: ContactSectionProp
         {/* Fast response & Direct Email note below CTA */}
         <div className="text-center mt-6">
           <p className="text-sm text-slate-400 break-words">
-            Direct Email: <a href="mailto:yasserayob0@gmail.com" className="text-cyan-400 hover:underline">yasserayob0@gmail.com</a>
+            Direct Email: <button type="button" onClick={copyEmail} className="text-cyan-400 hover:underline">yasserayob0@gmail.com</button>
           </p>
         </div>
 

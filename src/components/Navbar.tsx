@@ -1,14 +1,11 @@
+import DiscoveryCallButton from './DiscoveryCallButton';
 import './Navbar.css';
 import { useMotionPreference } from './MotionPreferences';
 import { useState, useEffect, useRef } from 'react';
 import { Menu, X, ArrowUpRight, Sparkles, Pause, Play } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
-interface NavbarProps {
-  onOpenContact: (topic?: string) => void;
-}
-
-export default function Navbar({ onOpenContact }: NavbarProps) {
+export default function Navbar() {
   const { enabled: motionEnabled, systemReduced, toggle: toggleMotion } = useMotionPreference();
   const headerRef = useRef<HTMLElement>(null);
   const [headerHeight, setHeaderHeight] = useState(84);
@@ -114,8 +111,7 @@ export default function Navbar({ onOpenContact }: NavbarProps) {
           {/* Right Action: Let's Talk CTA button */}
           <div className="hidden sm:flex items-center gap-3">
 
-            <button
-              onClick={() => { setMobileMenuOpen(false); onOpenContact(); }}
+            <DiscoveryCallButton onBeforeOpen={() => setMobileMenuOpen(false)}
               className="relative group overflow-hidden rounded-full p-[1px] focus:outline-none"
             >
               <span className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-sky-400 to-indigo-500 rounded-full animate-gradient-x opacity-80 group-hover:opacity-100 transition-opacity" />
@@ -124,7 +120,7 @@ export default function Navbar({ onOpenContact }: NavbarProps) {
                 <span>Let's Work Together</span>
                 <ArrowUpRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-cyan-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </span>
-            </button>
+            </DiscoveryCallButton>
           </div>
 
           <button onClick={toggleMotion} disabled={systemReduced} aria-label={motionEnabled ? 'Pause animations' : 'Resume animations'} title={systemReduced ? 'Animations are reduced by your system preference' : motionEnabled ? 'Pause animations' : 'Resume animations'} aria-pressed={!motionEnabled} className="ml-2 rounded-xl border border-slate-800 text-slate-300 inline-flex items-center justify-center shrink-0">{motionEnabled ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}</button>
@@ -170,16 +166,12 @@ export default function Navbar({ onOpenContact }: NavbarProps) {
                 </a>
               ))}
               <div className="pt-4 mt-2 border-t border-slate-800">
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    onOpenContact();
-                  }}
+                <DiscoveryCallButton onBeforeOpen={() => setMobileMenuOpen(false)}
                   className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2"
                 >
                   <Sparkles className="w-4 h-4" />
                   <span>Request a Discovery Call</span>
-                </button>
+                </DiscoveryCallButton>
               </div>
             </div>
           </motion.div>

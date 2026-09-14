@@ -1,0 +1,6 @@
+﻿.discovery-overlay{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:20px;background:#020617b8;backdrop-filter:blur(8px)}
+.discovery-dialog{position:relative;width:min(100%,560px);max-height:calc(100dvh - 40px);overflow:auto;padding:40px 28px 24px;border-radius:20px;border:1px solid #22506b;background:linear-gradient(140deg,#0b1d30,#070e1b);box-shadow:0 24px 80px #0007;color:#dbeafe}
+.discovery-dialog h2{font-size:clamp(17px,2vw,23px);line-height:1.35;font-weight:700;color:#f1f5f9;padding-right:20px}
+.discovery-dialog ul{display:flex;flex-wrap:wrap;gap:6px 20px;list-style:inside;margin:12px 0;color:#a5d9f3;font-size:12px}
+.discovery-dialog p{font-size:14px;line-height:1.7;margin-top:16px}.discovery-email{user-select:all;overflow-wrap:anywhere;color:#67e8f9}
+.discovery-close{position:absolute;right:12px;top:10px;display:grid;place-items:center;width:44px;height:44px;color:#cbd5e1}.discovery-copy{display:inline-flex;align-items:center;gap:9px;margin-top:16px;padding:12px 18px;border-radius:10px;background:#0e7490;color:white}

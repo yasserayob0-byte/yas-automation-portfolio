@@ -3,7 +3,7 @@
 }
 
 export function focusSection(id: string) {
-  const section = document.getElementById(id);
+  const section = document.getElementById(id === 'contact' ? 'booking' : id);
   if (!section) return;
   section.setAttribute('tabindex', '-1');
   section.focus({ preventScroll: true });
