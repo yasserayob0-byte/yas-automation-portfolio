@@ -1,10 +1,10 @@
+import WorkflowDisclosure, { WorkflowDisclosureProvider } from './components/WorkflowDisclosure';
 ﻿import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import CustomCursor from './components/CustomCursor';
 import BackgroundEffects from './components/BackgroundEffects';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import ServicesPreview from './components/ServicesPreview';
-import AboutSection from './components/AboutSection';
 import ServicesSection from './components/ServicesSection';
 import HowIWorkSection from './components/HowIWorkSection';
 import GoHighLevelShowcase from './components/GoHighLevelShowcase';
@@ -73,7 +73,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-slate-100 selection:bg-cyan-500/30 selection:text-cyan-200 relative overflow-x-clip">
+    <WorkflowDisclosureProvider><div className="min-h-screen bg-[#07090e] text-slate-100 selection:bg-cyan-500/30 selection:text-cyan-200 relative overflow-x-clip">
       <CustomCursor />
       <BackgroundEffects />
       <a onClick={(event) => { event.preventDefault(); focusSection(study ? 'case-study-content' : 'main-content'); }} href={study ? '#case-study-content' : '#main-content'} className="skip-link">Skip to content</a>
@@ -86,8 +86,7 @@ export default function App() {
           <ProjectsSection onSelectProjectForAudit={(project) => handleOpenContact(`Project: ${project}`)} onOpenCaseStudy={openCase} />
           <ServicesSection onSelectService={(service) => handleOpenContact(`Service: ${service}`)} />
           <GoHighLevelShowcase onConsultWorkflow={(workflow) => handleOpenContact(`GoHighLevel Workflow: ${workflow}`)} />
-          <HowIWorkSection />
-          <AboutSection onTalkWithYasser={() => handleOpenContact('Consultation with Yasser Usman')} />
+          <div id="about"><HowIWorkSection /></div>
           <TechStackSection />
           <WhyAutomationMatters />
           <TestimonialsSection />
@@ -95,8 +94,8 @@ export default function App() {
           <BookingSection initialTopic={contactTopic} />
         </main>
       </div>
-      {study && <main id="case-study-content" tabIndex={-1} className="relative z-10"><CaseStudyBoundary key={study.id}><Suspense fallback={<div role="status" className="px-6 py-24 text-center text-slate-300">Loading case study...</div>}><CaseStudyTemplate key={study.id} data={study} onBack={() => navigateSection('projects')} onNavigateProject={openCase} /></Suspense></CaseStudyBoundary></main>}
+      {study && <main id="case-study-content" tabIndex={-1} className="relative z-10"><div className="max-w-7xl mx-auto px-4 py-12"><a href="#projects" className="inline-block mb-6 text-cyan-300 underline">Back to portfolio</a><WorkflowDisclosure key={study.id} id={'case-' + study.id} headingLevel={1} title={study.title} category={study.category || study.badge || 'Case Study'} summary={study.tagline} image={study.heroScreenshot.imageUrl}><CaseStudyBoundary key={study.id}><Suspense fallback={<div role="status" className="px-6 py-24 text-center text-slate-300">Loading case study...</div>}><CaseStudyTemplate key={study.id} data={study} embedded onBack={() => navigateSection('projects')} onNavigateProject={openCase} /></Suspense></CaseStudyBoundary></WorkflowDisclosure></div></main>}
       <Footer />
-    </div>
+    </div></WorkflowDisclosureProvider>
   );
 }

@@ -908,19 +908,19 @@ export const TESTIMONIALS: TestimonialItem[] = [
 
 export const FAQS = [
   {
-    question: 'How is YAS Automation different from hiring a standard freelancer?',
-    answer: 'I focus on business workflows using GoHighLevel, n8n, and AI integrations. We identify the operational problem, map the integrations, and agree on error handling, validation, queueing, and documentation appropriate to the project.'
+    question: 'What can you automate for my business?',
+    answer: 'I can automate lead follow-up, appointment booking, customer replies, and repetitive data entry. We start with the tasks taking up time for your team and choose a practical workflow to improve.'
   },
   {
-    question: 'How long does a typical automation project take to build and deploy?',
-    answer: 'Indicative timelines are 7–14 days for focused GoHighLevel or n8n workflows and 2–4 weeks for more complex AI and API integrations. Scope, access to your tools, testing, and feedback determine the actual schedule; confirm it before work starts.'
+    question: 'How long does a typical automation project take?',
+    answer: 'A focused workflow typically takes 7 to 14 days; more complex projects may take 2 to 4 weeks. We agree on the timeline before starting, based on the scope, access to your tools, and testing needs.'
   },
   {
-    question: 'What happens if a third-party API changes or experiences downtime?',
-    answer: 'We plan how the workflow should handle outages: retries, queued events, validation, and alerts to the right person. The approach depends on the connected tools and data. Agree on monitoring, support, and exception handling as part of the scope.'
+    question: 'Can you work with my existing tools and CRM?',
+    answer: 'Yes, where your tools support the connections needed. I review your current setup first and explain any limitations before recommending changes.'
   },
   {
-    question: 'Can you integrate with our existing proprietary or legacy software?',
-    answer: 'I assess the APIs, webhooks, database access, and permission requirements of your existing tools before recommending an integration. Some legacy systems have limits; we clarify those during scoping.'
+    question: 'What do you need from me to get started?',
+    answer: 'Tell me which repetitive task you want to improve, the tools you use, and the result you want. Share your timeline and budget range if you know them; we can discuss any access needed after agreeing on the scope.'
   }
 ];

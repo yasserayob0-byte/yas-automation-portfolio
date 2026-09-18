@@ -1,4 +1,13 @@
-﻿.tech-stack-icon{display:grid;place-items:center;flex:0 0 56px;width:56px;height:56px;padding:11px;border:1px solid #1e293b;border-radius:16px;background:#020617;color:#38bdf8;box-shadow:inset 0 1px 8px #0003;transition:border-color .3s,box-shadow .3s,color .3s}
-.tech-stack-icon>svg,.tech-stack-icon>.technology-logo{width:32px;height:32px;flex-shrink:0}
-.group:hover .tech-stack-icon,.group:focus-visible .tech-stack-icon{border-color:#06b6d466;color:#67e8f9;box-shadow:0 0 22px #06b6d422}
-@media(prefers-reduced-motion:reduce){.tech-stack-icon{transition:none}}
+@reference "../index.css";
+#tech-stack .tech-carousel { @apply relative flex gap-3 overflow-x-auto py-3 px-1; scroll-snap-type:x proximity; scrollbar-width:thin; scrollbar-color: var(--color-slate-700) transparent; }
+#tech-stack .tech-carousel-item { @apply flex flex-col items-center justify-center gap-3 shrink-0 w-36 min-h-32 p-4 rounded-2xl border border-slate-800 bg-slate-900/60 cursor-pointer; scroll-snap-align:start; transition:transform .25s,border-color .25s,box-shadow .25s; }
+#tech-stack .tech-carousel-item:hover { @apply -translate-y-0.5 border-cyan-500/40 shadow-lg shadow-cyan-500/10; }
+#tech-stack .tech-carousel-item[aria-expanded="true"] { @apply border-cyan-400/60 bg-cyan-500/10; }
+#tech-stack .tech-stack-icon { @apply grid place-items-center w-12 h-12 shrink-0 text-cyan-400; }
+#tech-stack .tech-stack-icon>svg,#tech-stack .tech-stack-icon>.technology-logo { width:32px;height:32px; }
+#tech-stack .tech-carousel-control { @apply inline-flex items-center justify-center w-11 h-11 shrink-0 rounded-xl border border-slate-800 bg-slate-900/80 text-cyan-300 cursor-pointer transition-colors; }
+#tech-stack .tech-carousel-control:hover:not(:disabled) { @apply border-cyan-500/40 bg-slate-800; }
+#tech-stack .tech-carousel-control:disabled { @apply opacity-35 cursor-default; }
+#tech-stack button:focus-visible { @apply outline-2 outline-offset-2 outline-cyan-300; }
+@media(prefers-reduced-motion:reduce) { #tech-stack .tech-carousel-item,#tech-stack .tech-carousel-control { transition:none;transform:none; } }
+html[data-motion="off"] #tech-stack .tech-carousel-item { transition:none;transform:none; }

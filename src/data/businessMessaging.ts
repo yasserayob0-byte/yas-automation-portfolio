@@ -46,11 +46,8 @@ export const PROJECT_BUSINESS_STORIES: Record<string, ProjectBusinessStory> = {
 };
 
 export const CLIENT_JOURNEY = [
-  { title: 'Discovery', description: 'We discuss where work gets delayed, what it costs your team, and what you want to improve. Together, we choose a useful first workflow.' },
-  { title: 'Workflow Mapping', description: 'I map the steps, tools, people, and exceptions. We agree on scope and success criteria before development begins.' },
-  { title: 'Automation Development', description: 'I build the repeatable steps and connect your existing tools, with checkpoints so you can review how the workflow behaves.' },
-  { title: 'AI Integration', description: 'Where AI adds value, I connect it to relevant business information and define when a person should review or take over.' },
-  { title: 'Testing', description: 'We check normal requests, missing information, and failure scenarios against the agreed criteria before approving launch.' },
-  { title: 'Deployment', description: 'I help launch the approved workflow and walk your team through daily use, monitoring, and the handover documentation.' },
-  { title: 'Optimization', description: 'We review usage and results against the original goals, then prioritize improvements. Ongoing support is agreed as part of the scope.' },
+  { title: 'Discover', description: 'Understand the business problem, goals, and current workflow.' },
+  { title: 'Map', description: 'Design the automation flow, integrations, and logic.' },
+  { title: 'Build', description: 'Develop, test, and validate the automation.' },
+  { title: 'Launch', description: 'Deploy, document, and optimize the system.' },
 ];

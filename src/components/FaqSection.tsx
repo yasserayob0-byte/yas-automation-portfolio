@@ -5,11 +5,6 @@ import { ChevronDown, HelpCircle } from 'lucide-react';
 import { FAQS } from '../data/portfolioData';
 
 export default function FaqSection() {
-  const questions = [...FAQS,
-    { question: 'What should I include in my first message?', answer: 'Describe one repetitive workflow, your current tools, the volume of work, and the result you want. Include a timeline and budget range if known. Avoid sending credentials or customer records in the initial email.' },
-    { question: 'How are project costs and ongoing support scoped?', answer: 'Build cost depends on integrations, workflow complexity, data quality, and testing needs. Discuss software subscriptions, hosting, maintenance, and support separately so the total cost is clear before committing.' },
-    { question: 'What should we agree on before rollout?', answer: 'Confirm access and ownership of accounts, data handling, test cases, human review and fallback steps, documentation, and who responds to failures. Use a measurable baseline to evaluate the result.' }
-  ];
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
@@ -29,7 +24,7 @@ export default function FaqSection() {
 
         {/* FAQs Accordion */}
         <div className="space-y-3">
-          {questions.map((faq, idx) => {
+          {FAQS.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
               <div

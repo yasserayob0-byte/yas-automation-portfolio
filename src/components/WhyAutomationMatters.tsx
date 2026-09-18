@@ -1,21 +1,22 @@
 import Section from './Section';
+import { useMotionPreference } from './MotionPreferences';
 import { useState } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import {
   TrendingUp,
   Clock,
   Zap,
-  Users,
-  ShieldCheck,
   CheckCircle2,
   XCircle,
   Sparkles,
   ArrowRight,
   Calculator,
-  Flame
+  ChevronDown
 } from 'lucide-react';
 
 export default function WhyAutomationMatters() {
+  const [comparisonOpen, setComparisonOpen] = useState(false);
+  const { enabled } = useMotionPreference();
   const [activeTab, setActiveTab] = useState<'comparison' | 'calculator'>('comparison');
   
   // ROI Calculator state
@@ -34,15 +35,15 @@ export default function WhyAutomationMatters() {
   const impactCards = [
     {
       icon: Clock,
-      title: 'Reduce repetitive admin',
-      description: 'Eliminate tedious manual copy-pasting across CRMs, email inboxes, and spreadsheets so your team focuses on high-ticket revenue tasks.',
+      title: 'Reduce repetitive work',
+      description: 'Reduce manual copying between your CRM, inbox, and spreadsheets so your team can focus on customers.',
       metric: 'Time reclaimed',
       color: 'text-cyan-400',
       border: 'hover:border-cyan-500/50'
     },
     {
       icon: Zap,
-      title: 'Respond to leads sooner',
+      title: 'Respond faster',
       description: 'Route new inquiries, qualify leads, and send booking options without waiting for manual inbox checks.',
       metric: 'Faster routing',
       color: 'text-amber-400',
@@ -50,36 +51,12 @@ export default function WhyAutomationMatters() {
     },
     {
       icon: TrendingUp,
-      title: 'Follow up consistently',
+      title: 'Keep follow-ups consistent',
       description: 'Use scheduled follow-ups and recovery workflows to give missed appointments and unresponsive leads another path to booking.',
       metric: 'Recovery workflows',
       color: 'text-emerald-400',
       border: 'hover:border-emerald-500/50'
     },
-    {
-      icon: ShieldCheck,
-      title: 'Reduce data entry errors',
-      description: 'Validate required fields, deduplicate records, and route exceptions for review before updating connected systems.',
-      metric: 'Validation checks',
-      color: 'text-indigo-400',
-      border: 'hover:border-indigo-500/50'
-    },
-    {
-      icon: Users,
-      title: 'Keep customers informed',
-      description: 'Send confirmations, reminders, and follow-up messages so customers know what happens next.',
-      metric: 'Consistent updates',
-      color: 'text-purple-400',
-      border: 'hover:border-purple-500/50'
-    },
-    {
-      icon: Flame,
-      title: 'Support growing volumes',
-      description: 'Connect your tools and automate repeatable steps, with capacity shaped by API limits, hosting, monitoring, and team oversight.',
-      metric: 'Connected operations',
-      color: 'text-rose-400',
-      border: 'hover:border-rose-500/50'
-    }
   ];
 
   const comparisonData = [
@@ -160,19 +137,19 @@ export default function WhyAutomationMatters() {
 
         {/* Tab 1: Impact Pillars & Before vs After Matrix */}
         {activeTab === 'comparison' && (
-          <div className="space-y-16">
-            {/* 6 Key Impact Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="space-y-8">
+            {/* 3 Primary Business Outcomes */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {impactCards.map((card, idx) => {
                 const Icon = card.icon;
                 return (
                   <motion.div
                     key={idx}
-                    initial={{ opacity: 0, y: 14 }}
+                    initial={enabled ? { opacity: 0, y: 14 } : false}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: idx * 0.08 }}
-                    className={`p-6 rounded-3xl bg-slate-900/60 border border-slate-800 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:bg-slate-900/90 ${card.border} hover:shadow-xl group`}
+                    transition={{ duration: enabled ? 0.4 : 0, delay: enabled ? idx * 0.08 : 0 }}
+                    className={`p-6 rounded-3xl bg-slate-900/60 border border-slate-800 backdrop-blur-xl transition-all duration-300 motion-safe:hover:-translate-y-1 hover:bg-slate-900/90 ${card.border} hover:shadow-xl group`}
                   >
                     <div className="flex items-center justify-between mb-4">
                       <div className={`w-12 h-12 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-center ${card.color} group-hover:scale-[1.03] transition-transform`}>
@@ -194,12 +171,21 @@ export default function WhyAutomationMatters() {
               })}
             </div>
 
+            <div>
+              <button type="button" id="workflow-comparison-toggle" aria-expanded={comparisonOpen} aria-controls="workflow-comparison" onClick={() => setComparisonOpen(open => !open)} className="mx-auto flex items-center justify-center gap-3 rounded-xl border border-cyan-500/30 bg-cyan-500/10 px-5 py-3 text-sm font-semibold text-cyan-300 hover:bg-cyan-500/20 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300">
+                See How Automation Changes the Workflow
+                <ChevronDown aria-hidden="true" className={`h-4 w-4 shrink-0 transition-transform motion-reduce:transition-none ${comparisonOpen ? 'rotate-180' : ''}`} />
+              </button>
+              <div id="workflow-comparison" role="region" aria-labelledby="workflow-comparison-toggle" aria-hidden={!comparisonOpen} inert={!comparisonOpen}>
+                <AnimatePresence initial={false}>
+                  {comparisonOpen && <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: enabled ? 0.25 : 0 }} className="overflow-hidden">
+                    <div className="pt-5">
             {/* Before vs After Comparison Table */}
             <div className="rounded-3xl bg-slate-950 border border-slate-800 overflow-hidden shadow-2xl">
               <div className="p-6 bg-slate-900/80 border-b border-slate-800 flex items-center justify-between">
                 <div>
                   <h3 className="text-lg sm:text-xl font-bold text-white font-heading">
-                    Manual Friction vs Autonomous Execution
+                    Manual Friction vs Automation Execution
                   </h3>
                   <p className="text-xs text-slate-400">
                     How YAS Automation transforms daily operational performance.
@@ -239,6 +225,12 @@ export default function WhyAutomationMatters() {
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+
+                    </div>
+                  </motion.div>}
+                </AnimatePresence>
               </div>
             </div>
           </div>

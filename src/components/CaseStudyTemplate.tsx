@@ -1,3 +1,4 @@
+import WorkflowDetails from './WorkflowDetails';
 import DiscoveryCallButton from './DiscoveryCallButton';
 import Section from './Section';
 import RevealImage from './RevealImage';
@@ -31,6 +32,7 @@ import type { CaseStudyData } from '../types';
 
 interface CaseStudyTemplateProps {
   data: CaseStudyData;
+  embedded?: boolean;
   onBack?: () => void;
   onNavigateProject?: (projectId: string) => void;
 }
@@ -38,10 +40,12 @@ interface CaseStudyTemplateProps {
 
 export default function CaseStudyTemplate({
   data,
+  embedded = false,
   onBack,
   onNavigateProject
 }: CaseStudyTemplateProps) {
   const study = data;
+  const Title = embedded ? 'h2' : 'h1';
 
   const [activeGalleryModal, setActiveGalleryModal] = useState<string | null>(null);
   const [isHeroScreenshotZoomed, setIsHeroScreenshotZoomed] = useState(false);
@@ -64,6 +68,8 @@ export default function CaseStudyTemplate({
     return () => window.removeEventListener('keydown', keydown);
   }, [activeGalleryModal, activeGallerySlideIndex, study.gallery]);
 
+  if (embedded) return <WorkflowDetails study={study} />;
+
   return (
     <article className="min-h-screen bg-slate-950 text-slate-100 selection:bg-cyan-500 selection:text-slate-950 font-sans pb-24 relative overflow-x-clip">
       {/* Ambient Lighting Orbs */}
@@ -71,7 +77,7 @@ export default function CaseStudyTemplate({
       <div className="absolute top-[40%] right-[-100px] w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[160px] pointer-events-none -z-10" />
 
       {/* Sticky Top Navigation Bar */}
-      <div className="sticky top-0 z-40 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800/80">
+      {!embedded && <div className="sticky top-0 z-40 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <button
             onClick={onBack}
@@ -96,6 +102,7 @@ export default function CaseStudyTemplate({
         </div>
       </div>
 
+      }
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 space-y-20">
         
         {/* =========================================================================
@@ -118,9 +125,9 @@ export default function CaseStudyTemplate({
 
           {/* Title & Tagline */}
           <div className="space-y-4">
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold font-heading text-white tracking-tight leading-tight">
+            <Title className="text-3xl sm:text-5xl lg:text-6xl font-extrabold font-heading text-white tracking-tight leading-tight">
               {PROJECT_BUSINESS_STORIES[study.id]?.headline ?? study.title}
-            </h1>
+            </Title>
             <p className="text-lg sm:text-xl text-slate-300 font-sans leading-relaxed">
               {study.tagline}
             </p>

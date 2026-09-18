@@ -1,8 +1,8 @@
+import WorkflowDisclosure from './WorkflowDisclosure';
 import Section from './Section';
-import RevealImage from './RevealImage';
 import { useMotionPreference } from './MotionPreferences';
 import { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import type { LucideIcon } from 'lucide-react';
 import {
   ChevronLeft,
@@ -14,7 +14,6 @@ import {
   CheckCircle2,
   Mail,
   MessageSquare,
-  ArrowRight,
   Layers,
   FileCheck
 } from 'lucide-react';
@@ -364,6 +363,15 @@ const WORKFLOW_SLIDES: WorkflowSlide[] = [
   },
 ];
 
+const WORKFLOW_PROBLEMS: Record<string, string> = {
+  'ghl-lead-capture': 'Manual intake leaves staff transferring patient inquiries into the CRM before appointment handling can begin.',
+  'ghl-confirmation': 'Staff need to confirm new bookings and keep patients informed without sending each confirmation manually.',
+  'ghl-reminder': 'Patients can forget upcoming appointments, while manual reminders add work for clinic staff.',
+  'ghl-cancel': 'Cancellations require timely updates so staff and patient records remain aligned.',
+  'ghl-noshow': 'Missed appointments need a consistent follow-up process to help patients rebook.',
+  'ghl-followup': 'Post-appointment communication and feedback requests can be missed when follow-up depends on manual work.',
+};
+
 const TECH_BADGES = ['GoHighLevel', 'CRM', 'Workflow Automation', 'Email', 'SMS'];
 
 export default function GoHighLevelShowcase({ onConsultWorkflow }: GoHighLevelShowcaseProps) {
@@ -371,7 +379,6 @@ export default function GoHighLevelShowcase({ onConsultWorkflow }: GoHighLevelSh
   const reduceMotion = !motionEnabled;
   const slideNavRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
 
   useEffect(() => {
     const selected = slideNavRef.current?.querySelector<HTMLElement>('[aria-pressed="true"]');
@@ -379,19 +386,15 @@ export default function GoHighLevelShowcase({ onConsultWorkflow }: GoHighLevelSh
   }, [currentIndex, reduceMotion]);
 
   const activeSlide = WORKFLOW_SLIDES[currentIndex];
-
   const handleNext = () => {
-    setDirection(1);
     setCurrentIndex((prev) => (prev + 1) % WORKFLOW_SLIDES.length);
   };
 
   const handlePrev = () => {
-    setDirection(-1);
     setCurrentIndex((prev) => (prev - 1 + WORKFLOW_SLIDES.length) % WORKFLOW_SLIDES.length);
   };
 
   const handleSelectSlide = (index: number) => {
-    setDirection(index > currentIndex ? 1 : -1);
     setCurrentIndex(index);
   };
 
@@ -445,7 +448,7 @@ export default function GoHighLevelShowcase({ onConsultWorkflow }: GoHighLevelSh
         </div>
 
         {/* Horizontal Navigation Pills with Category Indicators */}
-        <div ref={slideNavRef} aria-label="Choose patient journey workflow" className="relative flex items-center gap-2.5 overflow-x-auto pb-4 mb-8 scrollbar-none">
+        <div ref={slideNavRef} aria-label="Choose patient journey workflow" className="relative flex items-center gap-2 overflow-x-auto px-1 py-2 mb-8 scrollbar-none">
           {WORKFLOW_SLIDES.map((slide, idx) => {
             const isSelected = currentIndex === idx;
             return (
@@ -453,9 +456,9 @@ export default function GoHighLevelShowcase({ onConsultWorkflow }: GoHighLevelSh
                 key={slide.id}
                 aria-pressed={isSelected}
                 onClick={() => handleSelectSlide(idx)}
-                className={`px-4 py-2.5 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all duration-300 cursor-pointer flex items-center gap-2 border ${
+                className={`h-12 shrink-0 px-3 py-3 rounded-2xl text-xs leading-5 font-semibold whitespace-nowrap transition-colors duration-300 cursor-pointer inline-flex items-center justify-center gap-2 border focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 ${
                   isSelected
-                    ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-bold border-cyan-400 shadow-[0_0_25px_rgba(6,182,212,0.35)] scale-[1.02]'
+                    ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 border-cyan-400 shadow-[0_0_25px_rgba(6,182,212,0.35)]'
                     : 'bg-slate-900/80 text-slate-400 hover:text-slate-200 border-slate-800/80 hover:bg-slate-800'
                 }`}
               >
@@ -466,127 +469,20 @@ export default function GoHighLevelShowcase({ onConsultWorkflow }: GoHighLevelSh
           })}
         </div>
 
-        <p className="text-sm text-slate-400 mb-4">Workflow metrics are project-specific. Discuss the measurement period and baseline before using them to forecast results.</p>
         {/* Main Interactive Slide Stage (Glassmorphism + Apple Card) */}
         <div className="relative" role="region" aria-label="Patient journey workflows" aria-roledescription="carousel">
           <p className="sr-only" aria-live="polite">Workflow {currentIndex + 1} of {WORKFLOW_SLIDES.length}: {activeSlide.title}</p>
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={activeSlide.id}
-              custom={direction}
-              variants={{ enter: (dir: number) => ({ opacity: 0, x: reduceMotion ? 0 : dir * 24 }), visible: { opacity: 1, x: 0 }, leave: (dir: number) => ({ opacity: 0, x: reduceMotion ? 0 : dir * -16 }) }}
-              initial="enter"
-              animate="visible"
-              exit="leave"
-              transition={{ duration: reduceMotion ? 0 : 0.28, ease: [0.16, 1, 0.3, 1] }}
-              className="rounded-3xl bg-slate-950/85 border border-slate-800/90 backdrop-blur-2xl p-6 sm:p-9 shadow-2xl overflow-hidden relative"
-            >
-              {/* Background ambient lighting accent */}
-              <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-cyan-500/10 via-blue-500/5 to-transparent rounded-full blur-3xl pointer-events-none" />
-
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-                
-                {/* Left Column: Workflow Info, Badges, Impact (5 Cols) */}
-                <div className="lg:col-span-5 space-y-6">
-                  
-                  {/* Step tag & Category */}
-                  <div className="flex items-center gap-2.5">
-                    <span className="px-3 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-xs font-mono font-semibold text-cyan-300">
-                      Slide {activeSlide.stepNum} of {String(WORKFLOW_SLIDES.length).padStart(2, '0')}
-                    </span>
-                    <span className="text-xs font-medium text-slate-400">
-                      {activeSlide.category}
-                    </span>
-                  </div>
-
-                  {/* Title & Description */}
-                  <div className="space-y-3">
-                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white font-heading leading-tight tracking-tight">
-                      {activeSlide.title}
-                    </h3>
-                    <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-sans">
-                      {activeSlide.description}
-                    </p>
-                  </div>
-
-                  {/* Technology Badges Matrix */}
-                  <div className="space-y-2 pt-1">
-                    <div className="text-[11px] font-mono text-slate-400 uppercase tracking-wider">
-                      Built with:
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {TECH_BADGES.map((badge, idx) => (
-                        <span
-                          key={idx}
-                          className="px-3 py-1 rounded-xl text-xs font-mono font-medium bg-slate-900/90 text-cyan-300 border border-slate-700/80 shadow-sm flex items-center gap-1.5"
-                        >
-                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-                          {badge}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Highlight Metric Card */}
-                  <div className="p-4 rounded-2xl bg-gradient-to-r from-slate-900/90 to-slate-950 border border-cyan-500/20 flex items-center justify-between shadow-inner">
-                    <div>
-                      <div className="text-[11px] font-mono text-slate-400 uppercase tracking-wider">
-                        {activeSlide.impactMetric.label}
-                      </div>
-                      <div className="text-xl sm:text-2xl font-bold text-white font-heading mt-0.5">
-                        {activeSlide.impactMetric.value}
-                      </div>
-                    </div>
-                    <span className="px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-semibold">
-                      {activeSlide.impactMetric.trend}
-                    </span>
-                  </div>
-
-                  {/* Action CTA Button */}
-                  <div className="pt-2">
-                    <button
-                      onClick={() => onConsultWorkflow(`Dental Clinic Patient Journey: ${activeSlide.title}`)}
-                      className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-xs uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2.5 cursor-pointer shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-[1.02] active:scale-98"
-                    >
-                      <span>Consult on This Workflow</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-
-               {/* Right Column: Actual GoHighLevel Workflow Screenshot */}
-<div className="lg:col-span-7">
-  <div className="rounded-3xl overflow-hidden border border-slate-700 bg-slate-950 shadow-2xl">
-
-    <div className="flex items-center justify-between px-4 py-3 gap-3 flex-wrap bg-slate-900 border-b border-slate-700">
-      <div className="flex items-center gap-2">
-        <span className="w-3 h-3 rounded-full bg-red-500"></span>
-        <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
-        <span className="w-3 h-3 rounded-full bg-green-500"></span>
-      </div>
-
-      <span className="text-xs text-slate-400 font-mono">
-        GoHighLevel Workflow Builder
-      </span>
-
-      <span className="text-xs px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-        Workflow Screenshot
-      </span>
-    </div>
-
-    <RevealImage
-      decoding="async"
-      src={activeSlide.image}
-      alt={activeSlide.title}
-      className="w-full object-contain"
-    />
-
-  </div>
-</div>
-
-              </div>
-            </motion.div>
-          </AnimatePresence>
+          <WorkflowDisclosure key={activeSlide.id} id={'ghl-' + activeSlide.id} title={activeSlide.title} category={activeSlide.category} summary={activeSlide.description} image={activeSlide.image}>
+          <div className="p-6 sm:p-8 space-y-8">
+            <section className="space-y-3"><h4 className="text-lg font-bold text-cyan-300">Business Problem</h4><p className="text-sm text-slate-300 leading-relaxed">{WORKFLOW_PROBLEMS[activeSlide.id]}</p></section>
+            <section className="space-y-3"><h4 className="text-lg font-bold text-cyan-300">Automation Solution</h4><ul className="list-disc pl-5 space-y-2 text-sm text-slate-300">{activeSlide.actions.map(action => <li key={action}>{action}</li>)}</ul></section>
+            <section className="space-y-3"><h4 className="text-lg font-bold text-cyan-300">Workflow Architecture / Process</h4><p className="text-sm text-slate-300"><span className="font-semibold text-white">Trigger: </span>{activeSlide.trigger}</p></section>
+            <section className="space-y-4"><h4 className="text-lg font-bold text-cyan-300">Key Steps</h4><ol className="grid sm:grid-cols-2 gap-4">{activeSlide.nodes.map(node => <li key={node.id} className="rounded-xl border border-slate-800 bg-slate-900/60 p-4"><div className="flex gap-2 items-center text-cyan-300"><node.icon aria-hidden="true" className="w-4 h-4 shrink-0" /><h5 className="font-semibold">{node.label}</h5></div><p className="mt-2 text-sm text-slate-300">{node.desc}</p><span className="text-xs font-mono text-slate-400">{node.tag}</span></li>)}</ol></section>
+            <section className="space-y-3"><h4 className="text-lg font-bold text-cyan-300">Tech Stack</h4><div className="flex flex-wrap gap-2">{TECH_BADGES.map(tech => <span key={tech} className="px-3 py-1 rounded-lg border border-slate-800 text-sm text-slate-300">{tech}</span>)}</div></section>
+            <section className="space-y-3"><h4 className="text-lg font-bold text-cyan-300">Business Impact / Results</h4><div className="rounded-xl border border-slate-800 bg-slate-900/60 p-4"><p className="text-xl font-bold text-cyan-300">{activeSlide.impactMetric.value}</p><p className="text-sm text-white">{activeSlide.impactMetric.label}</p><p className="text-sm text-slate-400">{activeSlide.impactMetric.trend}</p></div></section>
+            <button onClick={() => onConsultWorkflow('Dental Clinic Patient Journey: ' + activeSlide.title)} className="px-5 py-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-sm font-semibold">Consult on This Workflow</button>
+          </div>
+          </WorkflowDisclosure>
         </div>
 
       </div>
