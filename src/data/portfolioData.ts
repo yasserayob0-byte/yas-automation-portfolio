@@ -345,7 +345,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
  {
   id: 'proj-2',
-  title: 'AI Job Scraper & Resume Optimization System',
+  title: 'AI Jobs Scraper + Resume Optimizer',
   clientType: 'Recruitment & Career Acceleration',
   category: 'n8n',
   shortDescription: 'Automatically searches job opportunities, analyzes job descriptions, optimizes resumes with AI, and prepares tailored applications.',
@@ -387,7 +387,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
 },
   {
   id: 'proj-3',
-  title: 'AI Email Support Automation System',
+  title: 'AI Email Support Automation',
   clientType: 'Customer Service & Operations',
   category: 'n8n',
   shortDescription: 'Automatically classifies incoming emails, generates AI-powered replies, routes tickets, and keeps support teams updated in real time.',
@@ -449,7 +449,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
 },
  {
   id: 'proj-4',
-  title: 'AI Lead Qualification & CRM Automation',
+  title: 'End-to-End AI Lead Qualification & CRM Automation',
   clientType: 'Sales & Lead Generation',
   category: 'n8n',
   shortDescription: 'Automatically validates, scores, qualifies, and routes incoming leads while generating AI summaries and notifying the sales team in real time.',
@@ -479,7 +479,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     { label: 'Qualification', value: 'Instant' },
     { label: 'Sales Alerts', value: 'Real-time' }
   ],
-  browserTitle: 'AI Lead Qualification & CRM Automation',
+  browserTitle: 'End-to-End AI Lead Qualification & CRM Automation',
   browserUrl: 'lead-qualification.demo',
   featured: true,
   flowSteps: [
@@ -512,7 +512,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
 },
 {
   id: 'proj-6',
-  title: 'AI Voice Receptionist & Smart Appointment Booking',
+  title: 'AI Receptionist',
   clientType: 'Service Business',
   category: 'n8n',
   shortDescription: 'AI receptionist that answers calls, checks availability, books appointments, updates calendars, and logs customer information automatically.',
@@ -547,7 +547,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     { label: 'Response', value: 'Real-time' }
   ],
 
-  browserTitle: 'AI Voice Receptionist Workflow',
+  browserTitle: 'AI Receptionist',
 
   browserUrl: 'voice-receptionist.demo',
 
@@ -584,6 +584,40 @@ export const PROJECTS_DATA: ProjectItem[] = [
       description: 'Confirms the booking and returns the final response to the customer.',
       tech: 'AI'
     }
+  ]
+},
+{
+  id: 'proj-7',
+  title: 'AI Lead Qualification & CRM Automation',
+  clientType: 'Simulated Client Project',
+  category: 'n8n',
+  shortDescription: 'Captures, validates, checks duplicates, and prioritizes website leads before saving new contacts in HubSpot CRM.',
+  fullOverview: 'An n8n workflow that captures website inquiries, validates customer information, checks HubSpot for existing contacts, classifies lead priority with Nace Drex, and saves new contacts in HubSpot CRM.',
+  problemSolved: 'Businesses spend valuable time manually reviewing inquiries, entering contact information, and identifying which leads need attention. This can result in duplicate records, delayed follow-ups, and repetitive administrative work.',
+  solutionArchitecture: [
+    'Website Lead Webhook',
+    'Lead Validation',
+    'HubSpot Duplicate Check',
+    'Nace Drex Priority Classification',
+    'HubSpot Contact Creation',
+    'Conditional Slack Notification',
+    'Workflow Error Monitoring'
+  ],
+  techStack: ['n8n', 'Nace Drex API', 'HubSpot CRM', 'Slack'],
+  metrics: [
+    { label: 'Test Lead Priority', value: 'Medium' },
+    { label: 'HubSpot Result', value: 'Contact ID returned' },
+    { label: 'Error Alert', value: 'Verified' }
+  ],
+  browserTitle: 'AI Lead Qualification & CRM Automation',
+  browserUrl: 'lead-generation.demo',
+  featured: true,
+  flowSteps: [
+    { title: 'Capture & Validate', description: 'Receives a website inquiry and validates required customer information.', tech: 'n8n Webhook' },
+    { title: 'Check for Duplicates', description: 'Searches HubSpot for an existing contact before creating a new one.', tech: 'HubSpot CRM' },
+    { title: 'Classify Priority', description: 'Uses Nace Drex to classify the inquiry as High, Medium, or Low priority.', tech: 'Nace Drex API' },
+    { title: 'Save in HubSpot', description: 'Creates a HubSpot contact with the lead details and priority classification.', tech: 'HubSpot CRM' },
+    { title: 'Notify & Monitor', description: 'Uses conditional Slack notifications and a separate workflow-error notification path.', tech: 'Slack' }
   ]
 },
 ];

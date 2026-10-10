@@ -2,13 +2,14 @@ import type { CaseStudyData } from '../types';
 import fbMessengerImg from '../assets/images/fb_messenger_n8n_1787549985295.jpg';
 import jobScraperImg from '../assets/images/job_scraper_n8n_1787550004053.jpg';
 import leadCrmImg from '../assets/images/lead_crm_n8n_1787550019778.jpg';
+import leadGenerationHubspotImg from '../assets/images/lead_crm_n8n_1787550019778 (2).jpg';
 import emailSupportImg from '../assets/images/email_support_n8n_1787550036780.jpg';
 import ghlDentalImg from '../assets/images/ghl_dental_flow_1787550053544.jpg';
 
 export const AI_JOB_SCRAPER_CASE_STUDY: CaseStudyData = {
   id: 'proj-2',
   badge: 'AI WORKFLOW CASE STUDY',
-  title: 'AI Job Scraper & Resume Optimization System',
+  title: 'AI Jobs Scraper + Resume Optimizer',
   tagline: 'An AI-powered automation workflow that streamlines job searching, analyzes job requirements, and generates tailored resume content to simplify the application process.',
   clientType: 'Talent Acquisition & Career Tech',
   category: 'n8n & Google Gemini',
@@ -18,7 +19,7 @@ export const AI_JOB_SCRAPER_CASE_STUDY: CaseStudyData = {
   
   heroScreenshot: {
     imageUrl: jobScraperImg,
-    title: 'AI Job Scraper & Resume Optimization System (n8n Production Execution)',
+    title: 'AI Jobs Scraper + Resume Optimizer (n8n Production Execution)',
     caption: 'Production n8n workflow canvas showing automated job collection, Google Gemini AI parsing, Google Docs resume generation, Google Drive organization, and Slack notification.',
     badge: '14 Connected Nodes Active',
     browserUrl: 'https://hayabusaw.app.n8n.cloud/workflow/ai-job-scraper'
@@ -473,7 +474,7 @@ export const FB_MESSENGER_CASE_STUDY: CaseStudyData = {
   },
   nextProject: {
     id: 'proj-2',
-    title: 'AI Job Scraper & Resume Optimization System',
+    title: 'AI Jobs Scraper + Resume Optimizer',
     category: 'n8n & Google Gemini'
   }
 };
@@ -700,7 +701,7 @@ export const LEAD_QUALIFICATION_CASE_STUDY: CaseStudyData = {
     },
     {
       id: 'lead-gal-3',
-      title: 'AI Job Scraper & Resume Optimization System',
+      title: 'AI Jobs Scraper + Resume Optimizer',
       category: 'Related Workflow',
       imageUrl: jobScraperImg,
       caption: 'Complex 14-node automated pipeline featuring structured AI output parsing and Google Workspace sync.'
@@ -716,7 +717,7 @@ export const LEAD_QUALIFICATION_CASE_STUDY: CaseStudyData = {
 
   prevProject: {
     id: 'proj-2',
-    title: 'AI Job Scraper & Resume Optimization System',
+    title: 'AI Jobs Scraper + Resume Optimizer',
     category: 'n8n & Google Gemini'
   },
   nextProject: {
@@ -940,7 +941,7 @@ export const AI_EMAIL_SUPPORT_CASE_STUDY: CaseStudyData = {
     },
     {
       id: 'email-gal-3',
-      title: 'AI Job Scraper & Resume Optimization System',
+      title: 'AI Jobs Scraper + Resume Optimizer',
       category: 'Related Workflow',
       imageUrl: jobScraperImg,
       caption: 'Complex 14-node automated pipeline featuring structured AI output parsing and Google Workspace sync.'
@@ -1250,16 +1251,105 @@ export const PATIENT_JOURNEY_GHL_CASE_STUDY: CaseStudyData = {
   }
 };
 
+export const AI_LEAD_QUALIFICATION_HUBSPOT_CASE_STUDY: CaseStudyData = {
+  id: 'proj-7',
+  badge: 'SIMULATED CLIENT PROJECT',
+  title: 'AI Lead Qualification & CRM Automation',
+  tagline: 'A lead management workflow that validates website inquiries, prevents duplicate contacts, and saves prioritized leads in HubSpot.',
+  clientType: 'Simulated Client Project',
+  category: 'n8n',
+  role: 'Lead Automation Architect',
+  heroScreenshot: {
+    imageUrl: leadGenerationHubspotImg,
+    title: 'AI Lead Qualification & CRM Automation (n8n Workflow)',
+    caption: 'n8n workflow showing validation, HubSpot duplicate checking, AI priority classification, contact creation, and Slack paths.',
+    badge: 'Workflow test completed',
+    browserUrl: 'lead-generation.demo'
+  },
+  overview: {
+    executiveSummary: 'An automated lead management system that captures website inquiries, validates customer information, checks for duplicates, and classifies leads by priority before saving new contacts in HubSpot CRM.',
+    scopeHighlights: [
+      'Validates incoming website lead information',
+      'Checks HubSpot for existing contacts before creating a new one',
+      'Classifies leads as High, Medium, or Low priority with Nace Drex',
+      'Saves new contacts and priority properties in HubSpot',
+      'Includes conditional Slack notifications and workflow-error monitoring'
+    ]
+  },
+  challenge: {
+    title: 'Business Problem',
+    summary: 'Businesses spend valuable time manually reviewing inquiries, entering contact information, and identifying which leads need attention. This can result in duplicate records, delayed follow-ups, and repetitive administrative work.',
+    frictionPoints: [
+      { title: 'Manual Review', description: 'Each inquiry needs to be checked before the team can decide what happens next.' },
+      { title: 'Duplicate Records', description: 'Without an existing-contact check, the same person can be added to the CRM more than once.' },
+      { title: 'Delayed Follow-Up', description: 'Manual data entry and priority decisions slow the handoff to sales.' }
+    ]
+  },
+  solution: {
+    title: 'Automation Solution',
+    summary: 'Built an n8n workflow that captures website inquiries, validates customer information, checks HubSpot for existing contacts, uses Nace Drex to classify leads as High, Medium, or Low priority, and saves new leads to HubSpot CRM. The workflow includes conditional Slack notifications and error monitoring.',
+    corePillars: [
+      { title: 'Validation & Deduplication', description: 'Validates incoming lead details and checks HubSpot before creating a contact.' },
+      { title: 'AI Priority Classification', description: 'Uses Nace Drex to classify each inquiry as High, Medium, or Low priority.' },
+      { title: 'CRM & Alert Handling', description: 'Saves new contacts in HubSpot and provides conditional Slack and error-notification paths.' }
+    ]
+  },
+  architecture: {
+    title: 'Workflow Architecture',
+    description: 'Website Inquiry → Validate Lead → Check HubSpot → Classify Priority → Create HubSpot Contact → Conditional Slack Notification',
+    steps: [
+      { stepNumber: '01', title: 'Receive Lead Webhook', description: 'Captures a website inquiry and starts the automation.', tech: 'n8n Webhook', type: 'trigger' },
+      { stepNumber: '02', title: 'Normalize & Validate', description: 'Normalizes lead fields and checks the required information.', tech: 'n8n', type: 'action' },
+      { stepNumber: '03', title: 'Check Existing Contact', description: 'Searches HubSpot before a new contact is created.', tech: 'HubSpot CRM', type: 'condition' },
+      { stepNumber: '04', title: 'Classify Lead Priority', description: 'Uses Nace Drex to return a High, Medium, or Low classification.', tech: 'Nace Drex API', type: 'ai' },
+      { stepNumber: '05', title: 'Create HubSpot Contact', description: 'Saves the new contact with the correct lead properties and classification.', tech: 'HubSpot CRM', type: 'crm' },
+      { stepNumber: '06', title: 'Notify & Monitor', description: 'Provides conditional Slack notifications and a separate workflow-error alert path.', tech: 'Slack', type: 'notification' }
+    ]
+  },
+  features: [
+    { title: 'Lead Validation', description: 'Checks customer information before the workflow continues.', tag: 'Validation' },
+    { title: 'HubSpot Duplicate Check', description: 'Avoids creating a new contact when the lead already exists.', tag: 'HubSpot' },
+    { title: 'AI Priority Classification', description: 'Classifies inquiries as High, Medium, or Low priority.', tag: 'Nace Drex' },
+    { title: 'HubSpot Contact Creation', description: 'Creates contacts with the lead details and priority properties.', tag: 'CRM' },
+    { title: 'Slack Notifications', description: 'Supports conditional priority alerts and workflow-error notification delivery.', tag: 'Slack' }
+  ],
+  techStack: [
+    { name: 'n8n', category: 'Workflow Automation', role: 'Orchestrates validation, routing, CRM updates, and alerts' },
+    { name: 'Nace Drex API', category: 'AI Classification', role: 'Classifies each inquiry by priority' },
+    { name: 'HubSpot CRM', category: 'CRM', role: 'Checks existing contacts and stores new lead records' },
+    { name: 'Slack', category: 'Notifications', role: 'Delivers conditional lead and workflow-error notifications' }
+  ],
+  businessValue: {
+    summary: 'A fictional lead was processed successfully: it was classified as Medium priority, created in HubSpot with the correct properties, and returned a HubSpot Contact ID. Slack workflow-error notification delivery was also verified.',
+    metrics: [
+      { label: 'Test Lead', value: 'Processed', description: 'Fictional website inquiry completed the workflow', trend: 'Verified' },
+      { label: 'Priority', value: 'Medium', description: 'Priority classification returned by Nace Drex', trend: 'Verified' },
+      { label: 'HubSpot', value: 'Contact ID', description: 'Contact creation returned the HubSpot Contact ID', trend: 'Verified' },
+      { label: 'Error Alert', value: 'Slack', description: 'Workflow-error notification delivery was verified', trend: 'Verified' }
+    ]
+  },
+  technicalOverview: 'The workflow validates and normalizes a website lead, checks HubSpot for an existing contact, classifies priority with Nace Drex, and creates a HubSpot contact when appropriate. Conditional Slack and error-monitoring paths complete the automation.',
+  skillsDemonstrated: ['Workflow Automation', 'HubSpot CRM Integration', 'AI Classification Integration', 'Webhook Processing', 'Slack Notifications'],
+  whyItMatters: 'This project demonstrates a practical way to reduce repetitive lead administration while keeping CRM records organized and making priority visible to sales teams.',
+  gallery: [
+    { id: 'lead-hubspot-gal-1', title: 'Lead Qualification Workflow (n8n Canvas)', category: 'Pipeline Overview', imageUrl: leadGenerationHubspotImg, caption: 'Workflow canvas showing validation, HubSpot duplicate checking, AI classification, contact creation, and Slack paths.' }
+  ],
+  prevProject: { id: 'proj-6', title: 'AI Receptionist', category: 'n8n' },
+  nextProject: { id: 'proj-1', title: 'AI-Powered Facebook Messenger Support Agent', category: 'AI Agents' }
+};
+
 export const CASE_STUDIES_MAP: Record<string, CaseStudyData> = {
   'proj-1': FB_MESSENGER_CASE_STUDY,
   'proj-2': AI_JOB_SCRAPER_CASE_STUDY,
   'proj-4': LEAD_QUALIFICATION_CASE_STUDY,
   'proj-3': AI_EMAIL_SUPPORT_CASE_STUDY,
   'proj-5': PATIENT_JOURNEY_GHL_CASE_STUDY,
+  'proj-7': AI_LEAD_QUALIFICATION_HUBSPOT_CASE_STUDY,
   'fb-messenger': FB_MESSENGER_CASE_STUDY,
   'job-scraper': AI_JOB_SCRAPER_CASE_STUDY,
   'lead-crm': LEAD_QUALIFICATION_CASE_STUDY,
   'email-support': AI_EMAIL_SUPPORT_CASE_STUDY,
   'ghl-dental': PATIENT_JOURNEY_GHL_CASE_STUDY,
-  'patient-journey': PATIENT_JOURNEY_GHL_CASE_STUDY
+  'patient-journey': PATIENT_JOURNEY_GHL_CASE_STUDY,
+  'ai-lead-qualification-hubspot': AI_LEAD_QUALIFICATION_HUBSPOT_CASE_STUDY
 };

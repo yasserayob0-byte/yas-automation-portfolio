@@ -1,6 +1,7 @@
 import fbMessengerImg from '../assets/images/fb_messenger_n8n_1787549985295.jpg';
 import jobScraperImg from '../assets/images/job_scraper_n8n_1787550004053.jpg';
 import leadCrmImg from '../assets/images/lead_crm_n8n_1787550019778.jpg';
+import leadGenerationHubspotImg from '../assets/images/lead_crm_n8n_1787550019778 (2).jpg';
 import emailSupportImg from '../assets/images/email_support_n8n_1787550036780.jpg';
 import ghlDentalImg from '../assets/images/ghl_dental_flow_1787550053544.jpg';
 import aiReceptionistImg from '../assets/images/ai_receptionist.jpg';
@@ -51,9 +52,16 @@ export const PROJECT_ITEMS: ProjectVisualItem[] = [
 {
   id: 'proj-6',
   img: aiReceptionistImg,
-  title: 'AI Receptionist & Appointment Booking Automation',
+  title: 'AI Receptionist (n8n AI Workflow)',
   category: 'n8n AI Workflow',
   tag: 'Complex AI Workflow'
+},
+{
+  id: 'proj-7',
+  img: leadGenerationHubspotImg,
+  title: 'AI Lead Qualification & CRM Automation (n8n Workflow)',
+  category: 'CRM Automation',
+  tag: 'Tested workflow'
 },
 ];
 export const PROJECT_IMAGE_MAP: Record<string, ProjectVisualItem> = {
@@ -70,5 +78,6 @@ export const PROJECT_IMAGE_MAP: Record<string, ProjectVisualItem> = {
   'ghl-dental': PROJECT_ITEMS[4],
   'proj-6': PROJECT_ITEMS[5],
 'ai-receptionist': PROJECT_ITEMS[5],
+  'proj-7': PROJECT_ITEMS[6],
+  'ai-lead-qualification-hubspot': PROJECT_ITEMS[6],
 };
-
