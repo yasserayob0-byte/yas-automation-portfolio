@@ -1,6 +1,8 @@
 {
-  "name": "YAS Automation | Enterprise AI & Business Systems Agency",
-  "description": "Official website of YAS Automation, an enterprise-grade AI automation and autonomous business systems agency designed and developed by Yasser Usman.",
+  "name": "YAS Automation | n8n & CRM Automation for Service Businesses",
+  "description": "Inquiry intake, lead follow-ups, and booking workflows with n8n, GoHighLevel, and HubSpot. Independent portfolio demonstrations by Yasser Usman.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

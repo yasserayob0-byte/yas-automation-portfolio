@@ -6,13 +6,9 @@ export const GHL_WORKFLOWS: GHLWorkflow[] = [
     title: 'Appointment Confirmation',
     tagline: 'Instant Omni-Channel Booking Verification & Calendar Lock',
     category: 'High-Intent Acquisition',
-    description: 'Autonomous multi-channel trigger system executing within 400ms of any booking. Synchronizes Google Calendar, locks GoHighLevel custom fields, generates dynamic ICS calendar invites, dispatches tailored WhatsApp & SMS confirmations, and tags high-intent leads.',
+    description: 'Autonomous multi-channel trigger system triggered by a booking. Synchronizes Google Calendar, locks GoHighLevel custom fields, generates dynamic ICS calendar invites, dispatches tailored WhatsApp & SMS confirmations, and tags high-intent leads.',
     businessValue: 'Eliminates booking abandonment, verifies contact details in real-time, and elevates customer trust before the initial consultation.',
-    impactMetrics: [
-      { label: 'Instant Delivery SLA', value: '< 1.2s', trend: '+99.8% Speed' },
-      { label: 'Confirmation Rate', value: '98.4%', trend: '+34% vs Manual' },
-      { label: 'Double-Booking Errors', value: '0.00%', trend: 'Absolute Zero' }
-    ],
+    impactMetrics: [],
     features: [
       'Instant Webhook Dispatch with HMAC signature verification',
       'Dual-channel SMS + WhatsApp Business API message with 1-click add to Google/Apple Calendar',
@@ -74,12 +70,8 @@ export const GHL_WORKFLOWS: GHLWorkflow[] = [
     tagline: 'Predictive Multi-Touch Cadence with Self-Service Rescheduling',
     category: 'Show-Up Optimization',
     description: 'Dynamic timed sequence operating at 24h, 2h, and 15m intervals before appointment. Features 2-way conversational SMS logic: if the prospect replies "RESCHEDULE", the system pauses reminders and serves personalized calendar open slots without agent intervention.',
-    businessValue: 'Dramatically slashes client drop-offs, protects executive calendar bandwidth, and boosts show-up rates from 62% to 92%+.',
-    impactMetrics: [
-      { label: 'Show-Up Rate', value: '92.6%', trend: '+30.6% Lift' },
-      { label: 'Reschedule Self-Service', value: '78%', trend: 'No Human Needed' },
-      { label: 'Late Arrival Rate', value: '< 4%', trend: '-85% Reduction' }
-    ],
+    businessValue: 'Coordinates reminders and rescheduling messages around appointment times.',
+    impactMetrics: [],
     features: [
       'Multi-touch sequence triggered precisely at T-24h, T-2h, and T-15m',
       'Natural language 2-way SMS intent parsing for CONFIRM, DELAY, or RESCHEDULE',
@@ -134,12 +126,8 @@ export const GHL_WORKFLOWS: GHLWorkflow[] = [
     tagline: 'Instant Calendar Cleanup, Waitlist Auto-Fill & Pipeline Re-routing',
     category: 'Inventory Recovery',
     description: 'When a prospect or client cancels, this workflow automatically wipes calendar holds, flags the deal stage in CRM, notifies the sales rep, and instantly alerts high-priority waitlisted leads with the newly opened calendar spot.',
-    businessValue: 'Prevents dead calendar dead-time, recovers lost revenue potential, and keeps CRM pipeline integrity 100% clean.',
-    impactMetrics: [
-      { label: 'Calendar Re-fill Speed', value: '4.8 min', trend: 'Waitlist Auto-Ping' },
-      { label: 'Pipeline Accuracy', value: '100%', trend: 'Zero Ghost Deals' },
-      { label: 'Rep Time Saved', value: '45m / day', trend: 'Automated Sync' }
-    ],
+    businessValue: 'Updates cancelled appointments and CRM stages for follow-up.',
+    impactMetrics: [],
     features: [
       'Instant cancellation webhook listener across Google Calendar, Outlook, and GHL native calendar',
       'Automated slot reopening with priority blast to VIP waitlist segment',
@@ -193,13 +181,9 @@ export const GHL_WORKFLOWS: GHLWorkflow[] = [
     title: 'No Show Recovery',
     tagline: 'Empathy-Driven Automated Win-Back Sequence with Dynamic Frictionless Reschedule',
     category: 'Revenue Salvage',
-    description: 'Triggered 10 minutes after a prospect fails to enter the meeting room. Instead of aggressive sales spam, it deploys a high-converting empathy-first omnichannel sequence that makes rebooking effortless, reviving 38%+ of lost opportunities.',
+    description: 'Triggered 10 minutes after a prospect fails to enter the meeting room. Instead of aggressive sales spam, it deploys a high-converting empathy-first omnichannel sequence that makes rebooking effortless.',
     businessValue: 'Salvages expensive paid marketing spend, re-engages qualified prospects, and stops lost deals from falling through the cracks.',
-    impactMetrics: [
-      { label: 'Re-booking Recovery Rate', value: '38.4%', trend: 'Revived Pipeline' },
-      { label: 'Average Re-engage Time', value: '2.4 hrs', trend: 'Speedy Win-Back' },
-      { label: 'Cost Per Acquisition Saved', value: '$420+', trend: 'Per Saved Lead' }
-    ],
+    impactMetrics: [],
     features: [
       'Automated trigger 10 minutes post meeting start time upon rep tagging or Zoom absence webhook',
       'Empathy-first multi-touch sequence (T+10m SMS, T+4h Email with video message, T+48h check-in)',
@@ -255,11 +239,7 @@ export const GHL_WORKFLOWS: GHLWorkflow[] = [
     category: 'Retention & Conversion',
     description: 'Post-call automation engine that runs the second an appointment concludes. Automatically classifies the call outcome (Closed Won, Proposal Sent, Not Qualified), dispatches proposal PDFs, triggers automated Google Review requests, and schedules onboarding milestones.',
     businessValue: 'Accelerates deal velocity, drives organic 5-star Google reviews on autopilot, and delivers a memorable enterprise client onboarding experience.',
-    impactMetrics: [
-      { label: 'Proposal Delivery Time', value: '< 3 mins', trend: 'Instant Velocity' },
-      { label: 'Google Review Collection', value: '4.9 ⭐', trend: '+45 Reviews/mo' },
-      { label: 'Client Onboarding Velocity', value: '3.2x Faster', trend: 'Automated Hand-off' }
-    ],
+    impactMetrics: [],
     features: [
       'Call outcome routing based on rep single-click dropdown status in GHL mobile/desktop app',
       'Dynamic proposal generation with pre-populated scope of work and pricing table',
@@ -328,11 +308,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   'Human Handoff for Complex Inquiries'
     ],
     techStack: ['n8n', 'Facebook Messenger', 'Google Gemini', 'Webhook', 'HTTP Request', 'Google Sheets'],
-    metrics: [
-      { label: 'Execution Speed', value: '6.28s SLA' },
-      { label: 'Inquiries Automated', value: '85%+' },
-      { label: 'Context Accuracy', value: '99.4%' }
-    ],
+    metrics: [],
     browserUrl: 'https://hayabusaw.app.n8n.cloud/workflow/fb-messenger-support-agent',
     browserTitle: 'n8n Cloud — May 18 Execution #23 (Succeeded in 6.289s)',
     featured: true,
@@ -369,11 +345,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     'RapidAPI',
     'Slack'
   ],
-  metrics: [
-    { label: 'Applications Prepared', value: '100+' },
-    { label: 'Time Saved', value: '90%' },
-    { label: 'Resume Match', value: 'ATS Optimized' }
-  ],
+  metrics: [],
   browserTitle: 'AI Job Scraper & Resume Optimizer',
   browserUrl: 'job-scraper.demo',
   featured: true,
@@ -411,11 +383,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     'Webhook',
     'HTTP Request'
   ],
-  metrics: [
-    { label: 'Emails Automated', value: '95%' },
-    { label: 'Average Response', value: '<30 sec' },
-    { label: 'Manual Work Reduced', value: '90%' }
-  ],
+  metrics: [],
   browserTitle: 'AI Email Support Automation',
   browserUrl: 'email-support.demo',
   featured: true,
@@ -474,11 +442,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     'Slack',
     'Gmail'
   ],
-  metrics: [
-    { label: 'Lead Processing', value: '100% Automated' },
-    { label: 'Qualification', value: 'Instant' },
-    { label: 'Sales Alerts', value: 'Real-time' }
-  ],
+  metrics: [],
   browserTitle: 'End-to-End AI Lead Qualification & CRM Automation',
   browserUrl: 'lead-qualification.demo',
   featured: true,
@@ -541,11 +505,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     'JavaScript'
   ],
 
-  metrics: [
-    { label: 'Voice Calls', value: '24/7' },
-    { label: 'Booking', value: 'Automated' },
-    { label: 'Response', value: 'Real-time' }
-  ],
+  metrics: [],
 
   browserTitle: 'AI Receptionist',
 
@@ -604,11 +564,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     'Workflow Error Monitoring'
   ],
   techStack: ['n8n', 'Nace Drex API', 'HubSpot CRM', 'Slack'],
-  metrics: [
-    { label: 'Test Lead Priority', value: 'Medium' },
-    { label: 'HubSpot Result', value: 'Contact ID returned' },
-    { label: 'Error Alert', value: 'Verified' }
-  ],
+  metrics: [],
   browserTitle: 'AI Lead Qualification & CRM Automation',
   browserUrl: 'lead-generation.demo',
   featured: true,
@@ -621,6 +577,10 @@ export const PROJECTS_DATA: ProjectItem[] = [
   ]
 },
 ];
+// Prioritize CRM intake, lead follow-up, and booking; keep the jobs demo last.
+const projectOrder = ['proj-7', 'proj-4', 'proj-5', 'proj-6', 'proj-1', 'proj-3', 'proj-2'];
+PROJECTS_DATA.sort((a, b) => projectOrder.indexOf(a.id) - projectOrder.indexOf(b.id));
+
 export const TECH_STACK: TechItem[] = [
   {
     id: 'tech-n8n',
@@ -656,7 +616,7 @@ export const TECH_STACK: TechItem[] = [
     tagline: 'AI Language Models',
     description: 'AI Language Models — Custom function-calling agents, deterministic JSON structured outputs, and conversational intelligence.',
     extendedOverview: 'Multi-agent reasoning, deterministic JSON schema responses, prompt chains, and natural language classification algorithms.',
-    proficiency: 'Production Implementation',
+    proficiency: 'Portfolio Implementation',
     highlightGlow: 'from-emerald-500/20 via-teal-500/20 to-green-500/20',
     accentColor: '#10A37F',
     useCases: ['Lead Scoring', 'Natural Language SMS', 'Ticket Resolution', 'Copywriting Engines']
@@ -708,7 +668,7 @@ export const TECH_STACK: TechItem[] = [
     tagline: 'Email Automation',
     description: 'Email Automation — Inbound lead ingestion, AI draft generation, attachment scrapers, and transactional sequences.',
     extendedOverview: 'Smart inbox filters, attachment extraction pipelines, and high-converting personalized email follow-ups.',
-    proficiency: 'Production Setup',
+    proficiency: 'Portfolio Implementation',
     highlightGlow: 'from-red-500/20 via-amber-500/20 to-blue-500/20',
     accentColor: '#EA4335',
     useCases: ['Inbound Lead Ingestion', 'Transactional Alerts', 'Automated Invoice Scrapers', 'AI Draft Replies']
@@ -828,7 +788,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     deliverables: [
       'Tailored LLM prompt architecture & deterministic tool calling',
       'Autonomous lead qualification and CRM enrichment agents',
-      'Multimodal document & invoice parsing with 99.8%+ accuracy',
+      'Multimodal document & invoice parsing with human review',
       'Human-in-the-loop fallback safeguards and approval workflows',
       'Continuous prompt testing and latency optimization'
     ],
@@ -839,7 +799,7 @@ export const SERVICES_DATA: ServiceItem[] = [
   {
     id: 'srv-2',
     title: 'GoHighLevel Infrastructure & Growth Architecture',
-    subtitle: 'Enterprise CRM setup, custom snapshots, and bulletproof appointment retention engines.',
+    subtitle: 'Enterprise CRM setup, custom snapshots, and configurable appointment retention engines.',
     iconName: 'Building2',
     deliverables: [
       'Complete 5-stage appointment lifecycle engine (Confirmation, Reminder, Reschedule, No-Show, Follow-Up)',
@@ -870,7 +830,7 @@ export const SERVICES_DATA: ServiceItem[] = [
   {
     id: 'srv-4',
     title: 'Bespoke API Integrations & Webhook Systems',
-    subtitle: 'Connecting proprietary databases, legacy software, and modern cloud tools with zero friction.',
+    subtitle: 'Connecting proprietary databases, legacy software, and modern cloud tools with API integrations.',
     iconName: 'Network',
     deliverables: [
       'Custom RESTful endpoints and microservices',
@@ -884,61 +844,9 @@ export const SERVICES_DATA: ServiceItem[] = [
   }
 ];
 
-export const IMPACT_METRICS = [
-  {
-    metric: '75%',
-    label: 'Reduction in Repetitive Manual Work',
-    detail: 'Routine admin, copy-pasting data, and calendar chasing eliminated completely through automated triggers.'
-  },
-  {
-    metric: '< 45s',
-    label: 'Average Lead Response Time',
-    detail: 'Down from 4.8 hours industry average. Inbound prospects are engaged while buying intent is at its peak.'
-  },
-  {
-    metric: '3.4x',
-    label: 'Increase in Qualified Pipeline',
-    detail: 'Higher conversion from initial click to booked consultation with zero ghosting or missed touchpoints.'
-  },
-  {
-    metric: '99.9%',
-    label: 'System Uptime & Data Accuracy',
-    detail: 'Built with fault-tolerant retry queues and automated fallback pathways for continuous enterprise reliability.'
-  }
-];
+export const IMPACT_METRICS = [];
 
-export const TESTIMONIALS: TestimonialItem[] = [
-  {
-    id: 'test-1',
-    name: 'Marcus Vance',
-    role: 'Founder & CEO',
-    company: 'Vanguard Growth Advisory',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-    content: 'YAS Automation completely re-engineered our client acquisition pipeline. The GoHighLevel reminder and no-show recovery workflow alone recovered over $45,000 in deals within our first 60 days. Yasser builds like a true senior systems architect.',
-    highlight: 'Recovered $45,000 in pipeline within 60 days',
-    metricsResult: '+34% Show-up Rate'
-  },
-  {
-    id: 'test-2',
-    name: 'Elena Rostova',
-    role: 'VP of Operations',
-    company: 'Aether Logistics Group',
-    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
-    content: 'Our team was drowning in vendor invoices and manual ERP entries. The custom Gemini vision parsing pipeline designed by Yasser reduced our billing cycle from 4 days to literally under 2 minutes with zero data entry errors.',
-    highlight: 'Saved 140+ hours per month of manual accounting',
-    metricsResult: '99.9% Accuracy'
-  },
-  {
-    id: 'test-3',
-    name: 'David Chen',
-    role: 'Managing Director',
-    company: 'ScalePoint Media',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
-    content: 'Unlike most freelancers who just throw basic Zapier templates together, Yasser Usman builds enterprise-grade n8n systems with proper error logging and failover logic. A world-class partner for any serious agency.',
-    highlight: 'Enterprise-grade architecture with zero downtime',
-    metricsResult: '68% Support Automation'
-  }
-];
+export const TESTIMONIALS: TestimonialItem[] = [];
 
 export const FAQS = [
   {

@@ -69,3 +69,6 @@
 #home .agency-subject{background:transparent;box-shadow:none;filter:none}
 #home .agency-subject::before,#home .agency-subject::after{content:none}
 
+
+/* Capability labels replace numeric vanity stats. */
+.agency-stats{grid-template-columns:repeat(3,minmax(0,1fr));width:100%}.agency-stats dd{font-size:clamp(15px,1.5vw,22px);overflow-wrap:anywhere}.agency-stats dt{white-space:normal}.agency-copy h1>span{white-space:normal}

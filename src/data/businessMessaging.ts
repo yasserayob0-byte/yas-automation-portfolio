@@ -44,10 +44,10 @@ export const PROJECT_BUSINESS_STORIES: Record<string, ProjectBusinessStory> = {
     impact: 'Customers can request appointments around the clock, with fewer scheduling tasks left for staff to complete manually.',
   },
   'proj-7': {
-    headline: 'AI Lead Qualification & CRM Automation',
+    headline: 'HubSpot Lead-to-CRM Workflow',
     problem: 'Manual review and CRM entry can delay follow-up and create duplicate contact records.',
     solution: 'The workflow validates website leads, checks HubSpot, classifies priority, and saves new contacts with their result.',
-    impact: 'Sales receives more consistent CRM data and a clearer indication of which leads may need attention.',
+    impact: "Observed test results: A fictional website inquiry was classified as Medium priority and created in HubSpot, returning a Contact ID. Slack workflow-error notification delivery was also verified.",
   },
 };
 

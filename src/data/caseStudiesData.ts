@@ -14,14 +14,12 @@ export const AI_JOB_SCRAPER_CASE_STUDY: CaseStudyData = {
   clientType: 'Talent Acquisition & Career Tech',
   category: 'n8n & Google Gemini',
   role: 'Lead Automation Architect',
-  timeline: '1–2 Weeks Delivery',
-  liveDemoUrl: 'https://hayabusaw.app.n8n.cloud/workflow/ai-job-scraper',
   
   heroScreenshot: {
     imageUrl: jobScraperImg,
-    title: 'AI Jobs Scraper + Resume Optimizer (n8n Production Execution)',
-    caption: 'Production n8n workflow canvas showing automated job collection, Google Gemini AI parsing, Google Docs resume generation, Google Drive organization, and Slack notification.',
-    badge: '14 Connected Nodes Active',
+    title: 'AI Jobs Scraper + Resume Optimizer (n8n Demonstration Execution)',
+    caption: 'Demonstration n8n workflow canvas showing automated job collection, Google Gemini AI parsing, Google Docs resume generation, Google Drive organization, and Slack notification.',
+    badge: 'Workflow demonstration',
     browserUrl: 'https://hayabusaw.app.n8n.cloud/workflow/ai-job-scraper'
   },
 
@@ -181,12 +179,7 @@ export const AI_JOB_SCRAPER_CASE_STUDY: CaseStudyData = {
 
   businessValue: {
     summary: 'Rather than simply automating replies, this project demonstrates how AI can streamline one of the most repetitive parts of the job application process. By automating job analysis, resume optimization, and document management, the workflow reduces manual effort while helping applicants prepare tailored application materials more efficiently.',
-    metrics: [
-      { label: 'Time Saved per App', value: '45+ Min', description: 'Eliminates repetitive manual drafting for each role', trend: '80% Faster' },
-      { label: 'Document Organization', value: '100%', description: 'Structured cloud archiving across all applications', trend: 'Auto-Organized' },
-      { label: 'Keyword Alignment', value: '98.5%', description: 'AI-assisted alignment with target job requirements', trend: 'Optimized' },
-      { label: 'Workflow Efficiency', value: '10x', description: 'End-to-end automation from listing to notification', trend: 'Scalable' }
-    ]
+    metrics: []
   },
 
   technicalOverview: 'The workflow begins by collecting available job opportunities and extracting job descriptions. Google Gemini AI analyzes each position, identifies key qualifications, and generates optimized resume content. The updated resume is automatically saved to Google Docs and organized in Google Drive. Once processing is complete, Slack sends a notification to confirm that the workflow has finished successfully.',
@@ -206,7 +199,7 @@ export const AI_JOB_SCRAPER_CASE_STUDY: CaseStudyData = {
   gallery: [
     {
       id: 'job-gal-1',
-      title: 'Full Workflow Architecture (n8n Production Canvas)',
+      title: 'Full Workflow Architecture (n8n Demonstration Canvas)',
       category: 'Pipeline Overview',
       imageUrl: jobScraperImg,
       caption: 'Full 14-node n8n workflow canvas orchestrating job scraping, Gemini AI parsing, Google Docs resume synthesis, Google Drive storage, and Slack alerts.'
@@ -216,7 +209,7 @@ export const AI_JOB_SCRAPER_CASE_STUDY: CaseStudyData = {
       title: 'AI Facebook Messenger Support Agent Canvas',
       category: 'Related Workflow',
       imageUrl: fbMessengerImg,
-      caption: 'Production conversational AI workflow with Google Gemini reasoning and Simple Memory.'
+      caption: 'Demonstration conversational AI workflow with Google Gemini reasoning and Simple Memory.'
     },
     {
       id: 'job-gal-3',
@@ -254,14 +247,12 @@ export const FB_MESSENGER_CASE_STUDY: CaseStudyData = {
   clientType: 'Customer Support & Social Commerce',
   category: 'AI Agents',
   role: 'Lead Automation Architect',
-  timeline: '1–2 Weeks Delivery',
-  liveDemoUrl: 'https://hayabusaw.app.n8n.cloud/workflow/fb-messenger-support-agent',
   
   heroScreenshot: {
     imageUrl: fbMessengerImg,
-    title: 'AI-Powered Facebook Messenger Support Agent (n8n Production Execution)',
+    title: 'AI-Powered Facebook Messenger Support Agent (n8n Demonstration Execution)',
     caption: 'Full-pipeline view illustrating webhook ingestion, Google Docs knowledge base extraction, Google Gemini AI reasoning with Simple Memory, and Meta Graph API dispatching.',
-    badge: 'Succeeded in 6.289s SLA',
+    badge: 'Workflow demonstration',
     browserUrl: 'https://hayabusaw.app.n8n.cloud/workflow/fb-messenger-support-agent'
   },
 
@@ -394,7 +385,7 @@ export const FB_MESSENGER_CASE_STUDY: CaseStudyData = {
     },
     {
       title: 'Real-time webhook automation',
-      description: 'Sub-second event triggering ensures zero communication lag from customer query to response generation.',
+      description: 'Webhook events start response generation when a customer query arrives.',
       tag: 'Real-Time'
     },
     {
@@ -421,21 +412,16 @@ export const FB_MESSENGER_CASE_STUDY: CaseStudyData = {
 
   businessValue: {
     summary: 'Rather than simply automating replies, this workflow combines AI, workflow automation, and a centralized knowledge base to create a scalable customer support solution that improves operational efficiency and delivers consistent customer experiences.',
-    metrics: [
-      { label: 'Faster Response Time', value: '< 6.3s', description: 'Immediate response delivery across all hours', trend: 'Sub-7s Turnaround' },
-      { label: 'Manual Workload Reduced', value: '85%+', description: 'Repetitive support tickets resolved autonomously', trend: '-85% Effort' },
-      { label: 'Consistent Information', value: '99.4%', description: 'Grounded accuracy directly from verified docs', trend: 'Zero Hallucinations' },
-      { label: 'Scalable Support Capacity', value: '24/7/365', description: 'Zero extra headcount required for traffic surges', trend: 'Infinite Scalability' }
-    ]
+    metrics: []
   },
 
   gallery: [
     {
       id: 'fb-gal-1',
-      title: 'Full Workflow Architecture (n8n Production Canvas)',
+      title: 'Full Workflow Architecture (n8n Demonstration Canvas)',
       category: 'Pipeline Execution',
       imageUrl: fbMessengerImg,
-      caption: 'Production n8n canvas showing Webhook trigger, If condition routing, Filter node, Google Docs knowledge base, AI Agent with Google Gemini, Simple Memory, and outbound HTTP Request.'
+      caption: 'Demonstration n8n canvas showing Webhook trigger, If condition routing, Filter node, Google Docs knowledge base, AI Agent with Google Gemini, Simple Memory, and outbound HTTP Request.'
     },
     {
       id: 'fb-gal-2',
@@ -487,14 +473,12 @@ export const LEAD_QUALIFICATION_CASE_STUDY: CaseStudyData = {
   clientType: 'B2B Sales & High-Ticket Operations',
   category: 'AI Agents',
   role: 'Lead Automation Architect',
-  timeline: '1–2 Weeks Delivery',
-  liveDemoUrl: 'https://hayabusaw.app.n8n.cloud/workflow/lead-qualification-crm-automation',
 
   heroScreenshot: {
     imageUrl: leadCrmImg,
-    title: 'End-to-End AI Lead Qualification & CRM Automation (n8n Production Execution)',
-    caption: 'Production workflow illustrating webhook lead capture, JavaScript validation, OpenAI intent scoring, Airtable CRM synchronization, Google Sheets logging, Slack alerts, and automated email outreach.',
-    badge: 'Multi-Branch CRM Logic Active',
+    title: 'End-to-End AI Lead Qualification & CRM Automation (n8n Demonstration Execution)',
+    caption: 'Demonstration workflow illustrating webhook lead capture, JavaScript validation, OpenAI intent scoring, Airtable CRM synchronization, Google Sheets logging, Slack alerts, and automated email outreach.',
+    badge: 'Workflow demonstration',
     browserUrl: 'https://hayabusaw.app.n8n.cloud/workflow/lead-qualification-crm-automation'
   },
 
@@ -662,12 +646,7 @@ export const LEAD_QUALIFICATION_CASE_STUDY: CaseStudyData = {
 
   businessValue: {
     summary: 'Lead qualification is one of the most repetitive tasks in many sales processes. This workflow demonstrates how automation can reduce manual evaluation, improve consistency, and ensure high-quality leads receive timely attention while maintaining organized CRM records.',
-    metrics: [
-      { label: 'Manual Qualification', value: '-90%', description: 'Reduces manual lead qualification workload', trend: 'Instant Routing' },
-      { label: 'Response Time', value: '< 400ms', description: 'Improves response time for qualified leads', trend: 'Real-Time' },
-      { label: 'Evaluation Consistency', value: '100%', description: 'Standardizes the lead evaluation process', trend: 'Zero Missed Leads' },
-      { label: 'CRM Record Hygiene', value: '100% Sync', description: 'Keeps CRM records organized automatically', trend: 'Auto-Organized' }
-    ]
+    metrics: []
   },
 
   technicalOverview: 'The workflow begins when a lead is submitted through a webhook. Submitted information is validated before moving through an automated scoring process. Based on the qualification result, the workflow updates Airtable records, logs data into Google Sheets, sends Slack notifications, and prepares automated outreach actions to support faster sales engagement.',
@@ -687,17 +666,17 @@ export const LEAD_QUALIFICATION_CASE_STUDY: CaseStudyData = {
   gallery: [
     {
       id: 'lead-gal-1',
-      title: 'Full Workflow Architecture (n8n Production Canvas)',
+      title: 'Full Workflow Architecture (n8n Demonstration Canvas)',
       category: 'Pipeline Overview',
       imageUrl: leadCrmImg,
-      caption: 'Live n8n workflow canvas showing webhook trigger, validation nodes, AI scoring branch, Airtable update, Google Sheets logging, Slack alerts, and Gmail dispatch.'
+      caption: 'Demonstration n8n workflow canvas showing webhook trigger, validation nodes, AI scoring branch, Airtable update, Google Sheets logging, Slack alerts, and Gmail dispatch.'
     },
     {
       id: 'lead-gal-2',
       title: 'AI Facebook Messenger Support Agent Canvas',
       category: 'Related Workflow',
       imageUrl: fbMessengerImg,
-      caption: 'Production conversational AI support pipeline with Google Gemini reasoning and Simple Memory.'
+      caption: 'Demonstration conversational AI support pipeline with Google Gemini reasoning and Simple Memory.'
     },
     {
       id: 'lead-gal-3',
@@ -735,14 +714,12 @@ export const AI_EMAIL_SUPPORT_CASE_STUDY: CaseStudyData = {
   clientType: 'Customer Support Operations',
   category: 'Custom APIs',
   role: 'Lead Automation Architect',
-  timeline: '1–2 Weeks Delivery',
-  liveDemoUrl: 'https://hayabusaw.app.n8n.cloud/assistant/557aafce-33c8-4a00-ba74-49253062c7ee',
 
   heroScreenshot: {
     imageUrl: emailSupportImg,
-    title: 'AI Email Support Automation (n8n Production Execution)',
-    caption: 'Production n8n workflow canvas showing Gmail trigger monitoring, OpenRouter AI email analysis, intelligent classification, response generation, Google Sheets activity logging, Slack team notification, and automated reply dispatch.',
-    badge: 'Real-Time Ingestion Active',
+    title: 'AI Email Support Automation (n8n Demonstration Execution)',
+    caption: 'Demonstration n8n workflow canvas showing Gmail trigger monitoring, OpenRouter AI email analysis, intelligent classification, response generation, Google Sheets activity logging, Slack team notification, and automated reply dispatch.',
+    badge: 'Workflow demonstration',
     browserUrl: 'https://hayabusaw.app.n8n.cloud/assistant/557aafce-33c8-4a00-ba74-49253062c7ee'
   },
 
@@ -902,12 +879,7 @@ export const AI_EMAIL_SUPPORT_CASE_STUDY: CaseStudyData = {
 
   businessValue: {
     summary: 'Customer support teams spend significant time handling repetitive emails. This automation demonstrates how AI can improve response efficiency while keeping communication organized, consistent, and scalable.',
-    metrics: [
-      { label: 'Repetitive Handling', value: '-85%', description: 'Reduces repetitive email handling workload', trend: 'Automated Triage' },
-      { label: 'Response Consistency', value: '100%', description: 'Improves response consistency and accuracy', trend: 'Standardized' },
-      { label: 'Communication Speed', value: '< 2 Min', description: 'Speeds up customer communication and resolution', trend: 'Real-Time' },
-      { label: 'Priority Escalation', value: '100%', description: 'Helps prioritize important requests instantly', trend: 'Zero Missed VIPs' }
-    ]
+    metrics: []
   },
 
   technicalOverview: 'The workflow starts when a new email arrives in Gmail. AI analyzes the email content, determines its category, prepares an appropriate response, records the activity in Google Sheets, and sends Slack notifications when escalation or manual review is required.',
@@ -927,17 +899,17 @@ export const AI_EMAIL_SUPPORT_CASE_STUDY: CaseStudyData = {
   gallery: [
     {
       id: 'email-gal-1',
-      title: 'Full Workflow Architecture (n8n Production Canvas)',
+      title: 'Full Workflow Architecture (n8n Demonstration Canvas)',
       category: 'Pipeline Overview',
       imageUrl: emailSupportImg,
-      caption: 'Live n8n workflow canvas showing Gmail trigger, OpenRouter AI analysis, classification logic, response generator, Google Sheets logging, and Slack notification nodes.'
+      caption: 'Demonstration n8n workflow canvas showing Gmail trigger, OpenRouter AI analysis, classification logic, response generator, Google Sheets logging, and Slack notification nodes.'
     },
     {
       id: 'email-gal-2',
       title: 'AI Facebook Messenger Support Agent Canvas',
       category: 'Related Workflow',
       imageUrl: fbMessengerImg,
-      caption: 'Production conversational AI support pipeline with Google Gemini reasoning and Simple Memory.'
+      caption: 'Demonstration conversational AI support pipeline with Google Gemini reasoning and Simple Memory.'
     },
     {
       id: 'email-gal-3',
@@ -975,14 +947,12 @@ export const PATIENT_JOURNEY_GHL_CASE_STUDY: CaseStudyData = {
   clientType: 'Healthcare & Dental Practices',
   category: 'GoHighLevel CRM',
   role: 'Lead Automation Architect',
-  timeline: '1–2 Weeks Delivery',
-  liveDemoUrl: 'https://app.gohighlevel.com/v2/location/preview-patient-journey',
 
   heroScreenshot: {
     imageUrl: ghlDentalImg,
-    title: 'Patient Journey Automation System (GoHighLevel Production Flow)',
-    caption: 'Production GoHighLevel workflow canvas displaying multi-stage appointment confirmation, reminder triggers, status branching, tag updates, and post-visit retention sequences.',
-    badge: '5 Interconnected Modules Active',
+    title: 'Patient Journey Automation System (GoHighLevel Demonstration Flow)',
+    caption: 'Demonstration GoHighLevel workflow canvas displaying multi-stage appointment confirmation, reminder triggers, status branching, tag updates, and post-visit retention sequences.',
+    badge: 'Workflow demonstration',
     browserUrl: 'https://app.gohighlevel.com/v2/location/preview-patient-journey'
   },
 
@@ -1177,12 +1147,7 @@ export const PATIENT_JOURNEY_GHL_CASE_STUDY: CaseStudyData = {
 
   businessValue: {
     summary: 'Rather than automating a single task, this project demonstrates the design of a complete patient lifecycle automation system. By connecting multiple workflows into one integrated process, clinics can reduce administrative workload, improve operational consistency, and deliver a better experience for every patient from booking through follow-up.',
-    metrics: [
-      { label: 'Missed Appointments', value: '-70%', description: 'Reduces clinic no-shows through timely automated reminders', trend: 'Major Attendance Boost' },
-      { label: 'Admin Hours Saved', value: '20+ Hrs/Wk', description: 'Minimizes repetitive manual confirmation and outreach calls', trend: '-80% Manual Work' },
-      { label: 'CRM Sync Accuracy', value: '100%', description: 'Standardizes appointment handling and keeps data organized', trend: 'Zero Data Loss' },
-      { label: 'Patient Retention', value: '+42%', description: 'Creates consistent patient experiences and repeat bookings', trend: 'Higher Lifetime Value' }
-    ]
+    metrics: []
   },
 
   technicalOverview: 'The automation begins when a patient books an appointment. Confirmation workflows immediately update CRM records and notify the patient. Reminder workflows reduce missed appointments, while cancellation and no-show workflows maintain patient engagement through automated follow-ups. Completed appointments trigger post-visit communication to strengthen long-term relationships and improve the overall patient experience.',
@@ -1263,7 +1228,7 @@ export const AI_LEAD_QUALIFICATION_HUBSPOT_CASE_STUDY: CaseStudyData = {
     imageUrl: leadGenerationHubspotImg,
     title: 'AI Lead Qualification & CRM Automation (n8n Workflow)',
     caption: 'n8n workflow showing validation, HubSpot duplicate checking, AI priority classification, contact creation, and Slack paths.',
-    badge: 'Workflow test completed',
+    badge: 'Workflow demonstration',
     browserUrl: 'lead-generation.demo'
   },
   overview: {
@@ -1320,13 +1285,8 @@ export const AI_LEAD_QUALIFICATION_HUBSPOT_CASE_STUDY: CaseStudyData = {
     { name: 'Slack', category: 'Notifications', role: 'Delivers conditional lead and workflow-error notifications' }
   ],
   businessValue: {
-    summary: 'A fictional lead was processed successfully: it was classified as Medium priority, created in HubSpot with the correct properties, and returned a HubSpot Contact ID. Slack workflow-error notification delivery was also verified.',
-    metrics: [
-      { label: 'Test Lead', value: 'Processed', description: 'Fictional website inquiry completed the workflow', trend: 'Verified' },
-      { label: 'Priority', value: 'Medium', description: 'Priority classification returned by Nace Drex', trend: 'Verified' },
-      { label: 'HubSpot', value: 'Contact ID', description: 'Contact creation returned the HubSpot Contact ID', trend: 'Verified' },
-      { label: 'Error Alert', value: 'Slack', description: 'Workflow-error notification delivery was verified', trend: 'Verified' }
-    ]
+    summary: "Observed test results: A fictional website inquiry was classified as Medium priority and created in HubSpot, returning a Contact ID. Slack workflow-error notification delivery was also verified.",
+    metrics: []
   },
   technicalOverview: 'The workflow validates and normalizes a website lead, checks HubSpot for an existing contact, classifies priority with Nace Drex, and creates a HubSpot contact when appropriate. Conditional Slack and error-monitoring paths complete the automation.',
   skillsDemonstrated: ['Workflow Automation', 'HubSpot CRM Integration', 'AI Classification Integration', 'Webhook Processing', 'Slack Notifications'],

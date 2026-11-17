@@ -1,3 +1,4 @@
+import { DEMO_DISCLOSURE, HUBSPOT_TEST_RESULTS } from '../data/projectProof';
 import { createContext, useContext, useId, useState, type ReactNode } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { ChevronDown } from 'lucide-react';
@@ -27,6 +28,8 @@ export default function WorkflowDisclosure({ id, title, category, summary, image
         <span className="text-xs font-mono text-cyan-400">{category}</span>
         <Heading className="text-xl sm:text-2xl font-bold text-white font-heading leading-snug">{title}</Heading>
         <p className="text-sm text-slate-300 leading-relaxed line-clamp-2">{summary}</p>
+        <p className="text-sm text-slate-400 leading-relaxed">{DEMO_DISCLOSURE}</p>
+        {(id === 'proj-7' || id === 'case-proj-7') && <p className="text-sm text-cyan-200 leading-relaxed">{HUBSPOT_TEST_RESULTS}</p>}
         <button type="button" id={buttonId} aria-expanded={open} aria-controls={panelId}
           aria-label={(open ? 'Hide' : 'View') + ' workflow details: ' + title}
           onClick={() => toggle(id)}

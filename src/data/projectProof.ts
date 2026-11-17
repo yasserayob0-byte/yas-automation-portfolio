@@ -1,0 +1,2 @@
+export const DEMO_DISCLOSURE = "Independent portfolio demonstration — Built and tested with fictional sample data. The results below describe workflow tests, not measured client revenue or time savings.";
+export const HUBSPOT_TEST_RESULTS = "Observed test results: A fictional website inquiry was classified as Medium priority and created in HubSpot, returning a Contact ID. Slack workflow-error notification delivery was also verified.";

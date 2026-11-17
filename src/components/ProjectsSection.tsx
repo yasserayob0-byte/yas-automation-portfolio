@@ -31,7 +31,7 @@ export default function ProjectsSection({ onOpenCaseStudy }: ProjectsSectionProp
             See What Your Team Could Stop Doing Manually.
           </motion.h2>
           <p className="text-base sm:text-lg text-slate-400">
-            Explore real workflow screenshots, the problems each system solves, and how the integrations work. Project metrics are reported outcomes, not guarantees for a new deployment.
+            Explore independent workflow demonstrations, starting with website inquiry intake into HubSpot. Review the screenshots, workflow logic, and explicitly identified test results.
           </p>
 
           {/* Category Filter Tabs */}

@@ -1,3 +1,4 @@
+import { DEMO_DISCLOSURE } from '../data/projectProof';
 import type { ReactNode } from 'react';
 import type { CaseStudyData } from '../types';
 import { PROJECTS_DATA } from '../data/portfolioData';
@@ -38,6 +39,7 @@ export default function WorkflowDetails({ study }: { study: CaseStudyData }) {
     images.add(item.imageUrl); return true;
   });
   return <div className="p-6 sm:p-8 space-y-8 min-w-0">
+    <p className="text-sm text-slate-400 leading-relaxed">{DEMO_DISCLOSURE}</p>
     {section('Business Problem', <>{paragraphs([study.challenge.summary])}{study.challenge.frictionPoints.map(note)}</>)}
     {section('Automation Solution', <>{paragraphs([study.solution.summary])}{study.solution.corePillars.map(note)}{paragraphs([...(study.overview.scopeHighlights || [])])}</>)}
     {section('Workflow Architecture / Process', <>{paragraphs([study.architecture.description, study.technicalOverview])}
@@ -48,7 +50,7 @@ export default function WorkflowDetails({ study }: { study: CaseStudyData }) {
       {study.skillsDemonstrated && <div className="flex flex-wrap gap-2">{unique(study.skillsDemonstrated).map(skill => <span key={skill} className="text-xs text-slate-300 border border-slate-800 rounded-lg px-3 py-2">{skill}</span>)}</div>}
     </>)}
     {section('Tech Stack', <ul className="grid sm:grid-cols-2 gap-3">{tech.map(item => <li key={item.name} className="flex gap-3 min-w-0 p-4 rounded-xl border border-slate-800 bg-slate-900/60"><TechnologyLogo name={item.name} className="w-6 h-6 shrink-0" /><div><h5 className="font-semibold text-white">{item.name}</h5>{paragraphs([item.role])}</div></li>)}</ul>)}
-    {section('Business Impact / Results', <>{paragraphs([study.businessValue.summary, study.whyItMatters])}<div className="grid sm:grid-cols-3 gap-3">{metrics.map(metric => <div key={metric.label} className="p-4 rounded-xl border border-slate-800 bg-slate-900/60"><div className="font-bold text-xl text-cyan-300">{metric.value}</div><h5 className="text-sm text-white mt-1">{metric.label}</h5>{paragraphs([metric.description])}</div>)}</div></>)}
+    {section(study.id === 'proj-7' ? 'Observed Test Results' : 'Intended Workflow Benefits', <>{paragraphs([study.businessValue.summary, study.whyItMatters])}<div className="grid sm:grid-cols-3 gap-3">{metrics.map(metric => <div key={metric.label} className="p-4 rounded-xl border border-slate-800 bg-slate-900/60"><div className="font-bold text-xl text-cyan-300">{metric.value}</div><h5 className="text-sm text-white mt-1">{metric.label}</h5>{paragraphs([metric.description])}</div>)}</div></>)}
     {gallery.length > 0 && section('Additional Screenshots', <div className="grid sm:grid-cols-2 gap-4">{gallery.map(item => <figure key={item.id}><a href={item.imageUrl} target="_blank" rel="noreferrer" aria-label={'Open full screenshot: ' + item.title} className="block rounded-xl focus-visible:outline-2 focus-visible:outline-cyan-300"><img src={item.imageUrl} alt={item.title} loading="lazy" decoding="async" className="w-full h-auto rounded-xl border border-slate-800" /></a><figcaption className="mt-2 text-sm text-slate-400">{item.caption}</figcaption></figure>)}</div>)}
     <DiscoveryCallButton className="inline-flex px-5 py-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-sm font-semibold">Discuss this on a discovery call</DiscoveryCallButton>
   </div>;

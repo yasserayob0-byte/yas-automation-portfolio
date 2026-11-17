@@ -19,35 +19,35 @@ export const PROJECT_ITEMS: ProjectVisualItem[] = [
     img: fbMessengerImg,
     title: 'AI-Powered Facebook Messenger Support Agent (n8n Execution)',
     category: 'AI Agents',
-    tag: 'Succeeded in 6.289s'
+    tag: 'Workflow demonstration'
   },
   {
     id: 'proj-2',
     img: jobScraperImg,
     title: 'AI Jobs Scraper + Resume Optimizer (n8n Canvas)',
     category: 'n8n Workflow',
-    tag: 'Published • Live Pipeline'
+    tag: 'Workflow demonstration'
   },
   {
     id: 'proj-4',
     img: leadCrmImg,
     title: 'End-to-End AI Lead Qualification & CRM Automation (n8n Workflow)',
     category: 'CRM Automation',
-    tag: 'Executed Successfully'
+    tag: 'Workflow demonstration'
   },
   {
     id: 'proj-3',
     img: emailSupportImg,
     title: 'AI Email Support Automation (n8n Cloud Canvas)',
     category: 'Custom APIs',
-    tag: 'Success in 333ms'
+    tag: 'Workflow demonstration'
   },
   {
     id: 'proj-5',
     img: ghlDentalImg,
     title: 'Dental Clinic Patient Journey Automation (GoHighLevel Suite)',
     category: 'GoHighLevel CRM',
-    tag: '94.2% Show-Up Rate'
+    tag: 'Appointment Workflow Demo'
   },
 {
   id: 'proj-6',

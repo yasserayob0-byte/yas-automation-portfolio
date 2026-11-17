@@ -1,3 +1,4 @@
+import { DEMO_DISCLOSURE } from '../data/projectProof';
 import WorkflowDetails from './WorkflowDetails';
 import DiscoveryCallButton from './DiscoveryCallButton';
 import Section from './Section';
@@ -90,7 +91,7 @@ export default function CaseStudyTemplate({
           <div className="flex items-center gap-3">
             <span className="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono text-slate-400">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Production-Grade Architecture</span>
+              <span>Portfolio demonstration</span>
             </span>
 
             <DiscoveryCallButton
@@ -133,10 +134,11 @@ export default function CaseStudyTemplate({
             </p>
           </div>
 
+          <p className="text-sm text-slate-400">{DEMO_DISCLOSURE}</p>
           {/* Metadata Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md">
             <div>
-              <div className="text-[10px] font-mono uppercase text-slate-400 tracking-wider">Client / Industry</div>
+              <div className="text-[10px] font-mono uppercase text-slate-400 tracking-wider">Demonstration Context</div>
               <div className="text-sm font-semibold text-white mt-1">{study.clientType}</div>
             </div>
             <div>
@@ -584,7 +586,7 @@ export default function CaseStudyTemplate({
                 </div>
                 <div className="pt-3 border-t border-slate-900 flex items-center gap-2 text-xs font-mono text-emerald-400">
                   <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>Production Pipeline Live</span>
+                  <span>Portfolio demonstration</span>
                 </div>
               </div>
             )}
@@ -667,7 +669,7 @@ export default function CaseStudyTemplate({
               <span>08. WORKFLOW GALLERY</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-white">
-              Production Workflow Showcase
+              Demonstration Workflow Showcase
             </h2>
             <p className="text-sm text-slate-400">
               Interactive high-resolution inspection of the orchestrated pipeline nodes, triggers, memory stores, and API handlers.
@@ -776,7 +778,7 @@ export default function CaseStudyTemplate({
                         />
                       ) : (
                         <div className="py-24 text-center text-slate-500 font-mono text-xs">
-                          [Production Workflow Canvas Screenshot]
+                          [Demonstration Workflow Canvas Screenshot]
                         </div>
                       )}
                     </motion.div>
@@ -794,7 +796,7 @@ export default function CaseStudyTemplate({
                   <div className="space-y-1 max-w-2xl">
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-mono font-bold text-cyan-400 bg-cyan-500/10 px-2.5 py-0.5 rounded border border-cyan-500/20">
-                        {study.gallery[activeGallerySlideIndex]?.category || 'Production Canvas'}
+                        {study.gallery[activeGallerySlideIndex]?.category || 'Demonstration Workflow'}
                       </span>
                       <h3 className="text-base font-bold text-white">
                         {study.gallery[activeGallerySlideIndex]?.title}
@@ -891,7 +893,7 @@ export default function CaseStudyTemplate({
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-1">
                   <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-1">
                     <span className="text-[10px] font-mono text-slate-400 uppercase">Architecture Type</span>
-                    <div className="text-sm font-bold text-white">Production-tested workflow</div>
+                    <div className="text-sm font-bold text-white">Portfolio demonstration</div>
                     <p className="text-[11px] text-slate-400">Built and verified using n8n</p>
                   </div>
 

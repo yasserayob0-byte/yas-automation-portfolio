@@ -11,7 +11,6 @@ import GoHighLevelShowcase from './components/GoHighLevelShowcase';
 import ProjectsSection from './components/ProjectsSection';
 import TechStackSection from './components/TechStackSection';
 import WhyAutomationMatters from './components/WhyAutomationMatters';
-import TestimonialsSection from './components/TestimonialsSection';
 import FaqSection from './components/FaqSection';
 import BookingSection from './components/BookingSection';
 import Footer from './components/Footer';
@@ -89,7 +88,7 @@ export default function App() {
           <div id="about"><HowIWorkSection /></div>
           <TechStackSection />
           <WhyAutomationMatters />
-          <TestimonialsSection />
+
           <FaqSection />
           <BookingSection initialTopic={contactTopic} />
         </main>

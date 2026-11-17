@@ -33,7 +33,7 @@ export default function Footer() {
             </div>
 
             <p className="text-xs sm:text-sm text-slate-400 max-w-sm leading-relaxed">
-              Building intelligent business systems through AI automation. I build GoHighLevel, n8n, and custom AI agent pipelines for growing businesses.
+              n8n & CRM Automation for Service Businesses. Connect inquiry intake, lead follow-ups, and bookings with n8n, GoHighLevel, and HubSpot.
             </p>
 
             <div className="flex items-center gap-2 text-[11px] font-mono text-emerald-400">
@@ -82,12 +82,10 @@ export default function Footer() {
               Professional Profiles
             </h4>
             <div className="flex flex-col space-y-2 text-xs">
-              <DiscoveryCallButton emailOnly
+              <a href="https://www.linkedin.com/in/yasser-u-98b310364/" target="_blank" rel="noopener noreferrer"
                 className="hover:text-cyan-400 transition-colors flex items-center gap-2"
-              >
-                <Linkedin className="w-3.5 h-3.5 text-cyan-400" />
-                <span>Request LinkedIn Profile</span>
-              </DiscoveryCallButton>
+              ><Linkedin className="w-3.5 h-3.5 text-cyan-400" />
+                <span>LinkedIn Profile</span></a>
               <DiscoveryCallButton emailOnly
                 className="hover:text-cyan-400 transition-colors flex items-center gap-2"
               >

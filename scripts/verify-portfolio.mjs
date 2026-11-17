@@ -1,4 +1,5 @@
-﻿import assert from 'node:assert/strict';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { build } from 'esbuild';
 const result = await build({
@@ -71,3 +72,22 @@ for (const id of detailIds) {
   assert.equal((details.match(/Discuss this on a discovery call/g) || []).length, 1, id + ' has one discovery CTA');
 }
 console.log('PASS: All six detail bodies omit primary screenshots and repeated project headers, with one tech stack and discovery CTA.');
+
+const disclosure = 'Independent portfolio demonstration — Built and tested with fictional sample data. The results below describe workflow tests, not measured client revenue or time savings.';
+const observed = 'Observed test results: A fictional website inquiry was classified as Medium priority and created in HubSpot, returning a Contact ID. Slack workflow-error notification delivery was also verified.';
+assert.equal(PROJECTS_DATA[0].id, 'proj-7', 'HubSpot must lead the portfolio');
+assert.equal(PROJECTS_DATA.at(-1).id, 'proj-2', 'Jobs demo follows service-business automations');
+assert.equal(resolveCaseStudy('proj-7').businessValue.summary, observed);
+assert.ok(projects.includes(observed), 'HubSpot test result is visible without expanding a card');
+assert.equal(projects.split(disclosure).length - 1, PROJECTS_DATA.length, 'Every collapsed demo shows the exact disclosure');
+assert.ok(ghl.includes(disclosure), 'GHL demos show the disclosure');
+for (const id of detailIds) {
+  const html = renderToStaticMarkup(createElement(CaseStudy, { data: resolveCaseStudy(id) }));
+  assert.ok(html.includes(disclosure));
+  assert.doesNotMatch(html.replace(/<[^>]*>/g, ''), /99[.]9%|98[.]5%|85%|100%|45,000|140\+|68%|zero downtime/i);
+}
+const footer = readFileSync('src/components/Footer.tsx', 'utf8');
+assert.ok(footer.includes('href="https://www.linkedin.com/in/yasser-u-98b310364/"'));
+assert.ok(!footer.includes('Request LinkedIn Profile'));
+assert.ok(!readFileSync('src/App.tsx', 'utf8').includes('<TestimonialsSection'));
+console.log('PASS: Audit positioning, project order, exact disclosures and observed results, removed metrics, and LinkedIn URL.');

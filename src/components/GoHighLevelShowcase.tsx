@@ -61,7 +61,7 @@ const WORKFLOW_SLIDES: WorkflowSlide[] = [
     impactMetric: {
       label: 'Lead Response',
       value: 'Instant',
-      trend: '+100%',
+      trend: 'Configured workflow',
     },
     trigger: 'Patient submits Dental Appointment Form',
     actions: [
@@ -108,8 +108,8 @@ const WORKFLOW_SLIDES: WorkflowSlide[] = [
       'Automatically confirms appointments, updates pipeline stages, removes temporary tags, and sends confirmation SMS and email.',
     impactMetric: {
       label: 'Confirmation Rate',
-      value: '100%',
-      trend: '+95%',
+      value: 'Event-triggered',
+      trend: 'Configured workflow',
     },
     trigger: 'Appointment Status = Confirmed',
     actions: [
@@ -165,7 +165,7 @@ const WORKFLOW_SLIDES: WorkflowSlide[] = [
     impactMetric: {
       label: 'No-Show Reduction',
       value: '24h + 2h',
-      trend: '-40%',
+      trend: 'Configured workflow',
     },
     trigger: 'Upcoming Appointment',
     actions: [
@@ -229,7 +229,7 @@ const WORKFLOW_SLIDES: WorkflowSlide[] = [
     impactMetric: {
       label: 'Rebooking',
       value: 'Automatic',
-      trend: '+35%',
+      trend: 'Configured workflow',
     },
     trigger: 'Appointment Status = Cancelled',
     actions: [
@@ -277,7 +277,7 @@ const WORKFLOW_SLIDES: WorkflowSlide[] = [
     impactMetric: {
       label: 'Recovery Rate',
       value: 'Automated',
-      trend: '+50%',
+      trend: 'Configured workflow',
     },
     trigger: 'Appointment Status = No Show',
     actions: [
@@ -325,7 +325,7 @@ const WORKFLOW_SLIDES: WorkflowSlide[] = [
     impactMetric: {
       label: 'Patient Engagement',
       value: 'Post Visit',
-      trend: '+60%',
+      trend: 'Configured workflow',
     },
     trigger: 'Appointment Completed',
     actions: [
@@ -479,7 +479,7 @@ export default function GoHighLevelShowcase({ onConsultWorkflow }: GoHighLevelSh
             <section className="space-y-3"><h4 className="text-lg font-bold text-cyan-300">Workflow Architecture / Process</h4><p className="text-sm text-slate-300"><span className="font-semibold text-white">Trigger: </span>{activeSlide.trigger}</p></section>
             <section className="space-y-4"><h4 className="text-lg font-bold text-cyan-300">Key Steps</h4><ol className="grid sm:grid-cols-2 gap-4">{activeSlide.nodes.map(node => <li key={node.id} className="rounded-xl border border-slate-800 bg-slate-900/60 p-4"><div className="flex gap-2 items-center text-cyan-300"><node.icon aria-hidden="true" className="w-4 h-4 shrink-0" /><h5 className="font-semibold">{node.label}</h5></div><p className="mt-2 text-sm text-slate-300">{node.desc}</p><span className="text-xs font-mono text-slate-400">{node.tag}</span></li>)}</ol></section>
             <section className="space-y-3"><h4 className="text-lg font-bold text-cyan-300">Tech Stack</h4><div className="flex flex-wrap gap-2">{TECH_BADGES.map(tech => <span key={tech} className="px-3 py-1 rounded-lg border border-slate-800 text-sm text-slate-300">{tech}</span>)}</div></section>
-            <section className="space-y-3"><h4 className="text-lg font-bold text-cyan-300">Business Impact / Results</h4><div className="rounded-xl border border-slate-800 bg-slate-900/60 p-4"><p className="text-xl font-bold text-cyan-300">{activeSlide.impactMetric.value}</p><p className="text-sm text-white">{activeSlide.impactMetric.label}</p><p className="text-sm text-slate-400">{activeSlide.impactMetric.trend}</p></div></section>
+            <section className="space-y-3"><h4 className="text-lg font-bold text-cyan-300">Workflow Capability</h4><div className="rounded-xl border border-slate-800 bg-slate-900/60 p-4"><p className="text-xl font-bold text-cyan-300">{activeSlide.impactMetric.value}</p><p className="text-sm text-white">{activeSlide.impactMetric.label}</p><p className="text-sm text-slate-400">{activeSlide.impactMetric.trend}</p></div></section>
             <button onClick={() => onConsultWorkflow('Dental Clinic Patient Journey: ' + activeSlide.title)} className="px-5 py-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-sm font-semibold">Consult on This Workflow</button>
           </div>
           </WorkflowDisclosure>

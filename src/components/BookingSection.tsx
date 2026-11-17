@@ -48,7 +48,7 @@ export default function BookingSection(_props: { initialTopic?: string }) {
   return <Section id="booking" ref={sectionRef} aria-labelledby="booking-title" className="booking-section">
     <div aria-hidden="true" className="booking-ambient" /><div aria-hidden="true" className="booking-particles"><i /><i /><i /></div>
     <div className="booking-container">
-      <header className="booking-heading"><span className="booking-eyebrow"><CalendarDays size={15} aria-hidden="true" />LET'S FIND YOUR NEXT OPPORTUNITY</span><h2 id="booking-title" className="section-title">{DISCOVERY_TITLE}</h2><p>Choose a time that works for you and answer a few short questions so I can understand your workflow before the call.</p></header>
+      <header className="booking-heading"><span className="booking-eyebrow"><CalendarDays size={15} aria-hidden="true" />LET'S FIND YOUR NEXT OPPORTUNITY</span><h2 id="booking-title" className="section-title">{DISCOVERY_TITLE}</h2><p>Send your lead source, CRM, and the manual step you want automated. Book a call or email those three details so we can review your inquiry, follow-up, or booking workflow.</p></header>
       <div className="booking-grid">
         <div className="booking-panel booking-calendar"><div className="booking-calendar-heading"><span>YOUR NEXT STEP</span><h3>Choose a date &amp; time</h3><p>Find a time that works for you.</p></div>
           {status === 'loading' && <p className="booking-status" role="status">Loading available times...</p>}
@@ -58,7 +58,7 @@ export default function BookingSection(_props: { initialTopic?: string }) {
         </div>
       </div>
       <aside className="booking-expect" aria-labelledby="booking-expect-heading"><h3 id="booking-expect-heading">What to expect</h3><ul>{['30-minute consultation', 'Workflow and process review', 'Automation opportunity assessment', 'No obligation'].map(item => <li key={item}><Check size={16} aria-hidden="true" />{item}</li>)}</ul></aside>
-      <p className="booking-notice" role="status">{notice}</p><div className="booking-fallback"><span>Prefer email? <span className="booking-email">{DISCOVERY_EMAIL}</span></span><button type="button" onClick={copyEmail}><Copy size={14} aria-hidden="true" />Copy email</button></div>
+      <p className="booking-notice" role="status">{notice}</p><div className="booking-fallback"><span>Prefer email? <a className="booking-email" href={`mailto:${DISCOVERY_EMAIL}?subject=CRM%20automation%20inquiry&body=Lead%20source%3A%0ACRM%3A%0AManual%20step%20to%20automate%3A`}>{DISCOVERY_EMAIL}</a></span><button type="button" onClick={copyEmail}><Copy size={14} aria-hidden="true" />Copy email</button></div>
     </div>
   </Section>;
 }
